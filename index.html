@@ -133,13 +133,17 @@
 
           <div class="item-boards">
             <img
-              src="./assets/images/board-title3.jpg"
+              src="./assets/images/board-title4.jpg"
               alt="img board-title1"
             />
             <p>Board Title 04</p>
           </div>
 
-          <div class="item-default">
+          <div
+            class="item-default"
+            data-bs-toggle="modal"
+            data-bs-target="#scrollModal"
+          >
             <p>Create new board</p>
           </div>
         </div>
@@ -208,16 +212,16 @@
       id="offcanvasRight"
       aria-labelledby="offcanvasRightLabel"
     >
-      <div class="offcanvas-header">
+      <div class="offcanvas-body d-flex justify-content-start">
         <img
           class="logo-full"
           src="./assets/images/trello-logo-full.png"
           alt="img full logo"
         />
 
-        <p class="text-start">YOUR WORKSPACES</p>
+        <p>YOUR WORKSPACES</p>
 
-        <div class="workspaces">
+        <div class="workspaces workspaces-off">
           <div class="boards">
             <a href="#" class="item">
               <img src="./assets/icons/boards.png" alt="img boards" />
@@ -253,6 +257,212 @@
               <img src="./assets/icons/signOut.png" alt="img signOut" />
               <span>Sign out</span>
             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Create new board -->
+    <div class="modal fade" id="scrollModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Create board
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-background">
+              <p>Background</p>
+              <div class="list-background">
+                <div class="item-bg bg-item">
+                  <img
+                    class="img-bg"
+                    src="./assets/images/board-title2.jpg"
+                    alt="img1"
+                  />
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div class="item-bg bg-item">
+                  <img
+                    class="img-bg"
+                    src="./assets/images/board-title1.jpg"
+                    alt="img1"
+                  />
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div class="item-bg bg-item">
+                  <img
+                    class="img-bg"
+                    src="./assets/images/board-title4.jpg"
+                    alt="img1"
+                  />
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div class="item-bg bg-item">
+                  <img
+                    class="img-bg"
+                    src="./assets/images/board-title3.jpg"
+                    alt="img1"
+                  />
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-background">
+              <p>Color</p>
+              <div class="list-background">
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #ffb100 0%,
+                      #fa0c00 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #2609ff 0%,
+                      #d20cff 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #00ff2f 0%,
+                      #00ffc8 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #00ffe5 0%,
+                      #004bfa 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #ffa200 0%,
+                      #edfa00 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div
+                  class="item-color bg-item"
+                  style="
+                    background: linear-gradient(
+                      123deg,
+                      #ff00ea 0%,
+                      #fa0c00 100%
+                    );
+                  "
+                >
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-background">
+              <p>Board title <span>*</span></p>
+              <div class="title">
+                <input
+                  type="text"
+                  placeholder="E.g. Shopping list for birthday..."
+                />
+
+                <p>👋 Please provide a valid board title.</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn my-btn-close"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn my-btn-create">Create</button>
           </div>
         </div>
       </div>

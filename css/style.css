@@ -173,6 +173,7 @@ body {
     line-height: 21px;
     border: 1px solid #6C757D;
     margin: 0;
+    background-color: #FFF;
 }
 
 .btn-gr .btn-share{
@@ -259,6 +260,16 @@ body {
 
 .header .search-navigation{
     display: none;
+}
+
+.offcanvas-header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.offcanvas-header .logo-full{
+    width: 80px;
+    margin-bottom: 51.65px;
 }
 
 @media screen and (min-width: 848px) and (max-width: 960px){

@@ -6,7 +6,6 @@
     box-sizing: border-box;
 } 
 
-
 body {
     width: 100%;
     font-family: "Roboto", sans-serif;
@@ -306,7 +305,8 @@ body {
     border-bottom: 1px solid rgba(33, 37, 41, 0.25);
 }
 
-.modal-body .modal-background p{
+.modal-body .modal-background p,
+.modal-body .modal-title p{
     font-size: 20px;
     font-weight: 500;
     line-height: 24px;
@@ -357,7 +357,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.modal-background .title input{
+.modal-title .title input{
     width: 100%;
     height: 56px;
     border-radius: 6px;
@@ -366,13 +366,19 @@ body {
     background-color: #FFF;
 }
 
-.modal-background .title p{
+.modal-title .title p{
     color: #212529;
     font-size: 16px;    
     font-weight: 400;
     line-height: 24px;
+    margin-top: 4px;
 }
 
+.modal-body .modal-title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
 
 
@@ -487,18 +493,4 @@ body {
         width: 100%;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

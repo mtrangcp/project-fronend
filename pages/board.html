@@ -169,8 +169,16 @@
     <div class="modal fade" id="filterModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Filter</h1>
+          <div
+            class="modal-header d-flex align-items-center"
+            style="border-bottom: none"
+          >
+            <h1
+              class="modal-title fs-5 text-center flex-grow-1"
+              id="exampleModalLabel"
+            >
+              Filter
+            </h1>
             <button
               type="button"
               class="btn-close"
@@ -178,16 +186,26 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn my-btn-close"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn my-btn-create">Create</button>
+          <div class="modal-body">
+            <div class="keyboard">
+              <p class="title">Keyword</p>
+              <input type="text" placeholder="Enter a keyword…" />
+              <p class="p-normal">Search cards,</p>
+            </div>
+
+            <div class="keyboard">
+              <p class="title">Card status</p>
+
+              <div class="item">
+                <input type="checkbox" />
+                <span>Marked as complete</span>
+              </div>
+
+              <div class="item">
+                <input type="checkbox" />
+                <span>Not marked as complete</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

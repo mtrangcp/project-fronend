@@ -92,7 +92,107 @@
           </div>
         </div>
       </aside>
-      <main class="main"></main>
+      <main class="main">
+        <div class="overlay-title">
+          <div class="over-left">
+            <span class="title">Tổ chức sự kiện Year-end party !</span>
+
+            <img
+              id="title-star"
+              src="../assets/icons/starredBoards-black.png"
+              alt="img star"
+            />
+
+            <div class="over-board">
+              <img src="../assets/icons/over-board.png" alt="img board" />
+              <span>Board</span>
+            </div>
+
+            <div class="change-table">
+              <img
+                id="icon-table"
+                src="../assets/icons/table.png"
+                alt="img table"
+              />
+              <span>Table</span>
+            </div>
+
+            <div
+              data-bs-toggle="modal"
+              data-bs-target="#closeBoardModal"
+              class="close-board"
+            >
+              <img
+                id="icon-table"
+                src="../assets/icons/close-board.png"
+                alt="img close"
+              />
+              <span>Close this board</span>
+            </div>
+          </div>
+
+          <div
+            data-bs-toggle="modal"
+            data-bs-target="#filterModal"
+            class="over-right"
+          >
+            <img src="../assets/icons/filters.png" alt="filters" />
+            <span>Filters</span>
+          </div>
+        </div>
+
+        <div class="toDo-list">
+          <div class="item-toDo">
+            <div class="heading">
+              <span>Todo</span>
+              <div class="icon-util">
+                <img
+                  class="icon-arrow"
+                  src="../assets/icons/icon-arrow.png"
+                  alt="arrow"
+                />
+                <img
+                  class="icon-more"
+                  src="../assets/icons/icon-more.png"
+                  alt="more"
+                />
+              </div>
+            </div>
+
+            <div class="item"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal Filter Dropdown -->
+    <div class="modal fade" id="scrollModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Create board
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn my-btn-close"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn my-btn-create">Create</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script

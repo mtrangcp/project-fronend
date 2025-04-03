@@ -13,7 +13,8 @@ body {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #212529;
+    color: #172B4D;
+    /* color: #212529; */
 }
 
 .header {
@@ -114,23 +115,18 @@ body {
 .main {
     flex: 1;
     height: 100vh;
-    padding: 16px 24px;
     border-left: 1px solid #00000040;
     margin-left: calc((1 / 6) * 100%);
-}
-
-.workspaces .your-boards{
-    padding: 0 16px;
 }
 
 .workspaces .your-boards .title{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0 14px 6px 14px;
 }
 
 .workspaces .your-boards .title span{
-    color: #172B4D;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.042px;
@@ -156,7 +152,11 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 12px;
+    padding: 6px 10px 6px 14px;
+}
+
+.your-boards .list-your-boards .item:hover{
+    background-color: rgba(0, 0, 0, 0.16);
 }
 
 .list-your-boards .item img{
@@ -167,10 +167,144 @@ body {
 }
 
 .list-your-boards .item span {
-    color: #172B4D;
     font-size: 13.781px;
     line-height: 20px;
 }
+
+.main .overlay-title{
+    margin-top: 12px;
+    width: 100%;
+    height: 56px;   
+    padding: 12px 20.21px 12px 12px;
+    background-color: #F1F2F4;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main .overlay-title .over-right{
+    padding: 6px;
+    width: fit-content;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.main .overlay-title .over-right:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.overlay-title .over-right img,
+.overlay-title .over-left img{
+    width: 16px;
+    height: 16px;
+}
+
+.overlay-title .over-right span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.overlay-title .over-left{
+    display: flex;
+    align-items: center;
+}
+
+.overlay-title .over-left .title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+.overlay-title .over-left #title-star {
+    margin-left: 21.8px;
+    margin-right: 31.84px;
+}
+
+.overlay-title .over-left .over-board {
+    width: 85.09px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.50);
+    height: 32px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 32px;
+}
+
+.overlay-title .over-left .change-table ,
+.overlay-title .over-left .close-board{
+    margin-left:8px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.overlay-title .over-left .close-board:hover{
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.main .toDo-list{
+    padding: 33px 24px;
+    display: flex;
+    gap: 17px;
+}
+
+.main .toDo-list .item-toDo{
+    width: 272px;
+    border-radius: 12px;
+    background-color: #F1F2F4;
+    box-shadow: 0px 1px 1px 0px rgba(9, 30, 66, 0.25), 0px 0px 1px 0px rgba(9, 30, 66, 0.31);
+}
+
+.main .toDo-list .item-toDo .heading{
+    width: 100%;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toDo-list .item-toDo .heading .icon-util{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.toDo-list .item-toDo .heading .icon-arrow{
+    width: 24px;
+    height: 24px;
+}
+.toDo-list .item-toDo .heading .icon-more {
+    width: 16px;
+    height: 16px;
+}
+
+.toDo-list .item-toDo .item{
+    height: 36px;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0px 1px 1px 0px rgba(9, 30, 66, 0.25), 0px 0px 1px 0px rgba(9, 30, 66, 0.31);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+}
+
+
+
 
 
 

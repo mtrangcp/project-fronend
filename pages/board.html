@@ -166,13 +166,11 @@
     </div>
 
     <!-- Modal Filter Dropdown -->
-    <div class="modal fade" id="scrollModal" tabindex="-1">
+    <div class="modal fade" id="filterModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Create board
-            </h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Filter</h1>
             <button
               type="button"
               class="btn-close"
@@ -190,6 +188,36 @@
               Close
             </button>
             <button type="button" class="btn my-btn-create">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Close board -->
+    <div class="modal fade" id="closeBoardModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header popular">
+            <img
+              src="../assets/icons/icon-confirm-close.png"
+              alt="icon-confirm"
+            />
+
+            <p class="question">Are you sure?</p>
+            <p class="remind">You won't be able to revert this!</p>
+
+            <div class="d-flex justify-content-center list-btn">
+              <button type="button" class="btn my-btn-create">
+                Yes, close it!
+              </button>
+              <button
+                type="button"
+                class="btn my-btn-close"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>

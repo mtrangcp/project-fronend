@@ -193,7 +193,7 @@ body {
 
 .main .overlay-title .over-right:hover {
     cursor: pointer;
-    opacity: 0.6;
+    background-color: #ffffff;
 }
 
 .overlay-title .over-right img,
@@ -303,17 +303,55 @@ body {
     margin: 8px;
 }
 
+.popular{
+    display: flex;
+    flex-direction: column;
+}
 
+.popular img{
+    width: 88px;
+    height: 88px;
+    margin: 40px auto;
+}
 
+.popular .question,
+.popular .remind{
+    color: #545454;
+    text-align: center;
+    font-family: Montserrat;
+}
 
+.popular .question{
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 45px;
+}
 
+.popular .remind {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
 
+.popular .list-btn{
+    margin: 25px auto;
+    gap: 10px;
+}
 
+.popular .list-btn .my-btn-create,
+.popular .list-btn .my-btn-close {
+    background-color: #3085D6;
+    color: #FFFFFF;
+    padding: 10px 17px;
+}
 
+.popular .list-btn .my-btn-close {
+    background-color: #3085D6;
+}
 
-
-
-
+.popular .list-btn .my-btn-close {
+    background-color: #DD3333;
+}
 
 
 

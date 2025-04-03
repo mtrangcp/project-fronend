@@ -25,6 +25,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000;
 
     display: flex;
     justify-content: space-between;
@@ -110,20 +111,66 @@ body {
     line-height: 21px;
 }
 
+.main {
+    flex: 1;
+    height: 100vh;
+    padding: 16px 24px;
+    border-left: 1px solid #00000040;
+    margin-left: calc((1 / 6) * 100%);
+}
 
+.workspaces .your-boards{
+    padding: 0 16px;
+}
 
+.workspaces .your-boards .title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.workspaces .your-boards .title span{
+    color: #172B4D;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.042px;
+}
 
+.workspaces .your-boards .title img {
+    width: 24px;
+    height: 24px;
+}
 
+.workspaces .your-boards .title img:hover{
+    cursor: pointer;
+    opacity: 0.6;
+    transform: scale(1.5);
+    transition: all linear 0.5s;
+}
 
+.your-boards .list-your-boards{
+    padding: 0 ;
+}
 
+.your-boards .list-your-boards .item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
 
+.list-your-boards .item img{
+    width: 24px;
+    height: 20px;
+    border-radius: 2px;
+    object-fit: cover;
+}
 
-
-
-
-
-
+.list-your-boards .item span {
+    color: #172B4D;
+    font-size: 13.781px;
+    line-height: 20px;
+}
 
 
 

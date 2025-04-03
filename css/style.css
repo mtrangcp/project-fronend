@@ -25,6 +25,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000;
 
     display: flex;
     justify-content: space-between;
@@ -209,6 +210,40 @@ body {
     width: calc((100% - 48px) / 4) ;
     height: 130px;
     position: relative;
+}
+
+.listBoards .item-boards .edit-board{
+    display: flex;
+    gap: 8px;
+    height: 32px;
+    padding: 8px 28px 8px 12px;
+    align-items: center;
+    border-radius: 3px;
+    background: #2C3E5D;
+
+    position: absolute;
+    left: 15px;
+    bottom: 13.4px;
+}
+
+.listBoards .item-boards .edit-board {
+    display: none;
+}
+
+.item-boards:hover .edit-board {
+    display: flex;
+}
+
+.listBoards .item-boards .edit-board img{
+    width: 16px;
+    height: 16px;
+}
+
+.listBoards .item-boards .edit-board span {
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
 }
 
 .listBoards .item-boards img{

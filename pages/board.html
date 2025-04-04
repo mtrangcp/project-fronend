@@ -12,6 +12,10 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
   </head>
   <body>
     <header class="header">
@@ -159,7 +163,83 @@
               </div>
             </div>
 
-            <div class="item"></div>
+            <div class="list-item">
+              <div class="one-item">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Thuê DJ</span>
+              </div>
+
+              <div class="one-item">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Lên kịch bản chương trình</span>
+              </div>
+
+              <div class="one-item">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Chuẩn bị kịch</span>
+              </div>
+            </div>
+
+            <div class="last-item">
+              <div class="part-show">
+                <img src="../assets/icons/btn-add.png" alt="icon-add" />
+                <input type="text" placeholder="Add a card" />
+                <img src="../assets/icons/add-card.png" alt="icon-add-card" />
+              </div>
+
+              <div class="confirm-add">
+                <button>Add a card</button>
+                <span>✖︎</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-toDo">
+            <div class="heading">
+              <span>In-progress</span>
+              <div class="icon-util">
+                <img
+                  class="icon-arrow"
+                  src="../assets/icons/icon-arrow.png"
+                  alt="arrow"
+                />
+                <img
+                  class="icon-more"
+                  src="../assets/icons/icon-more.png"
+                  alt="more"
+                />
+              </div>
+            </div>
+
+            <div class="list-item"></div>
+
+            <div class="last-item">
+              <div class="part-show">
+                <img src="../assets/icons/btn-add.png" alt="icon-add" />
+                <input type="text" placeholder="Add a card" />
+                <img src="../assets/icons/add-card.png" alt="icon-add-card" />
+              </div>
+
+              <div class="confirm-add">
+                <button>Add a card</button>
+                <span>✖︎</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-toDo">
+            <div class="last-item">
+              <div class="part-show">
+                <img src="../assets/icons/btn-add.png" alt="icon-add" />
+                <input type="text" placeholder="Add another list" />
+                <img src="../assets/icons/add-card.png" alt="icon-add-card" />
+              </div>
+
+              <div class="confirm-add">
+                <button>Add another list</button>
+                <span>✖︎</span>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -196,14 +276,64 @@
             <div class="keyboard">
               <p class="title">Card status</p>
 
-              <div class="item">
+              <div class="item-status">
                 <input type="checkbox" />
                 <span>Marked as complete</span>
               </div>
 
-              <div class="item">
+              <div class="item-status">
                 <input type="checkbox" />
                 <span>Not marked as complete</span>
+              </div>
+            </div>
+
+            <div class="keyboard">
+              <p class="title">Due date</p>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img src="../assets/icons/filter-date.png" alt="filter date" />
+                <span>No dates</span>
+              </div>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img
+                  src="../assets/icons/over-dueDate.png"
+                  alt="over-dueDate"
+                />
+                <span>Overdue</span>
+              </div>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img src="../assets/icons/due-nextDay.png" alt="due-nextDay" />
+                <span>Due in the next day</span>
+              </div>
+            </div>
+
+            <div class="keyboard">
+              <p class="title">Labels</p>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img src="../assets/icons/filter-date.png" alt="filter date" />
+                <span>No dates</span>
+              </div>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img
+                  src="../assets/icons/over-dueDate.png"
+                  alt="over-dueDate"
+                />
+                <span>Overdue</span>
+              </div>
+
+              <div class="item-status">
+                <input type="checkbox" />
+                <img src="../assets/icons/due-nextDay.png" alt="due-nextDay" />
+                <span>Due in the next day</span>
               </div>
             </div>
           </div>

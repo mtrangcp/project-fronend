@@ -358,7 +358,7 @@ body {
 .modal-body .keyboard{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .modal-body .keyboard .title{
@@ -406,6 +406,17 @@ body {
     height: 24px;
 }
 
+.modal-body .keyboard .item-status .color-label,
+.modal-body .keyboard .item-status select {
+    flex: 1;
+    height: 32px;
+    border-radius: 3px;
+}
+
+.modal-body .keyboard .item-status select {
+    border: none;
+}
+
 .item-toDo .list-item {
     margin: 8px;
     height: fit-content;
@@ -430,6 +441,10 @@ body {
     border-radius: 50%;
 }
 
+.item-toDo .list-item .one-item i {
+    display: none;
+}
+
 .item-toDo .list-item .one-item i:hover {
     border: 2px solid gray;
 }
@@ -444,6 +459,10 @@ body {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+}
+
+.one-item:hover  i {
+    display: block !important;
 }
 
 .item-toDo .last-item{
@@ -512,6 +531,7 @@ overlay-title
 .item-toDo .last-item .confirm-add span:hover {
     background-color: rgba(0, 0, 0, 0.4);
     color: #fff;
+    cursor: pointer;
 }
 
 

@@ -135,6 +135,7 @@ body {
 .workspaces .your-boards .title img {
     width: 24px;
     height: 24px;
+    
 }
 
 .workspaces .your-boards .title img:hover{
@@ -544,6 +545,7 @@ overlay-title
     width: 100%;
     flex-direction: column;
     gap: 9px;
+    margin-bottom: 30px;
 }
 .popular .header-modal .header-top{
     display: flex;
@@ -606,7 +608,6 @@ overlay-title
 
 .popular .content .main-modal{
     flex: 1;
-    background-color: #6ba9ff;
 }
 
 .main-modal .input-content{
@@ -617,18 +618,19 @@ overlay-title
 
 .main-modal .input-content textarea {
     width: 512px;
-    min-height: 30px;
     height: fit-content;
+    margin-left: 34px;
 }
 
 .content .main-modal .title{
     height: fit-content;
-    background-color: red;
+    margin-bottom: 18px;
 }
 
 .content .main-modal .title img{
     width: 24px;
     height: 24px;
+    margin: 0;
 }
 
 .content .main-modal .title span {
@@ -670,7 +672,7 @@ overlay-title
 }
 
 .content .aside-modal .labels{
-    width: 168px;
+    width: 120px;
     height: 32px;
     display: flex;
     gap: 8px;

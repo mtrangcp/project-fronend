@@ -406,9 +406,14 @@
 
               <div class="span-select">
                 <span>in list</span>
-                <select name="status" id="status-task">
+                <select
+                  name="status"
+                  id="status-task"
+                  data-bs-toggle="modal"
+                  data-bs-target="#moveDropdownModal"
+                >
                   <option value="1">In-progress</option>
-                  <option value="2">done</option>
+                  <!-- <option value="2">done</option> -->
                 </select>
               </div>
             </div>
@@ -442,6 +447,58 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal move func dropdown -->
+    <div class="modal fade" id="moveDropdownModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title fs-5 w-100 text-center"
+              id="exampleModalLabel"
+            >
+              Move card
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Select destination</p>
+
+            <div class="boards">
+              <h3>Board</h3>
+              <input
+                type="text"
+                placeholder="Tổ chức sự kiện Year-end party !"
+              />
+            </div>
+
+            <div class="list-po">
+              <div class="list">
+                <h3>List</h3>
+                <select name="" id="">
+                  <option value="In-progress">In-progress</option>
+                </select>
+              </div>
+
+              <div class="position">
+                <h3>Position</h3>
+                <select name="" id="">
+                  <option value="1">1</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary me-auto">Move</button>
           </div>
         </div>
       </div>

@@ -166,17 +166,23 @@
             <div class="list-item">
               <div class="one-item">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>Thuê DJ</span>
+                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
+                  Thuê DJ
+                </span>
               </div>
 
               <div class="one-item">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>Lên kịch bản chương trình</span>
+                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
+                  Lên kịch bản chương trình
+                </span>
               </div>
 
               <div class="one-item">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>Chuẩn bị kịch</span>
+                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
+                  Chuẩn bị kịch
+                </span>
               </div>
             </div>
 
@@ -387,10 +393,85 @@
       </div>
     </div>
 
+    <!-- Modal Task Detail -->
+    <div class="modal fade modal-lg" id="taskDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header popular">
+            <div class="header-modal">
+              <div class="header-top">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Kịch bản</p>
+              </div>
+
+              <div class="span-select">
+                <span>in list</span>
+                <select name="status" id="status-task">
+                  <option value="1">In-progress</option>
+                  <option value="2">done</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="content">
+              <div class="main-modal">
+                <div class="title">
+                  <img src="../assets/icons/describe.png" alt="describe" />
+                  <span>Description</span>
+                </div>
+
+                <div class="input-content">
+                  <textarea id="editor"></textarea>
+
+                  <div class="btn-group">
+                    <button onclick="handleGetValue()">Save</button>
+                    <button>Cancel</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="aside-modal">
+                <div class="labels">
+                  <img src="../assets/icons/icon-labels.png" alt="labels" />
+                  <span>Labels</span>
+                </div>
+
+                <div class="labels">
+                  <img src="../assets/icons/icon-date.png" alt="date" />
+                  <span>Dates</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <script>
+      let myEditor;
+      document.addEventListener("DOMContentLoaded", function () {
+        ClassicEditor.create(document.querySelector("#editor"))
+          .then((editor) => {
+            myEditor = editor;
+          })
+          .catch((error) => {
+            console.error("Có lỗi xảy ra khi khởi tạo CKEditor:", error);
+          });
+      });
+
+      function handleGetValue() {
+        console.log("Nội dung:", myEditor.getData());
+      }
+    </script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
   </body>
 </html>

@@ -73,7 +73,7 @@ btnResgister.addEventListener("click", function (e) {
                             localStorage.setItem("proUsers", JSON.stringify(users));
 
                             const toastContent = document.createElement("div");
-                            toastContent.innerHTML = `<img src="../assets/icons/check_circle.png" width="24" height="24" style="margin-right: 8px;"> Đăng nhập thành công`;
+                            toastContent.innerHTML = `<img src="../assets/icons/check_circle.png" width="24" height="24" style="margin-right: 8px;"> Đăng ký thành công`;
                             toastContent.style.display = "flex";
                             toastContent.style.alignItems = "center";
 

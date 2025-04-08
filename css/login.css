@@ -96,6 +96,7 @@ form input {
 
 #form small{
     color: red;
+    display: none;
 }
 
 

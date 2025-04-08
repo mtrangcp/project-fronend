@@ -7,11 +7,17 @@
     <link rel="stylesheet" href="../css/board.css" />
 
     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -187,9 +193,13 @@
             </div>
 
             <div class="last-item">
-              <div class="part-show">
+              <div class="part-show d-flex align-items-center">
                 <img src="../assets/icons/btn-add.png" alt="icon-add" />
-                <input type="text" placeholder="Add a card" />
+                <textarea
+                  type="text"
+                  placeholder="Add a card"
+                  class="d-flex align-items-center"
+                ></textarea>
                 <img src="../assets/icons/add-card.png" alt="icon-add-card" />
               </div>
 
@@ -220,9 +230,13 @@
             <div class="list-item"></div>
 
             <div class="last-item">
-              <div class="part-show">
+              <div class="part-show d-flex align-items-center">
                 <img src="../assets/icons/btn-add.png" alt="icon-add" />
-                <input type="text" placeholder="Add a card" />
+                <textarea
+                  type="text"
+                  placeholder="Add a card"
+                  class="d-flex align-items-center"
+                ></textarea>
                 <img src="../assets/icons/add-card.png" alt="icon-add-card" />
               </div>
 
@@ -364,7 +378,7 @@
     </div>
 
     <!-- Modal Close board -->
-    <div class="modal fade" id="closeBoardModal" tabindex="-1">
+    <!-- <div class="modal fade" id="closeBoardModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header popular">
@@ -391,11 +405,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Modal Task Detail -->
     <div class="modal fade modal-lg" id="taskDetailModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header popular">
             <div class="header-modal">
@@ -426,7 +440,7 @@
                 </div>
 
                 <div class="input-content">
-                  <textarea id="editor"></textarea>
+                  <textarea id="editor" style="height: 300px"></textarea>
 
                   <div class="btn-group">
                     <button onclick="handleGetValue()">Save</button>
@@ -436,14 +450,31 @@
               </div>
 
               <div class="aside-modal">
-                <div class="labels">
+                <div
+                  class="labels"
+                  data-bs-toggle="modal"
+                  data-bs-target="#labelModal"
+                >
                   <img src="../assets/icons/icon-labels.png" alt="labels" />
                   <span>Labels</span>
                 </div>
 
-                <div class="labels">
+                <div
+                  class="labels"
+                  data-bs-toggle="modal"
+                  data-bs-target="#dateModal"
+                >
                   <img src="../assets/icons/icon-date.png" alt="date" />
                   <span>Dates</span>
+                </div>
+
+                <div
+                  class="labels"
+                  id="confirm-delete"
+                  style="background-color: #c9372c"
+                >
+                  <img src="../assets/icons/icon-del-task.png" alt="date" />
+                  <span style="color: #ffffff">Delete</span>
                 </div>
               </div>
             </div>
@@ -504,6 +535,152 @@
       </div>
     </div>
 
+    <!-- Modal add labels dropdown -->
+    <div
+      class="modal fade"
+      id="labelModal"
+      tabindex="-1"
+      aria-labelledby="labelModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content p-3">
+          <div class="modal-header">
+            <img
+              src="../assets/icons/btn-back.png"
+              alt="back-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+            <h5 class="modal-title" id="labelModalLabel">Create label</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Select a color</label>
+              <div class="d-flex flex-wrap gap-2">
+                <span
+                  class="color-option"
+                  style="background-color: #baf3db"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #f8e6a0"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #fedec8"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #ffd5d2"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #dfd8fd"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #4bce97"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #f5cd47"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #fea362"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #f87168"
+                ></span>
+                <span
+                  class="color-option"
+                  style="background-color: #9f8fef"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Create</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal choose dates -->
+    <div
+      class="modal fade"
+      id="dateModal"
+      tabindex="-1"
+      aria-labelledby="labelModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content p-3">
+          <div class="modal-header d-flex align-items-center">
+            <h5
+              class="modal-title text-center flex-grow-1"
+              id="labelModalLabel"
+            >
+              Dates
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="calendar"></div>
+            <!-- Khu vực hiển thị lịch -->
+
+            <label style="margin-top: 25px">
+              <input type="checkbox" id="start-date-checkbox" /> Start date
+            </label>
+            <input type="text" id="start-date" class="form-control" readonly />
+
+            <label>
+              <input type="checkbox" id="due-date-checkbox" /> Due date
+            </label>
+            <input type="text" id="due-date" class="form-control" readonly />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -530,6 +707,47 @@
       }
     </script>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- calendar -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let selectedInput = null;
+
+        const startCheckbox = document.querySelector("#start-date-checkbox");
+        const dueCheckbox = document.querySelector("#due-date-checkbox");
+
+        function handleCheckboxChange(checkbox, otherCheckbox, inputSelector) {
+          if (checkbox.checked) {
+            otherCheckbox.checked = false;
+            selectedInput = inputSelector;
+          } else {
+            selectedInput = null;
+          }
+        }
+
+        startCheckbox.addEventListener("change", function () {
+          handleCheckboxChange(this, dueCheckbox, "#start-date");
+        });
+
+        dueCheckbox.addEventListener("change", function () {
+          handleCheckboxChange(this, startCheckbox, "#due-date");
+        });
+
+        // Khởi tạo Flatpickr - hien thi lich
+        flatpickr("#calendar", {
+          inline: true,
+          enableTime: true,
+          dateFormat: "m/d/Y H:i",
+          onChange: function (selectedDates, dateStr) {
+            if (selectedInput) {
+              document.querySelector(selectedInput).value = dateStr;
+            }
+          },
+        });
+      });
+    </script>
+
+    <!-- dialog delete -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

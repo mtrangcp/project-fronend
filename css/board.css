@@ -436,6 +436,10 @@ body {
     margin-bottom: 8px;
 }
 
+.item-toDo .list-item .one-item:hover{
+    border: 1.3px solid gray;
+}
+
 .item-toDo .list-item .one-item i{
     color: #fff;
     border: 1px solid gray;
@@ -479,15 +483,21 @@ body {
     margin: 8px;
 }
 
+.item-toDo .last-item .part-show{
+    display: flex;
+    align-items: center;
+}
+
 .item-toDo .last-item .part-show img{
     width: 16px;
     height: 16px;
 }
 
+.item-toDo .last-item .part-show textarea,
 .item-toDo .last-item .part-show input {
     flex: 1;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 5px 10px;
     background-color: #F1F2F4;
 
@@ -496,11 +506,25 @@ body {
     font-weight: 500;
     line-height: 20px;
 }
-overlay-title
+
+.item-toDo .last-item .part-show textarea{
+    height: 50px;
+    resize: none;
+    padding: 14px 10px;
+}
+
+.item-toDo .last-item .part-show:focus-within img {
+    display: none;
+}
+
+.item-toDo .last-item .part-show textarea:focus,
 .item-toDo .last-item .part-show input:focus{
+    width: 100%;
     outline: none;
-    border: 1px solid gray;
     background-color: #fff;
+    padding: 5px 10px;
+
+    box-shadow: 0px 0px 0px 1px #8590A2 inset;
 }
 
 .item-toDo .last-item .confirm-add {
@@ -519,9 +543,10 @@ overlay-title
 
 .item-toDo .last-item .confirm-add button{
     border: none;
-    background-color: #6ba9ff;
-    border-radius: 8px;
+    background-color: #0C66E4;
+    border-radius: 3px;
     padding: 4px 10px;
+    color: #fff;
 }
 
 .item-toDo .last-item .confirm-add button:hover{
@@ -531,7 +556,7 @@ overlay-title
 
 .item-toDo .last-item .confirm-add span {
     padding: 4px 10px;
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 .item-toDo .last-item .confirm-add span:hover {
@@ -616,10 +641,8 @@ overlay-title
     gap: 8px;
 }
 
-.main-modal .input-content textarea {
-    width: 512px;
-    height: fit-content;
-    margin-left: 34px;
+.ck-content{
+    height: 280px !important;
 }
 
 .content .main-modal .title{
@@ -741,15 +764,27 @@ overlay-title
     line-height: 20px;
 }
 
-.modal-content .modal-body .boards input:focus{
-    border: 2px solid #8590A2;
+.modal-body .boards input:focus,
+.list-po .list select:focus,
+.list-po .position select:focus{
+    border: 1.5px solid #8590A2;
     cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content .modal-body .list-po{
     display: flex;
     gap: 8px;
     margin-top: 32px;
+}
+
+.modal-body .list-po .list{
+    flex: 3;
+}
+
+.modal-body .list-po .position {
+    flex: 1;
 }
 
 .modal-body .list-po .list,
@@ -769,6 +804,83 @@ overlay-title
     border: 1px solid #8590A2;
     background-color: #FFF;
 }
+
+.color-option {
+    width: calc((100% - 32px) / 5);
+    height: 40px;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.color-option:hover {
+    border: 2px solid #000;
+}
+
+#labelModal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between !important;
+    width: 100%;
+}
+
+#labelModal .modal-header img{
+    width: 24px;
+    height: 24px;
+}
+
+#labelModal .modal-header img:hover,
+#labelModal .modal-footer button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#labelModal .modal-header button {
+    margin: 0;
+}
+
+#labelModal .modal-footer button{
+    border-radius: 3px;
+    background-color: #0C66E4;
+}
+
+#labelModal .modal-footer {
+    border-top: 1px solid  rgba(9, 30, 66, 0.14);
+}
+
+#dateModal .modal-footer button {
+    border-radius: 3px;
+    background-color: rgba(9, 30, 66, 0.06);
+    height: 32px;
+    width: 100%;
+    border: none;
+
+    color: #172B4D;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+#dateModal .modal-footer button:hover,
+#dateModal .modal-footer button:focus{
+    background-color: #0C66E4;
+    color: #FFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

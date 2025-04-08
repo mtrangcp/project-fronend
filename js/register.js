@@ -38,7 +38,7 @@ btnResgister.addEventListener("click", function (e) {
     e.preventDefault();
 
     if (inputEmail.value.trim()) {
-        errorEmapassRegexil.style.display = "none";
+        errorEmail.style.display = "none";
 
         if (emailRegex.test(inputEmail.value.trim())) {
             let check = users.findIndex(item => item.email === inputEmail.value.trim());
@@ -95,13 +95,9 @@ btnResgister.addEventListener("click", function (e) {
                                 }
                             }).showToast();
 
-
-                            console.log("Đăng ký thành công!");
-
                             setTimeout(() => {
                                 window.location.href = "../pages/login.html";
                             }, 1500);
-
 
                         } else {
                             errorPass.style.display = "block";

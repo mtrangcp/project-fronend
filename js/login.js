@@ -18,8 +18,7 @@ inputPass.addEventListener("input", function () {
     inputPass.value.trim() ? errorPass.style.display = "none" : errorPass.style.display = "block";
 });
 
-let form = document.querySelector("#form");
-form.addEventListener("submit", function (e) {
+document.querySelector("#form").addEventListener("submit", function (e) {
     e.preventDefault();
 });
 
@@ -60,6 +59,17 @@ btnLogin.addEventListener("click", function (e) {
                         }
                     }).showToast();
 
+                    if (chbStatus.checked) {
+
+                        let rememberMe = inputEmail.value.trim();
+                        localStorage.setItem("proRememberMe", rememberMe);
+
+                        console.log("Đã lưu status login!");
+                    }
+
+                    setTimeout(() => {
+                        window.location.href = "../index.html";
+                    }, 1500);
 
                 } else {
 

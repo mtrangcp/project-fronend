@@ -94,7 +94,9 @@ form input {
     color: #212529BF;
 }
 
-
+#form small{
+    color: red;
+}
 
 
 

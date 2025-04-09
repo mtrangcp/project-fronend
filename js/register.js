@@ -95,6 +95,10 @@ btnResgister.addEventListener("click", function (e) {
                                 }
                             }).showToast();
 
+                            inputEmail.value = "";
+                            inputName.value = "";
+                            inputPass.value = "";
+
                             setTimeout(() => {
                                 window.location.href = "../pages/login.html";
                             }, 1500);
@@ -121,8 +125,34 @@ btnResgister.addEventListener("click", function (e) {
             errorEmail.textContent = "Email sai định dạng";
         }
     } else {
-        errorEmail.style.display = "block";
-        errorEmail.textContent = "Email không được để trống";
+        // errorEmail.style.display = "block";
+        // errorEmail.textContent = "Email không được để trống";
+
+        Toastify({
+            text: `
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <img src="../assets/icons/remove_circle.png" width="24" height="24" style="margin-right: 8px;">
+                    <strong>Error</strong>
+                    <img src="../assets/icons/close-toast.png" width="24" height="24" style="margin-right: 8px;">
+                </div>
+                <div style="margin-top: 4px;">
+                    Email không được bỏ trống
+                </div>
+            `,
+            duration: 2000,
+            gravity: "top",
+            position: "left",
+            stopOnFocus: true,
+            // close: true,
+            escapeMarkup: false,
+            style: {
+                background: "#FFE5E8",
+                color: "#000",
+                padding: "16px",
+                borderRadius: "10px",
+                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+            }
+        }).showToast();
     }
 });
 

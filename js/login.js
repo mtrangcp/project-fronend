@@ -59,6 +59,9 @@ btnLogin.addEventListener("click", function (e) {
                         }
                     }).showToast();
 
+                    inputEmail.value = "";
+                    inputPass.value = "";
+
                     if (chbStatus.checked) {
 
                         let rememberMe = inputEmail.value.trim();

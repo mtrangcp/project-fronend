@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="./css/style.css" />
 
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
@@ -106,8 +117,8 @@
           </div>
         </div>
 
-        <div class="listBoards">
-          <div class="item-boards">
+        <div class="listBoards" id="listBoard">
+          <!-- <div class="item-boards">
             <img
               src="./assets/images/board-title1.jpg"
               alt="img board-title1"
@@ -173,7 +184,7 @@
               <img src="./assets/icons/edit-board.png" alt="img edit" />
               <span>Edit this board</span>
             </div>
-          </div>
+          </div> -->
 
           <div
             class="item-default"
@@ -194,8 +205,8 @@
           </div>
         </div>
 
-        <div class="listBoards">
-          <div class="item-boards">
+        <div class="listBoards" id="starredBoard">
+          <!-- <div class="item-boards">
             <img
               src="./assets/images/important-board1.jpg"
               alt="img important-board1"
@@ -209,7 +220,7 @@
               alt="img important-board1"
             />
             <p>Important Board 02</p>
-          </div>
+          </div> -->
         </div>
 
         <div class="yourWorkspaces">
@@ -222,8 +233,8 @@
           </div>
         </div>
 
-        <div class="listBoards">
-          <div class="item-boards">
+        <div class="listBoards" id="closedBoard">
+          <!-- <div class="item-boards">
             <img
               src="./assets/images/important-board1.jpg"
               alt="img important-board1"
@@ -237,7 +248,7 @@
               alt="img important-board1"
             />
             <p>Closed Board 02</p>
-          </div>
+          </div> -->
         </div>
       </main>
     </div>
@@ -317,56 +328,40 @@
             <div class="modal-background">
               <p>Background</p>
               <div class="list-background">
-                <div class="item-bg bg-item">
-                  <img
-                    class="img-bg"
-                    src="./assets/images/board-title2.jpg"
-                    alt="img1"
-                  />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
-                </div>
-
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="1">
                   <img
                     class="img-bg"
                     src="./assets/images/board-title1.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="2">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title4.jpg"
+                    src="./assets/images/board-title2.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="3">
                   <img
                     class="img-bg"
                     src="./assets/images/board-title3.jpg"
                     alt="img1"
                   />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
+                </div>
+
+                <div class="item-bg bg-item" data="4">
                   <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
+                    class="img-bg"
+                    src="./assets/images/board-title4.jpg"
+                    alt="img1"
                   />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
               </div>
             </div>
@@ -376,6 +371,7 @@
               <div class="list-background">
                 <div
                   class="item-color bg-item"
+                  data="1"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -384,15 +380,12 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
                   class="item-color bg-item"
+                  data="2"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -401,15 +394,12 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
                   class="item-color bg-item"
+                  data="3"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -418,15 +408,12 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
                   class="item-color bg-item"
+                  data="4"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -435,15 +422,12 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
                   class="item-color bg-item"
+                  data="5"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -452,15 +436,12 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
                   class="item-color bg-item"
+                  data="6"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -469,11 +450,7 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
               </div>
             </div>
@@ -482,6 +459,7 @@
               <p>Board title <span>*</span></p>
               <div class="title">
                 <input
+                  id="boardTitle"
                   type="text"
                   placeholder="E.g. Shopping list for birthday..."
                 />
@@ -498,13 +476,15 @@
             >
               Close
             </button>
-            <button type="button" class="btn my-btn-create">Create</button>
+            <button type="button" id="btnCreateBoard" class="btn my-btn-create">
+              Create
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Create new board -->
+    <!-- Modal Update board -->
     <div class="modal fade" id="scrollModalEdit" tabindex="-1">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -523,20 +503,7 @@
             <div class="modal-background">
               <p>Background</p>
               <div class="list-background">
-                <div class="item-bg bg-item">
-                  <img
-                    class="img-bg"
-                    src="./assets/images/board-title2.jpg"
-                    alt="img1"
-                  />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
-                </div>
-
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="1">
                   <img
                     class="img-bg"
                     src="./assets/images/board-title1.jpg"
@@ -549,10 +516,10 @@
                   />
                 </div>
 
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="2">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title4.jpg"
+                    src="./assets/images/board-title2.jpg"
                     alt="img1"
                   />
                   <img
@@ -562,10 +529,23 @@
                   />
                 </div>
 
-                <div class="item-bg bg-item">
+                <div class="item-bg bg-item" data="3">
                   <img
                     class="img-bg"
                     src="./assets/images/board-title3.jpg"
+                    alt="img1"
+                  />
+                  <img
+                    class="img-tick"
+                    src="./assets/icons/Icon-tick.png"
+                    alt="tick"
+                  />
+                </div>
+
+                <div class="item-bg bg-item" data="4">
+                  <img
+                    class="img-bg"
+                    src="./assets/images/board-title4.jpg"
                     alt="img1"
                   />
                   <img
@@ -582,6 +562,7 @@
               <div class="list-background">
                 <div
                   class="item-color bg-item"
+                  data="1"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -599,6 +580,7 @@
 
                 <div
                   class="item-color bg-item"
+                  data="2"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -616,6 +598,7 @@
 
                 <div
                   class="item-color bg-item"
+                  data="3"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -633,6 +616,7 @@
 
                 <div
                   class="item-color bg-item"
+                  data="4"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -650,6 +634,7 @@
 
                 <div
                   class="item-color bg-item"
+                  data="5"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -667,6 +652,7 @@
 
                 <div
                   class="item-color bg-item"
+                  data="6"
                   style="
                     background: linear-gradient(
                       123deg,
@@ -712,6 +698,11 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
   </body>
 </html>

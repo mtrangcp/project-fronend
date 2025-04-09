@@ -61,6 +61,8 @@ btnLogin.addEventListener("click", function (e) {
                             localStorage.setItem("proRememberMe", rememberMe);
                         }
 
+                        localStorage.setItem("currentLogin", inputEmail.value);
+
                         inputEmail.value = "";
                         inputPass.value = "";
 

@@ -25,16 +25,67 @@ if (!statusLogin && !sessionLogin) {
     renderData();
     renderDataStarred();
     renderDataClosed();
-    // add board
+}
+
+function renderData() {
+    let listBoards = document.querySelector("#listBoard");
+    let localLogin = localStorage.getItem("currentLogin");
+
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+
+    let arrBoard = users[indexCurr].boards;
+
+    listBoards.innerHTML = "";
+    let htmls = arrBoard.map((item, index) => {
+        let isImage = item.backdrop.startsWith("../");
+
+        return `
+            <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
+                <p>${item.title}</p>
+
+                <div
+                    class="edit-board"
+                    data-bs-toggle="modal"
+                    data-bs-target="#scrollModalEdit"
+
+                    onclick="openModalUpdate(${index})"
+                >
+                    <img src="../assets/icons/edit-board.png" alt="img edit" />
+                    <span>Edit this board</span>
+                </div>
+            </div>
+        `;
+    });
+
+    let convertArr = htmls.join("");
+    convertArr += `
+        <div
+            class="item-default"
+            data-bs-toggle="modal"
+            data-bs-target="#createModalBoard"
+
+            onclick="openModalCreate()"
+        >
+            <p>Create new board</p>
+        </div>
+    `;
+    listBoards.innerHTML = convertArr;
+}
+
+function openModalCreate() {
+    renderListBg("list-bg-create");
+    renderListColor("list-color-create");
 
     let listBackground = document.querySelectorAll(".item-bg");
     let listColor = document.querySelectorAll(".item-color");
     let boardsTitle = document.querySelector("#boardTitle");
-
     let btnCreate = document.querySelector("#btnCreateBoard");
 
     let selectedBackground = 0;
     let selectedColor = 0;
+
+    listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+    listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
 
     listBackground.forEach(element => {
         element.addEventListener("click", function () {
@@ -60,8 +111,7 @@ if (!statusLogin && !sessionLogin) {
         });
     });
 
-    btnCreate.addEventListener("click", function (event) {
-        event.preventDefault();
+    btnCreate.onclick = function (event) {
 
         let inputTitle = boardsTitle.value?.trim();
         if (inputTitle) {
@@ -72,25 +122,23 @@ if (!statusLogin && !sessionLogin) {
 
                 let indexCurr = users.findIndex(item => item.email === localLogin);
                 let arrBoard = users[indexCurr].boards;
-                let arrId = arrBoard.map(item => item.id);
+                let arrId = arrBoard.map(item => item.id).filter(id => id !== null && !isNaN(id));
 
                 let urlBackdrop = "";
                 const now = new Date();
 
                 if (selectedBackground !== 0) {
                     let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
-
                     urlBackdrop = arrBackground[indexBg].url;
                 } else {
                     let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
-
                     urlBackdrop = arrColor[indexBg].color;
-                    console.log("urlBackdrop-----: ", urlBackdrop);
                 }
-                console.log("urlBackdrop-----: ", urlBackdrop);
 
+                // Math.max(arrId)
+                let newId = arrId.length === 0 ? 101 : Math.max(...arrId) + 1;
                 let newBoard = {
-                    id: arrId.length === 0 ? 101 : Math.max(arrId) + 1,
+                    id: newId,
                     title: inputTitle,
                     description: "",
                     backdrop: urlBackdrop,
@@ -104,70 +152,37 @@ if (!statusLogin && !sessionLogin) {
 
                 localStorage.setItem("proUsers", JSON.stringify(users));
 
-                renderData();
-
                 boardsTitle.value = "";
+                selectedBackground = 0;
+                selectedColor = 0;
                 listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+
+                renderData();
 
                 const createModal = bootstrap.Modal.getInstance(document.getElementById('createModalBoard'));
                 if (createModal) {
                     createModal.hide();
                 }
-
             }
 
         } else {
             showCustomToast("Tiêu đề không được bỏ trống!");
         }
-    });
+    };
+
+
 }
 
-function renderData() {
-    let listBoards = document.querySelector("#listBoard");
-    let localLogin = localStorage.getItem("currentLogin");
+function openModalUpdate(index) {
+    renderListBg("list-bg-up");
+    renderListColor("list-color-up");
 
-    let indexCurr = users.findIndex(item => item.email === localLogin);
 
-    console.log("users: ", users);
-    console.log("localLogin: ", localLogin);
-    console.log("indexCurr: ", indexCurr);
+    console.log("index của item: ", index);
 
-    let arrBoard = users[indexCurr].boards;
 
-    listBoards.innerHTML = "";
-    let htmls = arrBoard.map((item, index) => {
-        let isImage = item.backdrop.startsWith("../");
 
-        return `
-            <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
-                <p>${item.title}</p>
-
-                <div
-                    class="edit-board"
-                    data-bs-toggle="modal"
-                    data-bs-target="#scrollModalEdit"
-
-                    onclick="updateBoards( ${index})"
-                >
-                    <img src="../assets/icons/edit-board.png" alt="img edit" />
-                    <span>Edit this board</span>
-                </div>
-            </div>
-        `;
-    });
-
-    let convertArr = htmls.join("");
-    convertArr += `
-        <div
-            class="item-default"
-            data-bs-toggle="modal"
-            data-bs-target="#createModalBoard"
-        >
-            <p>Create new board</p>
-        </div>
-        `;
-    listBoards.innerHTML = convertArr;
 }
 
 function renderDataStarred() {
@@ -176,18 +191,11 @@ function renderDataStarred() {
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
 
-    console.log("users: ", users);
-    console.log("localLogin: ", localLogin);
-    console.log("indexCurr: ", indexCurr);
-
     let arrBoard = users[indexCurr].boards;
 
     let starredBoard = arrBoard.filter(item => {
         item.is_starred === true;
     });
-
-    console.log("starredBoard.length: ", starredBoard.length);
-
 
     if (starredBoard.length === 0) {
 
@@ -229,18 +237,11 @@ function renderDataClosed() {
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
 
-    console.log("users: ", users);
-    console.log("localLogin: ", localLogin);
-    console.log("indexCurr: ", indexCurr);
-
     let arrBoard = users[indexCurr].boards;
 
     let starredBoard = arrBoard.filter(item => {
         item.is_closed === true;
     });
-
-    console.log("starredBoard.length: ", starredBoard.length);
-
 
     if (starredBoard.length === 0) {
 
@@ -324,6 +325,7 @@ function showCustomToast(message) {
 function updateBoards(index) {
     console.log("index: ", index);
 
+    let boardsTitleUp = document.querySelector("#boardTitleUpdate");
     let localLogin = localStorage.getItem("currentLogin");
     let btnUpdate = document.querySelector("#btnUpdateBoard");
 
@@ -337,7 +339,7 @@ function updateBoards(index) {
     let itemCurr = arrBoard[index];
     let currbg = itemCurr.backdrop;
 
-    boardTitleUpdate.value = itemCurr.title;
+    boardsTitleUp.value = itemCurr.title;
 
     let checkBg = currbg.startsWith("../");
 
@@ -350,16 +352,6 @@ function updateBoards(index) {
 
                 element.querySelector('.fa-solid').classList.add('check-active');
             }
-
-            element.addEventListener("click", function () {
-                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-                selectedBackground = element.getAttribute("data");
-                selectedColor = 0;
-
-                this.querySelector('.fa-solid').classList.add('check-active');
-            });
         });
 
     } else {
@@ -378,70 +370,124 @@ function updateBoards(index) {
 
                 element.querySelector('.fa-solid').classList.add('check-active');
             }
+        });
+    }
 
-            element.addEventListener("click", function () {
+    listBackground.forEach((element, indexEl) => {
+        element.addEventListener("click", function () {
+            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+
+            selectedBackground = element.getAttribute("data");
+            selectedColor = 0;
+            console.log("Selected Background: ", selectedBackground);
+            console.log("Selected Color: ", selectedColor);
+
+            this.querySelector('.fa-solid').classList.add('check-active');
+        });
+    });
+
+    listColor.forEach((element, indexEl) => {
+        element.addEventListener("click", function () {
+            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+
+            selectedColor = element.getAttribute("data");
+            selectedBackground = 0;
+
+            console.log("Selected Background: ", selectedBackground);
+            console.log("Selected Color: ", selectedColor);
+
+            this.querySelector('.fa-solid').classList.add('check-active');
+        });
+    });
+
+    btnUpdate.addEventListener("click", function (event) {
+
+        let inputTitle = boardsTitleUp.value.trim();
+
+        if (inputTitle) {
+            if (!(+selectedBackground) && !(+selectedColor)) {
+                showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
+            } else {
+                let urlBackdrop = "";
+
+                if (+selectedBackground !== 0) {
+                    let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
+
+                    urlBackdrop = arrBackground[indexBg].url;
+                } else {
+                    let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
+                    urlBackdrop = arrColor[indexBg].color;
+                }
+
+                itemCurr.title = inputTitle;
+                itemCurr.backdrop = urlBackdrop;
+                console.log("urlBackdrop:----- ", urlBackdrop);
+                console.log("itemCurr:----- ", itemCurr);
+                console.log(":------------------------ ");
+
+
+                arrBoard[index] = itemCurr;
+                users[indexCurr].boards = arrBoard;
+
+                localStorage.setItem("proUsers", JSON.stringify(users));
+
+                renderData();
+
                 listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
 
-                selectedColor = element.getAttribute("data");
-                selectedBackground = 0;
-
-                this.querySelector('.fa-solid').classList.add('check-active');
-            });
-
-        });
-
-        btnUpdate.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            let boardsTitle = document.querySelector("#boardTitleUpdate");
-            let inputTitle = boardsTitle.value?.trim();
-
-            if (inputTitle) {
-                if (selectedBackground === 0 && selectedColor === 0) {
-                    showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
-                } else {
-                    let urlBackdrop = "";
-
-                    if (selectedBackground !== 0) {
-                        let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
-
-                        urlBackdrop = arrBackground[indexBg].url;
-                    } else {
-                        let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
-                        urlBackdrop = arrColor[indexBg].color;
-                    }
-                    console.log("urlBackdrop-----: ", urlBackdrop);
-
-                    itemCurr.title = inputTitle;
-                    itemCurr.backdrop = urlBackdrop;
-                    arrBoard[index] = itemCurr;
-                    users[indexCurr].boards = arrBoard;
-
-                    localStorage.setItem("proUsers", JSON.stringify(users));
-
-                    renderData();
-
-                    boardsTitle.value = "";
-                    listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-                    listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-                    const createModal = bootstrap.Modal.getInstance(document.getElementById('scrollModalEdit'));
-                    if (createModal) {
-                        createModal.hide();
-                    }
+                const createModal = bootstrap.Modal.getInstance(document.getElementById('scrollModalEdit'));
+                if (createModal) {
+                    createModal.hide();
                 }
-
-            } else {
-                showCustomToast("Tiêu đề không được bỏ trống!");
             }
-        })
-    }
+
+        } else {
+            showCustomToast("Tiêu đề không được bỏ trống!");
+        }
+    });
+}
+
+function renderListBg(id) {
+    let listbg = document.querySelector(`#${id}`);
+
+    listbg.innerHTML = "";
+    listbg.innerHTML = arrBackground.map(item => {
+        return `
+            <div class="item-bg bg-item item-bg-update" data="${item.id}">
+                <img
+                    class="img-bg"
+                    src="${item.url}"
+                    alt="img1"
+                />
+                <i class="fa-solid fa-circle-check img-tick"></i>
+            </div>
+        `;
+    }).join("");
+}
+
+function renderListColor(id) {
+    let listbg = document.querySelector(`#${id}`);
+
+    listbg.innerHTML = "";
+    listbg.innerHTML = arrColor.map(item => {
+        return `
+            <div
+                class="item-color bg-item item-color-update"
+                data="${item.id}"
+                style="
+                background: ${item.color};
+                "
+            >
+                <i class="fa-solid fa-circle-check img-tick"></i>
+            </div>
+        `;
+    }).join("");
 }
 
 function logout() {
-    console.log("log out dc goi");
-
     sessionStorage.removeItem("currentLoginSS");
     window.location.href = "../pages/login.html";
     return false;
@@ -450,6 +496,5 @@ function logout() {
 document.addEventListener("DOMContentLoaded", function () {
     if (!sessionLogin) {
         window.location.href = "../pages/login.html";
-
     }
-})
+});

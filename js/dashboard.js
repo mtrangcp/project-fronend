@@ -178,11 +178,114 @@ function openModalUpdate(index) {
     renderListBg("list-bg-up");
     renderListColor("list-color-up");
 
+    console.log("index-update của item: ", index);
 
-    console.log("index của item: ", index);
+    let boardsTitleUp = document.querySelector("#boardTitleUpdate");
+    let localLogin = localStorage.getItem("currentLogin");
+    let btnUpdate = document.querySelector("#btnUpdateBoard");
 
+    let listBackground = document.querySelectorAll(".item-bg-update");
+    let listColor = document.querySelectorAll(".item-color-update");
+    let selectedBackground = 0;
+    let selectedColor = 0;
 
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+    let arrBoard = users[indexCurr].boards;
+    let itemCurr = arrBoard[index];
+    let currbg = itemCurr.backdrop;
 
+    // Fill tiêu đề và active background hiện tại
+    boardsTitleUp.value = itemCurr.title;
+
+    let checkBg = currbg.startsWith("../");
+
+    if (checkBg) {
+        listBackground.forEach((element) => {
+            if (element.querySelector('img').getAttribute('src') === currbg) {
+                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+                element.querySelector('.fa-solid').classList.add('check-active');
+                selectedBackground = element.getAttribute("data"); // Gán giá trị ban đầu
+            }
+        });
+    } else {
+        let idColor = arrColor.find(element => element.color === currbg)?.id || 0;
+        listColor.forEach((element) => {
+            let elColor = +element.getAttribute("data");
+            if (elColor === idColor) {
+                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+                element.querySelector('.fa-solid').classList.add('check-active');
+                selectedColor = element.getAttribute("data"); // Gán giá trị ban đầu
+            }
+        });
+    }
+
+    // Xử lý chọn background mới
+    listBackground.forEach((element) => {
+        element.onclick = function () { // Thay addEventListener bằng gán trực tiếp
+            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            element.querySelector('.fa-solid').classList.add('check-active');
+            selectedBackground = element.getAttribute("data");
+            selectedColor = 0;
+            console.log("Selected Background: ", selectedBackground);
+            console.log("Selected Color: ", selectedColor);
+        };
+    });
+
+    listColor.forEach((element) => {
+        element.onclick = function () { // Thay addEventListener bằng gán trực tiếp
+            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+            element.querySelector('.fa-solid').classList.add('check-active');
+            selectedColor = element.getAttribute("data");
+            selectedBackground = 0;
+            console.log("Selected Background: ", selectedBackground);
+            console.log("Selected Color: ", selectedColor);
+        };
+    });
+
+    // Xử lý nút Save
+    btnUpdate.onclick = function (event) {
+        let inputTitle = boardsTitleUp.value.trim();
+
+        if (!inputTitle) {
+            showCustomToast("Tiêu đề không được bỏ trống!");
+            return;
+        }
+
+        let urlBackdrop = itemCurr.backdrop; // Giữ nguyên backdrop hiện tại nếu không chọn mới
+        if (+selectedBackground !== 0) {
+            let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
+            urlBackdrop = arrBackground[indexBg].url;
+        } else if (+selectedColor !== 0) {
+            let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
+            urlBackdrop = arrColor[indexBg].color;
+        }
+
+        // Nếu không chọn mới và backdrop hiện tại rỗng thì báo lỗi
+        if (!urlBackdrop) {
+            showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
+            return;
+        }
+
+        itemCurr.title = inputTitle;
+        itemCurr.backdrop = urlBackdrop;
+        arrBoard[index] = itemCurr;
+        users[indexCurr].boards = arrBoard;
+
+        localStorage.setItem("proUsers", JSON.stringify(users));
+        renderData();
+
+        listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+        listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+
+        const createModal = bootstrap.Modal.getInstance(document.getElementById('scrollModalEdit'));
+        if (createModal) {
+            createModal.hide();
+        }
+    };
 }
 
 function renderDataStarred() {
@@ -321,134 +424,6 @@ function showCustomToast(message) {
         }
     }, 100);
 };
-
-function updateBoards(index) {
-    console.log("index: ", index);
-
-    let boardsTitleUp = document.querySelector("#boardTitleUpdate");
-    let localLogin = localStorage.getItem("currentLogin");
-    let btnUpdate = document.querySelector("#btnUpdateBoard");
-
-    let listBackground = document.querySelectorAll(".item-bg-update");
-    let listColor = document.querySelectorAll(".item-color-update");
-    let selectedBackground = 0;
-    let selectedColor = 0;
-
-    let indexCurr = users.findIndex(item => item.email === localLogin);
-    let arrBoard = users[indexCurr].boards;
-    let itemCurr = arrBoard[index];
-    let currbg = itemCurr.backdrop;
-
-    boardsTitleUp.value = itemCurr.title;
-
-    let checkBg = currbg.startsWith("../");
-
-    if (checkBg) {
-        listBackground.forEach((element, indexEl) => {
-            if (element.querySelector('img').getAttribute('src') === currbg) {
-
-                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-                element.querySelector('.fa-solid').classList.add('check-active');
-            }
-        });
-
-    } else {
-        let idColor = 0;
-        arrColor.forEach(element => {
-            if (element.color === currbg) {
-                idColor = element.id;
-            }
-        });
-        listColor.forEach((element, indexEl) => {
-            let elColor = +element.getAttribute("data");
-
-            if (elColor === idColor) {
-                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-                element.querySelector('.fa-solid').classList.add('check-active');
-            }
-        });
-    }
-
-    listBackground.forEach((element, indexEl) => {
-        element.addEventListener("click", function () {
-            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-            selectedBackground = element.getAttribute("data");
-            selectedColor = 0;
-            console.log("Selected Background: ", selectedBackground);
-            console.log("Selected Color: ", selectedColor);
-
-            this.querySelector('.fa-solid').classList.add('check-active');
-        });
-    });
-
-    listColor.forEach((element, indexEl) => {
-        element.addEventListener("click", function () {
-            listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-            listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-            selectedColor = element.getAttribute("data");
-            selectedBackground = 0;
-
-            console.log("Selected Background: ", selectedBackground);
-            console.log("Selected Color: ", selectedColor);
-
-            this.querySelector('.fa-solid').classList.add('check-active');
-        });
-    });
-
-    btnUpdate.addEventListener("click", function (event) {
-
-        let inputTitle = boardsTitleUp.value.trim();
-
-        if (inputTitle) {
-            if (!(+selectedBackground) && !(+selectedColor)) {
-                showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
-            } else {
-                let urlBackdrop = "";
-
-                if (+selectedBackground !== 0) {
-                    let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
-
-                    urlBackdrop = arrBackground[indexBg].url;
-                } else {
-                    let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
-                    urlBackdrop = arrColor[indexBg].color;
-                }
-
-                itemCurr.title = inputTitle;
-                itemCurr.backdrop = urlBackdrop;
-                console.log("urlBackdrop:----- ", urlBackdrop);
-                console.log("itemCurr:----- ", itemCurr);
-                console.log(":------------------------ ");
-
-
-                arrBoard[index] = itemCurr;
-                users[indexCurr].boards = arrBoard;
-
-                localStorage.setItem("proUsers", JSON.stringify(users));
-
-                renderData();
-
-                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
-
-                const createModal = bootstrap.Modal.getInstance(document.getElementById('scrollModalEdit'));
-                if (createModal) {
-                    createModal.hide();
-                }
-            }
-
-        } else {
-            showCustomToast("Tiêu đề không được bỏ trống!");
-        }
-    });
-}
 
 function renderListBg(id) {
     let listbg = document.querySelector(`#${id}`);

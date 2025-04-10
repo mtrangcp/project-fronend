@@ -15,12 +15,12 @@ if (!statusLogin && !sessionLogin) {
     ];
 
     const arrColor = [
-        { id: 1, color: "linear-gradient( 123deg, #ffb100 0 %, #fa0c00 100 % )" },
-        { id: 2, color: "linear-gradient( 123deg, #2609ff 0 %, #d20cff 100 % )" },
-        { id: 3, color: "linear-gradient( 123deg, #00ff2f 0 %, #00ffc8 100 % )" },
-        { id: 4, color: "linear-gradient( 123deg, #00ffe5 0 %, #004bfa 100 % )" },
-        { id: 5, color: "linear-gradient( 123deg, #ffa200 0 %, #edfa00 100 % )" },
-        { id: 6, color: "linear-gradient( 123deg, #ff00ea 0 %, #fa0c00 100 % )" }
+        { id: 1, color: "linear-gradient( 123deg, #ffb100 0%, #fa0c00 100% )" },
+        { id: 2, color: "linear-gradient( 123deg, #2609ff 0%, #d20cff 100% )" },
+        { id: 3, color: "linear-gradient( 123deg, #00ff2f 0%, #00ffc8 100% )" },
+        { id: 4, color: "linear-gradient( 123deg, #00ffe5 0%, #004bfa 100% )" },
+        { id: 5, color: "linear-gradient( 123deg, #ffa200 0%, #edfa00 100% )" },
+        { id: 6, color: "linear-gradient( 123deg, #ff00ea 0%, #fa0c00 100% )" }
     ];
 
     // add board
@@ -80,10 +80,13 @@ if (!statusLogin && !sessionLogin) {
                     urlBackdrop = arrBackground[indexBg].url;
                 } else {
                     let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
-                    console.log("selectedColor: ", selectedColor);
+                    console.log("selectedColor-----: ", selectedColor);
+                    console.log("indexBg-----: ", indexBg);
 
                     urlBackdrop = arrColor[indexBg].color;
+                    console.log("urlBackdrop-----: ", urlBackdrop);
                 }
+                console.log("urlBackdrop-----: ", urlBackdrop);
 
                 let newBoard = {
                     id: arrId.length === 0 ? 101 : Math.max(arrId) + 1,
@@ -102,10 +105,15 @@ if (!statusLogin && !sessionLogin) {
 
                 renderData();
 
+                boardsTitle.value = "";
+                listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+                listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
+
                 const createModal = bootstrap.Modal.getInstance(document.getElementById('createModalBoard'));
                 if (createModal) {
                     createModal.hide();
                 }
+
             }
 
         } else {

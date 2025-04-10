@@ -30,10 +30,8 @@ if (!statusLogin && !sessionLogin) {
     let listBackground = document.querySelectorAll(".item-bg");
     let listColor = document.querySelectorAll(".item-color");
     let boardsTitle = document.querySelector("#boardTitle");
-    let boardTitleUpdate = document.querySelector("#boardTitleUpdate");
 
     let btnCreate = document.querySelector("#btnCreateBoard");
-
 
     let selectedBackground = 0;
     let selectedColor = 0;
@@ -272,12 +270,11 @@ function renderDataClosed() {
             `;
         });
 
-        let convertArr = htmls.join("");
+        let convertArr = htmls.join("currentLoginSS");
         listBoards.innerHTML = convertArr;
     }
 
 }
-
 
 function showCustomToast(message) {
     let formattedMessage = message.replace(/\n/g, "<br>");
@@ -323,7 +320,6 @@ function showCustomToast(message) {
         }
     }, 100);
 };
-
 
 function updateBoards(index) {
     console.log("index: ", index);
@@ -442,3 +438,18 @@ function updateBoards(index) {
         })
     }
 }
+
+function logout() {
+    console.log("log out dc goi");
+
+    sessionStorage.removeItem("currentLoginSS");
+    window.location.href = "../pages/login.html";
+    return false;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (!sessionLogin) {
+        window.location.href = "../pages/login.html";
+
+    }
+})

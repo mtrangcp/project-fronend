@@ -1,16 +1,17 @@
 let users = JSON.parse(localStorage.getItem("proUsers")) || [];
 let statusLogin = localStorage.getItem("proRememberMe");
+let sessionLogin = sessionStorage.getItem("currentLoginSS");
 
-if (!statusLogin) {
+if (!statusLogin && !sessionLogin) {
     window.location.href = "../pages/login.html";
 
 } else {
-    renderData()
+    renderData();
     const arrBackground = [
-        { id: 1, url: "./assets/images/board-title1.jpg" },
-        { id: 2, url: "./assets/images/board-title2.jpg" },
-        { id: 3, url: "./assets/images/board-title3.jpg" },
-        { id: 4, url: "./assets/images/board-title4.jpg" }
+        { id: 1, url: "../assets/images/board-title1.jpg" },
+        { id: 2, url: "../assets/images/board-title2.jpg" },
+        { id: 3, url: "../assets/images/board-title3.jpg" },
+        { id: 4, url: "../assets/images/board-title4.jpg" }
     ];
 
     const arrColor = [
@@ -65,12 +66,8 @@ if (!statusLogin) {
                 showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
             } else {
                 let localLogin = localStorage.getItem("currentLogin");
-                console.log("localLogin: ", localLogin);
 
                 let indexCurr = users.findIndex(item => item.email === localLogin);
-
-                console.log("indexCurr: ", indexCurr);
-
                 let arrBoard = users[indexCurr].boards;
                 let arrId = arrBoard.map(item => item.id);
 
@@ -80,14 +77,12 @@ if (!statusLogin) {
                 if (selectedBackground !== 0) {
                     let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
 
-                    console.log("indexBg: ", indexBg);
-
-
                     urlBackdrop = arrBackground[indexBg].url;
                 } else {
-                    let indexBg = arrColor.findIndex(item => item.id === selectedColor);
+                    let indexBg = arrColor.findIndex(item => item.id === +selectedColor);
+                    console.log("selectedColor: ", selectedColor);
 
-                    urlBackdrop = arrColor[indexBg].url;
+                    urlBackdrop = arrColor[indexBg].color;
                 }
 
                 let newBoard = {
@@ -95,7 +90,8 @@ if (!statusLogin) {
                     title: inputTitle,
                     description: "",
                     backdrop: urlBackdrop,
-                    is_starred: true,
+                    is_starred: false,
+                    is_closed: false,
                     created_at: now,
                     lists: []
                 }
@@ -105,6 +101,11 @@ if (!statusLogin) {
                 localStorage.setItem("proUsers", JSON.stringify(users));
 
                 renderData();
+
+                const createModal = bootstrap.Modal.getInstance(document.getElementById('createModalBoard'));
+                if (createModal) {
+                    createModal.hide();
+                }
             }
 
         } else {
@@ -118,16 +119,20 @@ function renderData() {
     let localLogin = localStorage.getItem("currentLogin");
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
+
+
+    console.log("users: ", users);
+    console.log("localLogin: ", localLogin);
+    console.log("indexCurr: ", indexCurr);
+
     let arrBoard = users[indexCurr].boards;
 
     listBoards.innerHTML = "";
     let htmls = arrBoard.map((item, index) => {
+        let isImage = item.backdrop.startsWith("../");
+
         return `
-            <div class="item-boards">
-                <img
-                    src=${item.backdrop}
-                    alt="img board-title1"
-                />
+            <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
                 <p>${item.title}</p>
 
                 <div
@@ -147,14 +152,13 @@ function renderData() {
         <div
             class="item-default"
             data-bs-toggle="modal"
-            data-bs-target="#scrollModal"
+            data-bs-target="#createModalBoard"
         >
             <p>Create new board</p>
         </div>
     `;
     listBoards.innerHTML = convertArr;
 }
-
 
 function showCustomToast(message) {
     let formattedMessage = message.replace(/\n/g, "<br>");
@@ -200,5 +204,3 @@ function showCustomToast(message) {
         }
     }, 100);
 };
-
-

@@ -7,14 +7,6 @@ let users = JSON.parse(localStorage.getItem("proUsers")) || [];
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
-inputEmail.addEventListener("input", function () {
-    inputEmail.value.trim() ? errorEmail.style.display = "none" : errorEmail.style.display = "block";
-});
-
-inputPass.addEventListener("input", function () {
-    inputPass.value.trim() ? errorPass.style.display = "none" : errorPass.style.display = "block";
-});
-
 document.querySelector("#form").addEventListener("submit", function (e) {
     e.preventDefault();
 });
@@ -23,10 +15,8 @@ btnLogin.addEventListener("click", function (e) {
     e.preventDefault();
 
     if (inputEmail.value.trim()) {
-
         if (emailRegex.test(inputEmail.value.trim())) {
             if (inputPass.value.trim()) {
-
                 let checkEmail = users.findIndex(item => item.email === inputEmail.value.trim());
 
                 if (checkEmail !== -1) {
@@ -56,12 +46,11 @@ btnLogin.addEventListener("click", function (e) {
                             }
                         }).showToast();
 
+                        sessionStorage.setItem("currentLoginSS", inputEmail.value.trim());
+                        localStorage.setItem("currentLogin", inputEmail.value.trim());
                         if (chbStatus.checked) {
-                            let rememberMe = inputEmail.value.trim();
-                            localStorage.setItem("proRememberMe", rememberMe);
+                            localStorage.setItem("proRememberMe", inputEmail.value.trim());
                         }
-
-                        localStorage.setItem("currentLogin", inputEmail.value);
 
                         inputEmail.value = "";
                         inputPass.value = "";
@@ -76,15 +65,12 @@ btnLogin.addEventListener("click", function (e) {
                 } else {
                     showCustomToast("Sai email! \nĐăng nhập thất bại");
                 }
-
             } else {
                 showCustomToast("Mật khẩu không được bỏ trống!");
             }
-
         } else {
             showCustomToast("Email sai định dạng!");
         }
-
     } else {
         showCustomToast("Email không được bỏ trống!");
     }

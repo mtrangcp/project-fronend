@@ -8,24 +8,6 @@ const passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
 let users = JSON.parse(localStorage.getItem("proUsers")) || [];
 
-inputEmail.addEventListener("input", function () {
-    inputEmail.value.trim()
-        ? (errorEmail.style.display = "none")
-        : (errorEmail.style.display = "block");
-});
-
-inputName.addEventListener("input", function () {
-    inputName.value.trim()
-        ? (errorName.style.display = "none")
-        : (errorName.style.display = "block");
-});
-
-inputPass.addEventListener("input", function () {
-    inputPass.value.trim()
-        ? (errorPass.style.display = "none")
-        : (errorPass.style.display = "block");
-});
-
 document.querySelector("#form").addEventListener("submit", function (e) {
     e.preventDefault();
 });

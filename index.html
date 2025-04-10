@@ -119,62 +119,7 @@
 
         <div class="listBoards" id="listBoard">
           <!-- <div class="item-boards">
-            <img
-              src="./assets/images/board-title1.jpg"
-              alt="img board-title1"
-            />
             <p>Board Title 01</p>
-
-            <div
-              class="edit-board"
-              data-bs-toggle="modal"
-              data-bs-target="#scrollModalEdit"
-            >
-              <img src="./assets/icons/edit-board.png" alt="img edit" />
-              <span>Edit this board</span>
-            </div>
-          </div>
-
-          <div class="item-boards">
-            <img
-              src="./assets/images/board-title2.jpg"
-              alt="img board-title1"
-            />
-            <p>Board Title 02</p>
-
-            <div
-              class="edit-board"
-              data-bs-toggle="modal"
-              data-bs-target="#scrollModalEdit"
-            >
-              <img src="./assets/icons/edit-board.png" alt="img edit" />
-              <span>Edit this board</span>
-            </div>
-          </div>
-
-          <div class="item-boards">
-            <img
-              src="./assets/images/board-title3.jpg"
-              alt="img board-title1"
-            />
-            <p>Board Title 03</p>
-
-            <div
-              class="edit-board"
-              data-bs-toggle="modal"
-              data-bs-target="#scrollModalEdit"
-            >
-              <img src="./assets/icons/edit-board.png" alt="img edit" />
-              <span>Edit this board</span>
-            </div>
-          </div>
-
-          <div class="item-boards">
-            <img
-              src="./assets/images/board-title4.jpg"
-              alt="img board-title1"
-            />
-            <p>Board Title 04</p>
 
             <div
               class="edit-board"
@@ -188,8 +133,8 @@
 
           <div
             class="item-default"
+            data-bs-target="#createModalBoard"
             data-bs-toggle="modal"
-            data-bs-target="#scrollModal"
           >
             <p>Create new board</p>
           </div>
@@ -310,8 +255,8 @@
     </div>
 
     <!-- Modal Create new board -->
-    <div class="modal fade" id="scrollModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal fade" id="createModalBoard" tabindex="-1">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -693,7 +638,6 @@
       </div>
     </div>
 
-    <script src="./js/dashboard.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -704,5 +648,7 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
+
+    <script src="./js/dashboard.js"></script>
   </body>
 </html>

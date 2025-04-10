@@ -208,6 +208,13 @@ body {
     width: calc((100% - 48px) / 4);
     height: 130px;
     position: relative;
+
+    /* background-image: url('../assets/images/board-title1.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .listBoards .item-boards .edit-board {
@@ -222,6 +229,11 @@ body {
     position: absolute;
     left: 15px;
     bottom: 13.4px;
+}
+
+.listBoards .item-boards .edit-board:hover{
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .listBoards .item-boards .edit-board {
@@ -244,12 +256,12 @@ body {
     line-height: 20px;
 }
 
-.listBoards .item-boards img {
+/* .listBoards .item-boards img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
-}
+} */
 
 .listBoards .item-boards p {
     color: #fff;

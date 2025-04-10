@@ -194,7 +194,6 @@ function openModalUpdate(index) {
     let itemCurr = arrBoard[index];
     let currbg = itemCurr.backdrop;
 
-    // Fill tiêu đề và active background hiện tại
     boardsTitleUp.value = itemCurr.title;
 
     let checkBg = currbg.startsWith("../");
@@ -205,7 +204,8 @@ function openModalUpdate(index) {
                 listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 element.querySelector('.fa-solid').classList.add('check-active');
-                selectedBackground = element.getAttribute("data"); // Gán giá trị ban đầu
+
+                selectedBackground = element.getAttribute("data");
             }
         });
     } else {
@@ -216,17 +216,18 @@ function openModalUpdate(index) {
                 listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
                 element.querySelector('.fa-solid').classList.add('check-active');
-                selectedColor = element.getAttribute("data"); // Gán giá trị ban đầu
+
+                selectedColor = element.getAttribute("data");
             }
         });
     }
 
-    // Xử lý chọn background mới
     listBackground.forEach((element) => {
-        element.onclick = function () { // Thay addEventListener bằng gán trực tiếp
+        element.onclick = function () {
             listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
             listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
             element.querySelector('.fa-solid').classList.add('check-active');
+
             selectedBackground = element.getAttribute("data");
             selectedColor = 0;
             console.log("Selected Background: ", selectedBackground);
@@ -235,10 +236,11 @@ function openModalUpdate(index) {
     });
 
     listColor.forEach((element) => {
-        element.onclick = function () { // Thay addEventListener bằng gán trực tiếp
+        element.onclick = function () {
             listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
             listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
             element.querySelector('.fa-solid').classList.add('check-active');
+
             selectedColor = element.getAttribute("data");
             selectedBackground = 0;
             console.log("Selected Background: ", selectedBackground);
@@ -246,7 +248,6 @@ function openModalUpdate(index) {
         };
     });
 
-    // Xử lý nút Save
     btnUpdate.onclick = function (event) {
         let inputTitle = boardsTitleUp.value.trim();
 
@@ -255,7 +256,7 @@ function openModalUpdate(index) {
             return;
         }
 
-        let urlBackdrop = itemCurr.backdrop; // Giữ nguyên backdrop hiện tại nếu không chọn mới
+        let urlBackdrop = itemCurr.backdrop;
         if (+selectedBackground !== 0) {
             let indexBg = arrBackground.findIndex(item => item.id === +selectedBackground);
             urlBackdrop = arrBackground[indexBg].url;
@@ -264,7 +265,6 @@ function openModalUpdate(index) {
             urlBackdrop = arrColor[indexBg].color;
         }
 
-        // Nếu không chọn mới và backdrop hiện tại rỗng thì báo lỗi
         if (!urlBackdrop) {
             showCustomToast("Bạn chưa chọn hình nền hoặc màu nền!");
             return;

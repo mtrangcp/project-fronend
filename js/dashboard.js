@@ -1,7 +1,3 @@
-let users = JSON.parse(localStorage.getItem("proUsers")) || [];
-let statusLogin = localStorage.getItem("proRememberMe");
-let sessionLogin = sessionStorage.getItem("currentLoginSS");
-
 const arrBackground = [
     { id: 1, url: "../assets/images/board-title1.jpg" },
     { id: 2, url: "../assets/images/board-title2.jpg" },
@@ -17,6 +13,39 @@ const arrColor = [
     { id: 5, color: "linear-gradient( 123deg, #ffa200 0%, #edfa00 100% )" },
     { id: 6, color: "linear-gradient( 123deg, #ff00ea 0%, #fa0c00 100% )" }
 ];
+
+let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+let statusLogin = localStorage.getItem("proRememberMe");
+let sessionLogin = sessionStorage.getItem("currentLoginSS");
+
+let yourWorkSpace = document.querySelector("#listBoard");
+let starredBoard_title = document.querySelector("#starred-title");
+let starredBoard_list = document.querySelector("#starredBoard");
+let closedBoard_title = document.querySelector("#closed-title");
+let closedBoard_list = document.querySelector("#closedBoard");
+
+let listStarredboard = document.querySelector("#renderStarredboard");
+let listClosedboard = document.querySelector("#renderClosedboard");
+
+listStarredboard.addEventListener("click", function () {
+    yourWorkSpace.style.display = "none";
+    closedBoard_title.style.display = "none";
+    closedBoard_list.style.display = "none";
+
+    starredBoard_title.style.display = "block";
+    starredBoard_list.style.display = "flex";
+});
+
+listClosedboard.addEventListener("click", function () {
+    yourWorkSpace.style.display = "none";
+    starredBoard_title.style.display = "none";
+    starredBoard_list.style.display = "none";
+
+    closedBoard_title.style.display = "block";
+    closedBoard_list.style.display = "flex";
+});
+
+
 
 if (!statusLogin && !sessionLogin) {
     window.location.href = "../pages/login.html";
@@ -42,7 +71,6 @@ function renderData() {
         return `
             <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
                 <p>${item.title}</p>
-
                 <div
                     class="edit-board"
                     data-bs-toggle="modal"
@@ -53,6 +81,8 @@ function renderData() {
                     <img src="../assets/icons/edit-board.png" alt="img edit" />
                     <span>Edit this board</span>
                 </div>
+
+                <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
             </div>
         `;
     });
@@ -70,6 +100,29 @@ function renderData() {
         </div>
     `;
     listBoards.innerHTML = convertArr;
+}
+
+function markStarBoard(index) {
+    console.log("index: ", index);
+
+    let listBoards = document.querySelector("#listBoard");
+    let localLogin = localStorage.getItem("currentLogin");
+
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+    let arrBoard = users[indexCurr].boards;
+    let itemCurr = arrBoard[index];
+
+    console.log("itemCurr: ", itemCurr);
+
+    itemCurr.is_starred = !itemCurr.is_starred;
+
+    arrBoard[index] = itemCurr;
+    users[indexCurr].boards = arrBoard;
+
+    localStorage.setItem("proUsers", JSON.stringify(users));
+    renderData();
+
+    renderData();
 }
 
 function openModalCreate() {
@@ -178,7 +231,7 @@ function openModalUpdate(index) {
     renderListBg("list-bg-up");
     renderListColor("list-color-up");
 
-    console.log("index-update của item: ", index);
+    // console.log("index-update của item: ", index);
 
     let boardsTitleUp = document.querySelector("#boardTitleUpdate");
     let localLogin = localStorage.getItem("currentLogin");
@@ -297,12 +350,12 @@ function renderDataStarred() {
     let arrBoard = users[indexCurr].boards;
 
     let starredBoard = arrBoard.filter(item => {
-        item.is_starred === true;
+        return item.is_starred === true;
     });
 
     if (starredBoard.length === 0) {
-
         listBoards.textContent = "DANH SÁCH RỖNG";
+        listBoards.style.color = "rgb(137, 137, 137)";
     } else {
 
         listBoards.innerHTML = "";
@@ -324,6 +377,8 @@ function renderDataStarred() {
                         <img src="../assets/icons/edit-board.png" alt="img edit" />
                         <span>Edit this board</span>
                     </div>
+
+                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
                 </div>
             `;
         });
@@ -347,8 +402,9 @@ function renderDataClosed() {
     });
 
     if (starredBoard.length === 0) {
-
         listBoards.textContent = "DANH SÁCH RỖNG";
+        listBoards.style.color = "rgb(137, 137, 137)";
+
     } else {
 
         listBoards.innerHTML = "";
@@ -370,6 +426,8 @@ function renderDataClosed() {
                         <img src="../assets/icons/edit-board.png" alt="img edit" />
                         <span>Edit this board</span>
                     </div>
+                    
+                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
                 </div>
             `;
         });

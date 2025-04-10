@@ -239,7 +239,26 @@ body {
     display: none;
 }
 
+.listBoards .item-boards .fa-star{
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.listBoards .item-boards .fa-star:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.listBoards .item-boards .fa-star {
+    display: none;
+}
+
 .item-boards:hover .edit-board {
+    display: flex;
+}
+.item-boards:hover .fa-star {
     display: flex;
 }
 

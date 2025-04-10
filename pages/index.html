@@ -117,9 +117,24 @@
           </div>
         </div>
 
-        <div class="listBoards" id="listBoard"></div>
+        <div class="listBoards" id="listBoard">
+          <!-- <div class="item-boards" style="background-color: red">
+            <p>abc abc</p>
 
-        <div class="yourWorkspaces">
+            <div
+              class="edit-board"
+              data-bs-toggle="modal"
+              data-bs-target="#scrollModalEdit"
+            >
+              <img src="../assets/icons/edit-board.png" alt="img edit" />
+              <span>Edit this board</span>
+            </div>
+
+            <i class="fa-solid fa-star" onclick="markStarBoard()"></i>
+          </div> -->
+        </div>
+
+        <div class="yourWorkspaces" id="starred-title">
           <div class="workspaces-left">
             <img
               src="../assets/icons/starredBoards-black.png"
@@ -131,7 +146,7 @@
 
         <div class="listBoards" id="starredBoard"></div>
 
-        <div class="yourWorkspaces">
+        <div class="yourWorkspaces" id="closed-title">
           <div class="workspaces-left">
             <img
               src="../assets/icons/closedBoards-black.png"

@@ -74,46 +74,17 @@
               <img src="../assets/icons/btn-add.png" alt="img-add" />
             </div>
 
-            <div class="list-your-boards">
-              <div class="item">
-                <img
-                  src="../assets/images/your-boards1.png"
-                  alt="img your-boards1"
-                />
-                <span>123123213</span>
-              </div>
-
-              <div class="item">
-                <img
-                  src="../assets/images/your-boards2.png"
-                  alt="img your-boards1"
-                />
-                <span>42314</span>
-              </div>
-
-              <div class="item">
-                <img
-                  src="../assets/images/your-boards3.png"
-                  alt="img your-boards1"
-                />
-                <span>My Trello board</span>
-              </div>
-
-              <div class="item">
-                <img
-                  src="../assets/images/your-boards2.png"
-                  alt="img your-boards1"
-                />
-                <span>Tổ chức sự kiện ...</span>
-              </div>
-            </div>
+            <div class="list-your-boards"></div>
+            <!--  -->
           </div>
         </div>
       </aside>
       <main class="main">
         <div class="overlay-title">
           <div class="over-left">
-            <span class="title">Tổ chức sự kiện Year-end party !</span>
+            <span class="title" id="board-name">
+              Tổ chức sự kiện Year-end party !
+            </span>
 
             <img
               id="title-star"
@@ -259,12 +230,16 @@
             <div class="last-item">
               <div class="part-show">
                 <img src="../assets/icons/btn-add.png" alt="icon-add" />
-                <input type="text" placeholder="Add another list" />
+                <input
+                  type="text"
+                  placeholder="Add another list"
+                  id="inputAddList"
+                />
                 <img src="../assets/icons/add-card.png" alt="icon-add-card" />
               </div>
 
               <div class="confirm-add">
-                <button>Add another list</button>
+                <button id="abcabc">Add another list</button>
                 <span>✖︎</span>
               </div>
             </div>
@@ -386,7 +361,7 @@
     </div>
 
     <!-- Modal Close board -->
-    <!-- <div class="modal fade" id="closeBoardModal" tabindex="-1">
+    <div class="modal fade" id="closeBoardModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header popular">
@@ -413,7 +388,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Modal Task Detail -->
     <div class="modal fade modal-lg" id="taskDetailModal" tabindex="-1">

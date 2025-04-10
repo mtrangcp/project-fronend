@@ -112,6 +112,7 @@ function boardDetail(indexBoard) {
     console.log("chooseBoard: ", chooseBoard);
 
     localStorage.setItem("chooseCurrentBoard", JSON.stringify(chooseBoard));
+    localStorage.setItem("arrayBoardOfUser", JSON.stringify(arrBoard));
 
     window.location.href = "../pages/boardDetail.html";
 }

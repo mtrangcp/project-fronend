@@ -149,6 +149,15 @@ body {
     padding: 0 ;
 }
 
+.title-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
 .your-boards .list-your-boards .item{
     display: flex;
     align-items: center;
@@ -160,13 +169,17 @@ body {
     background-color: rgba(0, 0, 0, 0.16);
 }
 
-.list-your-boards .item img{
+.list-your-boards .item .img{
     width: 24px;
     height: 20px;
     border-radius: 2px;
-    object-fit: cover;
-}
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
 
+}
 .list-your-boards .item span {
     font-size: 13.781px;
     line-height: 20px;
@@ -219,6 +232,7 @@ body {
     font-size: 18px;
     font-weight: 700;
     line-height: 32px;
+    max-width: 500px;
 }
 
 .overlay-title .over-left #title-star {

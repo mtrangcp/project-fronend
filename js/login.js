@@ -56,7 +56,7 @@ btnLogin.addEventListener("click", function (e) {
                         inputPass.value = "";
 
                         setTimeout(() => {
-                            window.location.href = "../index.html";
+                            window.location.href = "../pages/index.html";
                         }, 1500);
                     } else {
                         showCustomToast("Sai mật khẩu! \nĐăng nhập thất bại");

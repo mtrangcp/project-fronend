@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
 
     <link
       rel="stylesheet"
@@ -27,18 +27,18 @@
   <body>
     <header class="header">
       <div class="div-logo">
-        <img src="./assets/images/trello-logo-full.png" alt="img full logo" />
+        <img src="../assets/images/trello-logo-full.png" alt="img full logo" />
       </div>
 
       <div class="search-navigation">
         <img
           class="search"
-          src="./assets/icons/toggle-search.png"
+          src="../assets/icons/toggle-search.png"
           alt="img search "
         />
         <img
           class="navigation"
-          src="./assets/icons/toggle-navigation.png"
+          src="../assets/icons/toggle-navigation.png"
           alt="img navigation "
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasRight"
@@ -53,22 +53,22 @@
 
         <div class="workspaces">
           <div class="boards">
-            <a href="#" class="item">
-              <img src="./assets/icons/boards.png" alt="img boards" />
+            <a href="index.html" class="item">
+              <img src="../assets/icons/boards.png" alt="img boards" />
               <span>Boards</span>
             </a>
 
-            <a href="#" class="item">
+            <a href="#" class="item" id="renderStarredboard">
               <img
-                src="./assets/icons/starredBoards.png"
+                src="../assets/icons/starredBoards.png"
                 alt="img starredBoards"
               />
               <span>Starred Boards</span>
             </a>
 
-            <a href="#" class="item">
+            <a href="#" class="item" id="renderClosedboard">
               <img
-                src="./assets/icons/closedBoards.png"
+                src="../assets/icons/closedBoards.png"
                 alt="img closedBoards"
               />
               <span>Closed Boards</span>
@@ -79,12 +79,12 @@
 
           <div class="boards">
             <a href="#" class="item">
-              <img src="./assets/icons/setting.png" alt="img setting" />
+              <img src="../assets/icons/setting.png" alt="img setting" />
               <span>Settings</span>
             </a>
 
-            <a href="#" class="item">
-              <img src="./assets/icons/signOut.png" alt="img signOut" />
+            <a href="" class="item" onclick="logout()">
+              <img src="../assets/icons/signOut.png" alt="img signOut" />
               <span>Sign out</span>
             </a>
           </div>
@@ -93,7 +93,7 @@
       <main class="main">
         <div class="yourWorkspaces">
           <div class="workspaces-left">
-            <img src="./assets/icons/boards-black.png" alt="img Workspaces" />
+            <img src="../assets/icons/boards-black.png" alt="img Workspaces" />
             <span> Your Workspaces</span>
           </div>
 
@@ -104,97 +104,44 @@
             </div>
 
             <div class="select-time">
-              <img src="./assets/icons/calender.png" alt="img calender" />
+              <img src="../assets/icons/calender.png" alt="img calender" />
 
               <span>This week</span>
 
               <img
                 class="btn-select"
-                src="./assets/icons/btn-select.png"
+                src="../assets/icons/btn-select.png"
                 alt="img select"
               />
             </div>
           </div>
         </div>
 
-        <div class="listBoards" id="listBoard">
-          <!-- <div class="item-boards">
-            <p>Board Title 01</p>
-
-            <div
-              class="edit-board"
-              data-bs-toggle="modal"
-              data-bs-target="#scrollModalEdit"
-            >
-              <img src="./assets/icons/edit-board.png" alt="img edit" />
-              <span>Edit this board</span>
-            </div>
-          </div> -->
-
-          <div
-            class="item-default"
-            data-bs-target="#createModalBoard"
-            data-bs-toggle="modal"
-          >
-            <p>Create new board</p>
-          </div>
-        </div>
+        <div class="listBoards" id="listBoard"></div>
 
         <div class="yourWorkspaces">
           <div class="workspaces-left">
             <img
-              src="./assets/icons/starredBoards-black.png"
+              src="../assets/icons/starredBoards-black.png"
               alt="img Workspaces"
             />
             <span> Starred Boards</span>
           </div>
         </div>
 
-        <div class="listBoards" id="starredBoard">
-          <!-- <div class="item-boards">
-            <img
-              src="./assets/images/important-board1.jpg"
-              alt="img important-board1"
-            />
-            <p>Important Board 01</p>
-          </div>
-
-          <div class="item-boards">
-            <img
-              src="./assets/images/important-board2.jpg"
-              alt="img important-board1"
-            />
-            <p>Important Board 02</p>
-          </div> -->
-        </div>
+        <div class="listBoards" id="starredBoard"></div>
 
         <div class="yourWorkspaces">
           <div class="workspaces-left">
             <img
-              src="./assets/icons/closedBoards-black.png"
+              src="../assets/icons/closedBoards-black.png"
               alt="img Workspaces"
             />
             <span> Closed Boards</span>
           </div>
         </div>
 
-        <div class="listBoards" id="closedBoard">
-          <!-- <div class="item-boards">
-            <img
-              src="./assets/images/important-board1.jpg"
-              alt="img important-board1"
-            />
-            <p>Closed Board 01</p>
-          </div>
-
-          <div class="item-boards">
-            <img
-              src="./assets/images/important-board2.jpg"
-              alt="img important-board1"
-            />
-            <p>Closed Board 02</p>
-          </div> -->
-        </div>
+        <div class="listBoards" id="closedBoard"></div>
       </main>
     </div>
 
@@ -207,7 +154,7 @@
       <div class="offcanvas-body d-flex justify-content-start">
         <img
           class="logo-full"
-          src="./assets/images/trello-logo-full.png"
+          src="../assets/images/trello-logo-full.png"
           alt="img full logo"
         />
 
@@ -216,13 +163,13 @@
         <div class="workspaces workspaces-off">
           <div class="boards">
             <a href="#" class="item">
-              <img src="./assets/icons/boards.png" alt="img boards" />
+              <img src="../assets/icons/boards.png" alt="img boards" />
               <span>Boards</span>
             </a>
 
             <a href="#" class="item">
               <img
-                src="./assets/icons/starredBoards.png"
+                src="../assets/icons/starredBoards.png"
                 alt="img starredBoards"
               />
               <span>Starred Boards</span>
@@ -230,7 +177,7 @@
 
             <a href="#" class="item">
               <img
-                src="./assets/icons/closedBoards.png"
+                src="../assets/icons/closedBoards.png"
                 alt="img closedBoards"
               />
               <span>Closed Boards</span>
@@ -241,12 +188,12 @@
 
           <div class="boards">
             <a href="#" class="item">
-              <img src="./assets/icons/setting.png" alt="img setting" />
+              <img src="../assets/icons/setting.png" alt="img setting" />
               <span>Settings</span>
             </a>
 
             <a href="#" class="item">
-              <img src="./assets/icons/signOut.png" alt="img signOut" />
+              <img src="../assets/icons/signOut.png" alt="img signOut" />
               <span>Sign out</span>
             </a>
           </div>
@@ -276,7 +223,7 @@
                 <div class="item-bg bg-item" data="1">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title1.jpg"
+                    src="../assets/images/board-title1.jpg"
                     alt="img1"
                   />
                   <i class="fa-solid fa-circle-check img-tick"></i>
@@ -285,7 +232,7 @@
                 <div class="item-bg bg-item" data="2">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title2.jpg"
+                    src="../assets/images/board-title2.jpg"
                     alt="img1"
                   />
                   <i class="fa-solid fa-circle-check img-tick"></i>
@@ -294,7 +241,7 @@
                 <div class="item-bg bg-item" data="3">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title3.jpg"
+                    src="../assets/images/board-title3.jpg"
                     alt="img1"
                   />
                   <i class="fa-solid fa-circle-check img-tick"></i>
@@ -303,7 +250,7 @@
                 <div class="item-bg bg-item" data="4">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title4.jpg"
+                    src="../assets/images/board-title4.jpg"
                     alt="img1"
                   />
                   <i class="fa-solid fa-circle-check img-tick"></i>
@@ -448,56 +395,40 @@
             <div class="modal-background">
               <p>Background</p>
               <div class="list-background">
-                <div class="item-bg bg-item" data="1">
+                <div class="item-bg bg-item item-bg-update" data="1">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title1.jpg"
+                    src="../assets/images/board-title1.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
-                <div class="item-bg bg-item" data="2">
+                <div class="item-bg bg-item item-bg-update" data="2">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title2.jpg"
+                    src="../assets/images/board-title2.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
-                <div class="item-bg bg-item" data="3">
+                <div class="item-bg bg-item item-bg-update" data="3">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title3.jpg"
+                    src="../assets/images/board-title3.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
-                <div class="item-bg bg-item" data="4">
+                <div class="item-bg bg-item item-bg-update" data="4">
                   <img
                     class="img-bg"
-                    src="./assets/images/board-title4.jpg"
+                    src="../assets/images/board-title4.jpg"
                     alt="img1"
                   />
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
               </div>
             </div>
@@ -506,7 +437,7 @@
               <p>Color</p>
               <div class="list-background">
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="1"
                   style="
                     background: linear-gradient(
@@ -516,15 +447,11 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="2"
                   style="
                     background: linear-gradient(
@@ -534,15 +461,11 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="3"
                   style="
                     background: linear-gradient(
@@ -552,15 +475,11 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="4"
                   style="
                     background: linear-gradient(
@@ -570,15 +489,11 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="5"
                   style="
                     background: linear-gradient(
@@ -588,15 +503,11 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
 
                 <div
-                  class="item-color bg-item"
+                  class="item-color bg-item item-color-update"
                   data="6"
                   style="
                     background: linear-gradient(
@@ -606,11 +517,7 @@
                     );
                   "
                 >
-                  <img
-                    class="img-tick"
-                    src="./assets/icons/Icon-tick.png"
-                    alt="tick"
-                  />
+                  <i class="fa-solid fa-circle-check img-tick"></i>
                 </div>
               </div>
             </div>
@@ -618,7 +525,11 @@
             <div class="modal-title">
               <p>Board title <span>*</span></p>
               <div class="title">
-                <input type="text" placeholder="Board 01..." />
+                <input
+                  id="boardTitleUpdate"
+                  type="text"
+                  placeholder="Board 01..."
+                />
 
                 <p>👋 Please provide a valid board title.</p>
               </div>
@@ -632,7 +543,9 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn my-btn-create">Save</button>
+            <button type="button" id="btnUpdateBoard" class="btn my-btn-create">
+              Save
+            </button>
           </div>
         </div>
       </div>
@@ -649,6 +562,6 @@
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
 
-    <script src="./js/dashboard.js"></script>
+    <script src="../js/dashboard.js"></script>
   </body>
 </html>

@@ -1,0 +1,36 @@
+let chooseBoard = JSON.parse(localStorage.getItem("chooseCurrentBoard"));
+
+console.log("chooseBoard: ", chooseBoard);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

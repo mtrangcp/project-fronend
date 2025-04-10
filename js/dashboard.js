@@ -45,8 +45,6 @@ listClosedboard.addEventListener("click", function () {
     closedBoard_list.style.display = "flex";
 });
 
-
-
 if (!statusLogin && !sessionLogin) {
     window.location.href = "../pages/login.html";
 
@@ -61,15 +59,15 @@ function renderData() {
     let localLogin = localStorage.getItem("currentLogin");
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
-
     let arrBoard = users[indexCurr].boards;
+
 
     listBoards.innerHTML = "";
     let htmls = arrBoard.map((item, index) => {
         let isImage = item.backdrop.startsWith("../");
 
         return `
-            <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
+            <div onclick = "boardDetail(${index})"  class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
                 <p>${item.title}</p>
                 <div
                     class="edit-board"
@@ -100,6 +98,119 @@ function renderData() {
         </div>
     `;
     listBoards.innerHTML = convertArr;
+}
+
+function boardDetail(indexBoard) {
+    console.log("indexBoard: ", indexBoard);
+
+    let localLogin = localStorage.getItem("currentLogin");
+
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+    let arrBoard = users[indexCurr].boards;
+    let chooseBoard = arrBoard[indexBoard];
+
+    console.log("chooseBoard: ", chooseBoard);
+
+    localStorage.setItem("chooseCurrentBoard", JSON.stringify(chooseBoard));
+
+    window.location.href = "../pages/boardDetail.html";
+}
+
+function renderDataStarred() {
+    let listBoards = document.querySelector("#starredBoard");
+    let localLogin = localStorage.getItem("currentLogin");
+
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+
+    let arrBoard = users[indexCurr].boards;
+
+    let starredBoard = arrBoard.filter(item => {
+        return item.is_starred === true;
+    });
+
+    if (starredBoard.length === 0) {
+        listBoards.textContent = "DANH SÁCH RỖNG";
+        listBoards.style.color = "rgb(137, 137, 137)";
+    } else {
+
+        listBoards.innerHTML = "";
+
+        let htmls = starredBoard.map((item, index) => {
+            let isImage = item.backdrop.startsWith("../");
+
+            return `
+                <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
+                    <p>${item.title}</p>
+    
+                    <div
+                        class="edit-board"
+                        data-bs-toggle="modal"
+                        data-bs-target="#scrollModalEdit"
+    
+                        onclick="openModalUpdate(${index})"
+                    >
+                        <img src="../assets/icons/edit-board.png" alt="img edit" />
+                        <span>Edit this board</span>
+                    </div>
+
+                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
+                </div>
+            `;
+        });
+
+        let convertArr = htmls.join("");
+        listBoards.innerHTML = convertArr;
+    }
+
+}
+
+function renderDataClosed() {
+    let listBoards = document.querySelector("#closedBoard");
+    let localLogin = localStorage.getItem("currentLogin");
+
+    let indexCurr = users.findIndex(item => item.email === localLogin);
+
+    let arrBoard = users[indexCurr].boards;
+
+    let starredBoard = arrBoard.filter(item => {
+        item.is_closed === true;
+    });
+
+    if (starredBoard.length === 0) {
+        listBoards.textContent = "DANH SÁCH RỖNG";
+        listBoards.style.color = "rgb(137, 137, 137)";
+
+    } else {
+
+        listBoards.innerHTML = "";
+
+        let htmls = starredBoard.map((item, index) => {
+            let isImage = item.backdrop.startsWith("../");
+
+            return `
+                <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
+                    <p>${item.title}</p>
+    
+                    <div
+                        class="edit-board"
+                        data-bs-toggle="modal"
+                        data-bs-target="#scrollModalEdit"
+    
+                        onclick="openModalUpdate( ${index})"
+                    >
+                        <img src="../assets/icons/edit-board.png" alt="img edit" />
+                        <span>Edit this board</span>
+                    </div>
+                    
+                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
+                </div>
+            `;
+        });
+
+        let convertArr = htmls.join("currentLoginSS");
+        listBoards.innerHTML = convertArr;
+    }
+
 }
 
 function markStarBoard(index) {
@@ -330,6 +441,8 @@ function openModalUpdate(index) {
 
         localStorage.setItem("proUsers", JSON.stringify(users));
         renderData();
+        renderDataStarred();
+        renderDataClosed();
 
         listBackground.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
         listColor.forEach(item => item.querySelector('.fa-solid')?.classList.remove('check-active'));
@@ -339,103 +452,6 @@ function openModalUpdate(index) {
             createModal.hide();
         }
     };
-}
-
-function renderDataStarred() {
-    let listBoards = document.querySelector("#starredBoard");
-    let localLogin = localStorage.getItem("currentLogin");
-
-    let indexCurr = users.findIndex(item => item.email === localLogin);
-
-    let arrBoard = users[indexCurr].boards;
-
-    let starredBoard = arrBoard.filter(item => {
-        return item.is_starred === true;
-    });
-
-    if (starredBoard.length === 0) {
-        listBoards.textContent = "DANH SÁCH RỖNG";
-        listBoards.style.color = "rgb(137, 137, 137)";
-    } else {
-
-        listBoards.innerHTML = "";
-
-        let htmls = starredBoard.map((item, index) => {
-            let isImage = item.backdrop.startsWith("../");
-
-            return `
-                <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
-                    <p>${item.title}</p>
-    
-                    <div
-                        class="edit-board"
-                        data-bs-toggle="modal"
-                        data-bs-target="#scrollModalEdit"
-    
-                        onclick="updateBoards( ${index})"
-                    >
-                        <img src="../assets/icons/edit-board.png" alt="img edit" />
-                        <span>Edit this board</span>
-                    </div>
-
-                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
-                </div>
-            `;
-        });
-
-        let convertArr = htmls.join("");
-        listBoards.innerHTML = convertArr;
-    }
-
-}
-
-function renderDataClosed() {
-    let listBoards = document.querySelector("#closedBoard");
-    let localLogin = localStorage.getItem("currentLogin");
-
-    let indexCurr = users.findIndex(item => item.email === localLogin);
-
-    let arrBoard = users[indexCurr].boards;
-
-    let starredBoard = arrBoard.filter(item => {
-        item.is_closed === true;
-    });
-
-    if (starredBoard.length === 0) {
-        listBoards.textContent = "DANH SÁCH RỖNG";
-        listBoards.style.color = "rgb(137, 137, 137)";
-
-    } else {
-
-        listBoards.innerHTML = "";
-
-        let htmls = starredBoard.map((item, index) => {
-            let isImage = item.backdrop.startsWith("../");
-
-            return `
-                <div class="item-boards" style="${isImage ? `background-image: url('${item.backdrop}');` : `background: ${item.backdrop};`}">
-                    <p>${item.title}</p>
-    
-                    <div
-                        class="edit-board"
-                        data-bs-toggle="modal"
-                        data-bs-target="#scrollModalEdit"
-    
-                        onclick="updateBoards( ${index})"
-                    >
-                        <img src="../assets/icons/edit-board.png" alt="img edit" />
-                        <span>Edit this board</span>
-                    </div>
-                    
-                    <i class="fa-solid fa-star ${item.is_starred ? "check-active" : ""}" onclick="markStarBoard(${index})"></i>
-                </div>
-            `;
-        });
-
-        let convertArr = htmls.join("currentLoginSS");
-        listBoards.innerHTML = convertArr;
-    }
-
 }
 
 function showCustomToast(message) {

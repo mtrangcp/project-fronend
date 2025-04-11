@@ -45,7 +45,7 @@ listClosedboard.addEventListener("click", function () {
     closedBoard_list.style.display = "flex";
 });
 
-if (!statusLogin && !sessionLogin) {
+if (!statusLogin || !sessionLogin) {
     window.location.href = "../pages/login.html";
 
 } else {
@@ -60,7 +60,6 @@ function renderData() {
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
     let arrBoard = users[indexCurr].boards;
-
 
     listBoards.innerHTML = "";
     let htmls = arrBoard.map((item, index) => {
@@ -112,6 +111,7 @@ function boardDetail(indexBoard) {
     console.log("chooseBoard: ", chooseBoard);
 
     localStorage.setItem("chooseCurrentBoard", JSON.stringify(chooseBoard));
+    localStorage.setItem("chooseBoardIndex", indexBoard);
     localStorage.setItem("arrayBoardOfUser", JSON.stringify(arrBoard));
 
     window.location.href = "../pages/boardDetail.html";
@@ -122,7 +122,6 @@ function renderDataStarred() {
     let localLogin = localStorage.getItem("currentLogin");
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
-
     let arrBoard = users[indexCurr].boards;
 
     let starredBoard = arrBoard.filter(item => {
@@ -170,14 +169,13 @@ function renderDataClosed() {
     let localLogin = localStorage.getItem("currentLogin");
 
     let indexCurr = users.findIndex(item => item.email === localLogin);
-
     let arrBoard = users[indexCurr].boards;
 
-    let starredBoard = arrBoard.filter(item => {
-        item.is_closed === true;
+    let closedBoard = arrBoard.filter(item => {
+        return item.is_closed === true;
     });
 
-    if (starredBoard.length === 0) {
+    if (closedBoard.length === 0) {
         listBoards.textContent = "DANH SÁCH RỖNG";
         listBoards.style.color = "rgb(137, 137, 137)";
 
@@ -185,7 +183,7 @@ function renderDataClosed() {
 
         listBoards.innerHTML = "";
 
-        let htmls = starredBoard.map((item, index) => {
+        let htmls = closedBoard.map((item, index) => {
             let isImage = item.backdrop.startsWith("../");
 
             return `

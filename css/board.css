@@ -54,6 +54,10 @@ body {
 .aside {
     padding-top: 17.61px;
     width: calc((1 / 6) * 100%);
+    height: 100vh;
+    z-index: 100;
+    background: #fff;
+    border-right: 1px solid #dadada;
 
     position: fixed;
     top: 48px;
@@ -114,9 +118,9 @@ body {
 
 .main {
     flex: 1;
-    height: 100vh;
-    border-left: 1px solid #00000040;
+    height: calc(100vh - 64px);
     margin-left: calc((1 / 6) * 100%);
+    /* overflow-x: auto; */
 }
 
 .workspaces .your-boards .title{
@@ -152,6 +156,7 @@ body {
 .title-clamp {
     display: -webkit-box;
     -webkit-line-clamp: 1;
+    /* line-clamp: 1; */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -276,6 +281,17 @@ body {
     display: flex;
     gap: 17px;
 }
+/* .main .toDo-list .last-item-list {
+    order: 1000;
+}
+
+.main .toDo-list .order1 {
+    order: 1;
+}
+
+.main .toDo-list .order2 {
+    order: 2 ;
+} */
 
 .main .toDo-list .item-toDo{
     height: fit-content;
@@ -521,18 +537,39 @@ body {
     line-height: 20px;
 }
 
-.item-toDo .last-item .part-show textarea{
+.item-toDo .last-item #btnShowAddCard button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.item-toDo .last-item .addAnotherCard textarea{
     height: 50px;
     resize: none;
     padding: 14px 10px;
 }
 
-.item-toDo .last-item .part-show:focus-within img {
-    display: none;
+.item-toDo .last-item .part-show button{
+    border: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
-.item-toDo .last-item .part-show textarea:focus,
-.item-toDo .last-item .part-show input:focus{
+.item-toDo .last-item .part-show button:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.item-toDo .last-item .part-show button span{
+    color: #44546F;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.item-toDo .last-item .part-show textarea:focus{
     width: 100%;
     outline: none;
     background-color: #fff;
@@ -547,12 +584,40 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
-.item-toDo .last-item .confirm-add{
-    display: none;
+
+.item-toDo .last-item .addAnotherList{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.part-show:focus-within+.confirm-add {
-    display: block;
+.item-toDo .last-item .addAnotherCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-toDo .last-item .addAnotherList  input,
+.item-toDo .last-item .addAnotherCard textarea{
+    flex: 1;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #F1F2F4;
+
+    color: #44546F;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.item-toDo .last-item .addAnotherList input:focus ,
+.item-toDo .last-item .addAnotherCard textarea:focus{
+    width: 100%;
+    outline: none;
+    background-color: #fff;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 0px 1px #8590A2 inset;
 }
 
 .item-toDo .last-item .confirm-add button{

@@ -156,7 +156,6 @@ body {
 .title-clamp {
     display: -webkit-box;
     -webkit-line-clamp: 1;
-    /* line-clamp: 1; */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -184,11 +183,26 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
 
+    background-color: red;
 }
 .list-your-boards .item span {
     font-size: 13.781px;
     line-height: 20px;
 }
+
+.list-your-boards .item i:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.list-your-boards .item .star-black{
+    color: #000;
+}
+
+.list-your-boards .item .star-white {
+    color: #fff;
+}
+
 
 .main .overlay-title{
     margin-top: 12px;
@@ -238,6 +252,14 @@ body {
     font-weight: 700;
     line-height: 32px;
     max-width: 500px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .overlay-title .over-left #title-star {
@@ -281,17 +303,6 @@ body {
     display: flex;
     gap: 17px;
 }
-/* .main .toDo-list .last-item-list {
-    order: 1000;
-}
-
-.main .toDo-list .order1 {
-    order: 1;
-}
-
-.main .toDo-list .order2 {
-    order: 2 ;
-} */
 
 .main .toDo-list .item-toDo{
     height: fit-content;

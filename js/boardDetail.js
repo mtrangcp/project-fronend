@@ -19,6 +19,7 @@ let listYourBoard = document.querySelector(".list-your-boards");
 let btnCloseBoard = document.querySelector(".my-btn-create");
 
 titleBoard.textContent = chooseBoard.title;
+titleBoard.classList.add("title-clamp");
 renderListYourBoard();
 console.log(arrayBoardOfUser[indexOdBoard].lists);
 
@@ -323,6 +324,12 @@ function renderListYourBoard() {
                   }"
                 ></div>
                 <span class="title-clamp">${item.title}</span>
+
+                ${
+                  item.is_starred
+                    ? `<i  class="fa-solid fa-star star-black" onclick="removeStar(${index})" > </i>`
+                    : `<i class="fa-solid fa-star star-white" onclick="addStar(${index})"></i>`
+                }
             </div>
         `;
     })

@@ -40,10 +40,8 @@ btnCloseBoard.addEventListener("click", function () {
 });
 
 function showListOfBoard(index) {
-  console.log("index board: ", index);
-  console.log("arrayBoardOfUser: ", arrayBoardOfUser);
-
   localStorage.setItem("chooseBoardIndex", index);
+  titleBoard.textContent = arrayBoardOfUser[index].title;
 
   renderListData(arrayBoardOfUser[index].lists);
 }
@@ -52,11 +50,13 @@ function renderListData(arrayList) {
   let listData = document.querySelector("#toDo-lists");
   listData.innerHTML = "";
 
-  let htmls = arrayList.map((item) => {
+  let htmls = arrayList.map((item, index) => {
     return `
             <div class="item-toDo">
                 <div class="heading">
-                <span>${item.title}</span>
+                <input autofocus type="text" id="updateTitleList" />
+                <span onclick="updateTitleOfList(${index})" 
+                    id="titleList">${item.title}</span>
                 <div class="icon-util">
                     <img
                         class="icon-arrow"
@@ -74,7 +74,6 @@ function renderListData(arrayList) {
                 <div class="list-item"  id="list-item-task">
                     ${item.tasks
                       .map((task) => {
-                        // console.log(`task: ${task.id}`, task);
                         return `
                         <div class="one-item">
                             <i class="fa-solid fa-circle-check"></i>
@@ -287,6 +286,51 @@ function renderListData(arrayList) {
       });
     }
   });
+}
+
+function updateTitleOfList(index) {
+  console.log("index list dc chon: ", index);
+
+  let titleList = document.querySelectorAll("#titleList");
+  let inputTitleUpdate = document.querySelectorAll("#updateTitleList");
+
+  inputTitleUpdate[index].style.display = "block";
+  inputTitleUpdate[index].value = titleList[index].textContent;
+  titleList[index].style.display = "none";
+
+  inputTitleUpdate[index].addEventListener(
+    "keydown",
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        console.log("Bạn đã nhấn Enter!");
+        if (inputTitleUpdate[index].value.trim()) {
+          console.log(
+            "Nội dung cập nhật:",
+            inputTitleUpdate[index].value.trim()
+          );
+          titleList[index].textContent = inputTitleUpdate[index].value.trim();
+        } else {
+          showCustomToast("Tên List không được để trống");
+        }
+        closeInput(index);
+      }
+    }
+  );
+
+  document.addEventListener("click", function handleClickOutside(event) {
+    if (
+      !inputTitleUpdate[index].contains(event.target) &&
+      event.target !== titleList[index]
+    ) {
+      closeInput(index);
+      document.removeEventListener("click", handleClickOutside);
+    }
+  });
+
+  function closeInput(i) {
+    inputTitleUpdate[i].style.display = "none";
+    titleList[i].style.display = "block";
+  }
 }
 
 function renderListTasks(arrayTasks) {

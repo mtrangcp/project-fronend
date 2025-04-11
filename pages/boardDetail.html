@@ -23,11 +23,6 @@
       crossorigin="anonymous"
     />
 
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    /> -->
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -79,7 +74,12 @@
               <img src="../assets/icons/btn-add.png" alt="img-add" />
             </div>
 
-            <div class="list-your-boards"></div>
+            <div class="list-your-boards">
+              <div class="item">
+                <div class="img"></div>
+                <span class="title-clamp">abc abc</span>
+              </div>
+            </div>
             <!--  -->
           </div>
         </div>
@@ -136,7 +136,7 @@
         </div>
 
         <div class="toDo-list" id="toDo-lists">
-          <div class="item-toDo order1">
+          <!-- <div class="item-toDo order1">
             <div class="heading">
               <span>Todo</span>
               <div class="icon-util">
@@ -153,7 +153,7 @@
               </div>
             </div>
 
-            <div class="list-item">
+            <div class="list-item" id="list-item-task">
               <div class="one-item">
                 <i class="fa-solid fa-circle-check"></i>
                 <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
@@ -194,7 +194,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!--  -->
 
@@ -717,5 +717,6 @@
     ></script>
 
     <script src="../js/boardDetail.js"></script>
+    <!-- <script src="../js/test.js"></script> -->
   </body>
 </html>

@@ -5,7 +5,7 @@ if (!statusLogin || !sessionLogin) {
   window.location.href = "../pages/login.html";
 }
 
-// index user hien tai
+// Index user hiện tại
 let users = JSON.parse(localStorage.getItem("proUsers")) || [];
 let localLogin = localStorage.getItem("currentLogin");
 let indexCurr = users.findIndex((item) => item.email === localLogin);
@@ -38,52 +38,52 @@ btnCloseBoard.addEventListener("click", function () {
   }
 });
 
-function showListOfBoard(index) {
-  console.log("index board: ", index);
-  console.log("arrayBoardOfUser: ", arrayBoardOfUser);
-
-  localStorage.setItem("chooseBoardIndex", index);
-
-  renderListData(arrayBoardOfUser[index].lists);
+function renderListYourBoard() {
+  listYourBoard.innerHTML = "";
+  listYourBoard.innerHTML = arrayBoardOfUser
+    .map((item) => {
+      let isImage = item.backdrop.startsWith("../");
+      return `
+            <div class="item">
+                <div class="img" style="${
+                  isImage
+                    ? `background-image: url('${item.backdrop}');`
+                    : `background: ${item.backdrop};`
+                }"></div>
+                <span class="title-clamp">${item.title}</span>
+            </div>
+        `;
+    })
+    .join("");
 }
 
 function renderListData(arrayList) {
   let listData = document.querySelector("#toDo-lists");
   listData.innerHTML = "";
 
-  let htmls = arrayList.map((item) => {
+  let htmls = arrayList.map((item, index) => {
     return `
             <div class="item-toDo">
                 <div class="heading">
-                <span>${item.title}</span>
-                <div class="icon-util">
-                    <img
-                        class="icon-arrow"
-                        src="../assets/icons/icon-arrow.png"
-                        alt="arrow"
-                    />
-                    <img
-                        class="icon-more"
-                        src="../assets/icons/icon-more.png"
-                        alt="more"
-                    />
+                    <span>${item.title}</span>
+                    <div class="icon-util">
+                        <img class="icon-arrow" src="../assets/icons/icon-arrow.png" alt="arrow" />
+                        <img class="icon-more" src="../assets/icons/icon-more.png" alt="more" />
+                    </div>
                 </div>
-                </div>
-
-                <div class="list-item"  id="list-item-task">
+                <div class="list-item">
                     ${item.tasks
-                      .map((task) => {
-                        // console.log(`task: ${task.id}`, task);
-                        return `
+                      .map(
+                        (task) => `
                         <div class="one-item">
                             <i class="fa-solid fa-circle-check"></i>
                             <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${task.title}</span>
                         </div>
-                    `;
-                      })
+                    `
+                      )
                       .join("")}
                 </div>
-
+                
                 <div class="last-item">
                     <div class="part-show" id="btnShowAddCard">
                         <button>
@@ -103,39 +103,32 @@ function renderListData(arrayList) {
                     </div>
                 </div>
             </div>
-      `;
+        `;
   });
 
   let convertArr = htmls.join("");
-
   convertArr += `
-                <div class="item-toDo last-item-list">
-                    <div class="last-item">
-                    <div class="part-show" id="btnShowAddList">
-                        <button>
+        <div class="item-toDo last-item-list">
+            <div class="last-item">
+                <div class="part-show" id="btnShowAddList">
+                    <button>
                         <img src="../assets/icons/btn-add.png" alt="icon-add" />
                         <span>Add another list</span>
-                        </button>
-                    </div>
-
-                    <div class="addAnotherList">
-                        <input
-                        autofocus
-                        type="text"
-                        placeholder="Add another list"
-                        id="inputAddList"
-                        />
-
-                        <div class="confirm-add">
+                    </button>
+                </div>
+                <div class="addAnotherList">
+                    <input autofocus type="text" placeholder="Add another list" id="inputAddList" />
+                    <div class="confirm-add">
                         <button id="btnAddList">Add another list</button>
-                        <span id="spanClose" >✖︎</span>
-                        </div>
-                    </div>
+                        <span id="spanClose">✖︎</span>
                     </div>
                 </div>
-          `;
+            </div>
+        </div>
+    `;
   listData.innerHTML = convertArr;
 
+  // Gắn sự kiện cho "Add another list"
   let newBtnShowAddList = document.querySelector("#btnShowAddList");
   let newAddAnotherList = document.querySelector(".addAnotherList");
   let newBtnAddList = document.querySelector("#btnAddList");
@@ -156,15 +149,6 @@ function renderListData(arrayList) {
   if (newBtnAddList && newInputAdd) {
     newBtnAddList.addEventListener("click", function (event) {
       event.preventDefault();
-
-      let users = JSON.parse(localStorage.getItem("proUsers")) || [];
-      let localLogin = localStorage.getItem("currentLogin");
-      let indexCurr = users.findIndex((item) => item.email === localLogin);
-
-      let chooseBoard = JSON.parse(localStorage.getItem("chooseCurrentBoard"));
-      let arrayBoardOfUser = users[indexCurr].boards;
-      let indexOdBoard = localStorage.getItem("chooseBoardIndex");
-
       if (newInputAdd.value?.trim()) {
         let arrList = users[indexCurr].boards[indexOdBoard].lists;
         let arrId = arrList
@@ -181,23 +165,10 @@ function renderListData(arrayList) {
 
         arrList.push(newObj);
         users[indexCurr].boards[indexOdBoard].lists = arrList;
-        console.log("-------------------------");
-
-        console.log(
-          "users[indexCurr].boards[indexOdBoard].lists: ",
-          users[indexCurr].boards[indexOdBoard].lists
-        );
-        console.log("arrList: ", arrList);
-
-        console.log("-------------------------");
-
         localStorage.setItem("proUsers", JSON.stringify(users));
-
-        console.log("users: ", users);
 
         renderListData(arrList);
 
-        // Reset
         newInputAdd.value = "";
         newBtnShowAddList.style.display = "block";
         newAddAnotherList.style.display = "none";
@@ -215,118 +186,18 @@ function renderListData(arrayList) {
     });
   }
 
-  // add card
+  // Điều chỉnh giao diện cho "Add a card" của từng list
+  arrayList.forEach((_, index) => {
+    let btnShowAddCard = document.querySelector(`#btnShowAddCard-${index}`);
+    let formAddTasks = document.querySelector(
+      `#btnShowAddCard-${index} + .addAnotherCard`
+    );
 
-  let btnShowAddCard = document.querySelectorAll("#btnShowAddCard");
-  let formAddTasks = document.querySelectorAll(".addAnotherCard");
-  let closeAddCard = document.querySelectorAll("#spanCloseCard");
-  let btnAddCard = document.querySelectorAll("#btnAddCard");
-  let inputTitleCard = document.querySelectorAll("#inputTitleCard");
-
-  btnShowAddCard.forEach((element, index) => {
-    if (element && formAddTasks[index]) {
-      element.style.display = "block";
-      formAddTasks[index].style.display = "none";
-
-      element.addEventListener("click", function () {
-        element.style.display = "none";
-        formAddTasks[index].style.display = "block";
-
-        formAddTasks.forEach((e, i) => {
-          if (i != index) {
-            e.style.display = "none";
-            btnShowAddCard[i].style.display = "block";
-          }
-        });
-      });
-
-      closeAddCard[index].addEventListener("click", function () {
-        inputTitleCard[index].value = "";
-        element.style.display = "block";
-        formAddTasks[index].style.display = "none";
-      });
-
-      btnAddCard[index].addEventListener("click", function (event) {
-        event.preventDefault();
-        console.log("index list da nhan: ", index);
-        console.log("input: ", inputTitleCard[index].value?.trim());
-
-        if (inputTitleCard[index].value?.trim()) {
-          let arrList = users[indexCurr].boards[indexOdBoard].lists;
-          let arrTasks = arrList[index].tasks;
-          let arrTaskIds = arrTasks
-            .map((task) => task.id)
-            .filter((id) => id !== null && !isNaN(id));
-          let newTaskId =
-            arrTaskIds.length === 0 ? 301 : Math.max(...arrTaskIds) + 1;
-          const now = new Date();
-
-          let newTask = {
-            id: newTaskId,
-            title: inputTitleCard[index].value.trim(),
-            status: "pending",
-            due_date: null,
-            created_at: now,
-            tag: [],
-          };
-
-          arrTasks.push(newTask);
-          arrList[index].tasks = arrTasks;
-          users[indexCurr].boards[indexOdBoard].lists = arrList;
-          localStorage.setItem("proUsers", JSON.stringify(users));
-
-          renderListData(arrList);
-
-          inputTitleCard[index].value = "";
-          element.style.display = "block";
-          formAddTasks[index].style.display = "none";
-        } else {
-          showCustomToast("Tên card không được để trống");
-        }
-      });
+    if (btnShowAddCard && formAddTasks) {
+      btnShowAddCard.style.display = "block";
+      formAddTasks.style.display = "none";
     }
   });
-}
-
-function renderListTasks(arrayTasks) {
-  let listTasks = document.querySelector("#list-item-task");
-
-  listTasks.innerHTML = "";
-  listTasks.innerHTML = arrayTasks
-    .map((item) => {
-      return `
-            <div class="one-item">
-                <i class="fa-solid fa-circle-check"></i>
-                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
-                  ${item.title}
-                </span>
-            </div>
-        `;
-    })
-    .join("");
-}
-
-function renderListYourBoard() {
-  listYourBoard.innerHTML = "";
-
-  listYourBoard.innerHTML = arrayBoardOfUser
-    .map((item, index) => {
-      let isImage = item.backdrop.startsWith("../");
-      return `
-            <div class="item" onclick="showListOfBoard(${index})" >
-                <div
-                  class="img"
-                  style="${
-                    isImage
-                      ? `background-image: url('${item.backdrop}');`
-                      : `background: ${item.backdrop};`
-                  }"
-                ></div>
-                <span class="title-clamp">${item.title}</span>
-            </div>
-        `;
-    })
-    .join("");
 }
 
 function showCustomToast(message) {
@@ -343,7 +214,7 @@ function showCustomToast(message) {
             <div style="margin-top: 4px; word-wrap: break-word; white-space: normal;">
                 ${formattedMessage}
             </div>
-            `,
+        `,
     duration: 3000,
     gravity: "top",
     position: "left",

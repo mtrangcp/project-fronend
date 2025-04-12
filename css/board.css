@@ -514,6 +514,7 @@ body {
 .check-active{
     color: #22A06B !important;
     border: none !important;
+    display: block !important;
 }
 
 .item-toDo .list-item .one-item span {

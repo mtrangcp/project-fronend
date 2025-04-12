@@ -77,11 +77,18 @@ function renderListData(arrayList) {
 
                 <div class="list-item" id="list-item-task">
                     ${item.tasks
-                      .map((task) => {
+                      .map((task, indexTask) => {
                         return `
                             <div class="one-item">
-                                <i class="fa-solid fa-circle-check"></i>
-                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${task.title}</span>
+                                <i id="statusTask" class="fa-solid fa-circle-check ${
+                                  task.status === "complete"
+                                    ? "check-active"
+                                    : ""
+                                }"
+                                onclick="updateStatusTask(${index},${indexTask})"></i>
+                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${
+                                  task.title
+                                }</span>
                             </div>
                         `;
                       })
@@ -308,6 +315,30 @@ function attachCardEvents() {
       });
     }
   });
+}
+
+function updateStatusTask(indexList, indexTask) {
+  console.log("indexList: ", indexList);
+  console.log("indexTask: ", indexTask);
+
+  let statusTask = document.querySelector("#statusTask");
+
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+  let arrList = users[indexCurr].boards[indexOfBoard].lists;
+  if ((arrList[indexList].tasks[indexTask].status = "complete")) {
+    arrList[indexList].tasks[indexTask].status = "pending";
+  } else {
+    arrList[indexList].tasks[indexTask].status = "complete";
+  }
+
+  users[indexCurr].boards[indexOfBoard].lists = arrList;
+  localStorage.setItem("proUsers", JSON.stringify(users));
+
+  renderListData(arrList);
 }
 
 function getIndexDel(indexList) {

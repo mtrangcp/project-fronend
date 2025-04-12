@@ -141,67 +141,6 @@
         </div>
 
         <div class="toDo-list" id="toDo-lists">
-          <div class="item-toDo order1">
-            <div class="heading">
-              <input autofocus type="text" id="updateTitleList" />
-              <span id="titleList">Todo</span>
-              <div class="icon-util">
-                <img
-                  class="icon-arrow"
-                  src="../assets/icons/icon-arrow.png"
-                  alt="arrow"
-                />
-                <img
-                  class="icon-more"
-                  src="../assets/icons/icon-more.png"
-                  alt="more"
-                />
-              </div>
-            </div>
-
-            <div class="list-item" id="list-item-task">
-              <div class="one-item">
-                <i class="fa-solid fa-circle-check"></i>
-                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
-                  Thuê DJ
-                </span>
-              </div>
-
-              <div class="one-item">
-                <i class="fa-solid fa-circle-check"></i>
-                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
-                  Lên kịch bản chương trình
-                </span>
-              </div>
-
-              <div class="one-item">
-                <i class="fa-solid fa-circle-check"></i>
-                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">
-                  Chuẩn bị kịch
-                </span>
-              </div>
-            </div>
-
-            <div class="last-item">
-              <div class="part-show" id="btnShowAddCard">
-                <button>
-                  <img src="../assets/icons/btn-add.png" alt="icon-add" />
-                  <span>Add card</span>
-                  <img src="../assets/icons/add-card.png" alt="icon-add-card" />
-                </button>
-              </div>
-
-              <div class="addAnotherCard">
-                <textarea type="text" placeholder="Add a card"></textarea>
-
-                <div class="confirm-add">
-                  <button id="btnAddCard">Add a card</button>
-                  <span id="spanCloseCard">✖︎</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!--  -->
 
           <div class="item-toDo last-item-list">
@@ -358,8 +297,47 @@
             <p class="remind">You won't be able to revert this!</p>
 
             <div class="d-flex justify-content-center list-btn">
-              <button type="button" class="btn my-btn-create">
+              <button
+                id="btnConfirmDelete"
+                type="button"
+                class="btn my-btn-create"
+              >
                 Yes, close it!
+              </button>
+              <button
+                id="btnCloseBoard"
+                type="button"
+                class="btn my-btn-close"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Close list -->
+    <div class="modal fade" id="closeListModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header popular">
+            <img
+              src="../assets/icons/icon-confirm-close.png"
+              alt="icon-confirm"
+            />
+
+            <p class="question">Are you sure?</p>
+            <p class="remind">You won't be able to revert this!</p>
+
+            <div class="d-flex justify-content-center list-btn">
+              <button
+                id="btnConfirmDelList"
+                type="button"
+                class="btn my-btn-create"
+              >
+                Yes, delete it!
               </button>
               <button
                 type="button"

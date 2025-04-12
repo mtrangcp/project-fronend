@@ -1,7 +1,7 @@
 let statusLogin = localStorage.getItem("proRememberMe");
 let sessionLogin = sessionStorage.getItem("currentLoginSS");
 
-if (!statusLogin || !sessionLogin) {
+if (!statusLogin && !sessionLogin) {
   window.location.href = "../pages/login.html";
 }
 
@@ -16,7 +16,10 @@ let indexOdBoard = localStorage.getItem("chooseBoardIndex");
 
 let titleBoard = document.querySelector("#board-name");
 let listYourBoard = document.querySelector(".list-your-boards");
-let btnCloseBoard = document.querySelector(".my-btn-create");
+let btnCloseBoard = document.querySelector("#btnCloseBoard");
+
+// bien chung
+let indexToDelete = null;
 
 titleBoard.textContent = chooseBoard.title;
 titleBoard.classList.add("title-clamp");
@@ -47,6 +50,7 @@ function showListOfBoard(index) {
 }
 
 function renderListData(arrayList) {
+  console.log("data ve: ", arrayList);
   let listData = document.querySelector("#toDo-lists");
   listData.innerHTML = "";
 
@@ -54,47 +58,54 @@ function renderListData(arrayList) {
     return `
             <div class="item-toDo">
                 <div class="heading">
-                <input autofocus type="text" id="updateTitleList" />
-                <span onclick="updateTitleOfList(${index})" 
-                    id="titleList">${item.title}</span>
-                <div class="icon-util">
-                    <img
-                        class="icon-arrow"
-                        src="../assets/icons/icon-arrow.png"
-                        alt="arrow"
-                    />
-                    <img
-                        class="icon-more"
-                        src="../assets/icons/icon-more.png"
-                        alt="more"
-                    />
-                </div>
+                    <input type="text" id="updateTitleList" />
+                    <span onclick="updateTitleOfList(${index})" 
+                        id="titleList">${item.title}</span>
+                    <div class="icon-util">
+                        <img
+                            class="icon-arrow"
+                            src="../assets/icons/icon-arrow.png"
+                            alt="arrow"
+                        />
+                        <img
+                            class="icon-more"
+                            src="../assets/icons/icon-more.png"
+                            alt="more"
+                        />
+                    </div>
                 </div>
 
-                <div class="list-item"  id="list-item-task">
+                <div class="list-item" id="list-item-task">
                     ${item.tasks
                       .map((task) => {
                         return `
-                        <div class="one-item">
-                            <i class="fa-solid fa-circle-check"></i>
-                            <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${task.title}</span>
-                        </div>
-                    `;
+                            <div class="one-item">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${task.title}</span>
+                            </div>
+                        `;
                       })
                       .join("")}
                 </div>
 
                 <div class="last-item">
-                    <div class="part-show" id="btnShowAddCard">
-                        <button>
+                    <div class="part-show" >
+                        <button id="btnShowAddCard">
                             <img src="../assets/icons/btn-add.png" alt="icon-add" />
                             <span>Add card</span>
-                            <img src="../assets/icons/add-card.png" alt="icon-add-card" />
                         </button>
+                        <img
+                            id="iconDelList"
+                            onclick="getIndexDel(${index})"
+                            src="../assets/icons/add-card.png"
+                            alt="icon-add-card"
+                            data-bs-toggle="modal"
+                            data-bs-target="#closeListModal"
+                        />
                     </div>
 
                     <div class="addAnotherCard">
-                        <textarea type="text" placeholder="Add a card" id="inputTitleCard"></textarea>
+                        <textarea placeholder="Add a card" id="inputTitleCard"></textarea>
 
                         <div class="confirm-add">
                             <button id="btnAddCard">Add a card</button>
@@ -103,39 +114,39 @@ function renderListData(arrayList) {
                     </div>
                 </div>
             </div>
-      `;
+        `;
   });
 
   let convertArr = htmls.join("");
 
   convertArr += `
-                <div class="item-toDo last-item-list">
-                    <div class="last-item">
-                    <div class="part-show" id="btnShowAddList">
-                        <button>
+        <div class="item-toDo last-item-list">
+            <div class="last-item">
+                <div class="part-show" id="btnShowAddList">
+                    <button>
                         <img src="../assets/icons/btn-add.png" alt="icon-add" />
                         <span>Add another list</span>
-                        </button>
-                    </div>
+                    </button>
+                </div>
 
-                    <div class="addAnotherList">
-                        <input
-                        autofocus
+                <div class="addAnotherList">
+                    <input
                         type="text"
                         placeholder="Add another list"
                         id="inputAddList"
-                        />
+                    />
 
-                        <div class="confirm-add">
+                    <div class="confirm-add">
                         <button id="btnAddList">Add another list</button>
                         <span id="spanClose" >✖︎</span>
-                        </div>
-                    </div>
                     </div>
                 </div>
-          `;
+            </div>
+        </div>
+    `;
   listData.innerHTML = convertArr;
 
+  // Gắn sự kiện cho nút "Add another list"
   let newBtnShowAddList = document.querySelector("#btnShowAddList");
   let newAddAnotherList = document.querySelector(".addAnotherList");
   let newBtnAddList = document.querySelector("#btnAddList");
@@ -150,6 +161,7 @@ function renderListData(arrayList) {
       console.log("click btnShowAddList");
       newBtnShowAddList.style.display = "none";
       newAddAnotherList.style.display = "flex";
+      newInputAdd.focus();
     });
   }
 
@@ -160,9 +172,6 @@ function renderListData(arrayList) {
       let users = JSON.parse(localStorage.getItem("proUsers")) || [];
       let localLogin = localStorage.getItem("currentLogin");
       let indexCurr = users.findIndex((item) => item.email === localLogin);
-
-      let chooseBoard = JSON.parse(localStorage.getItem("chooseCurrentBoard"));
-      let arrayBoardOfUser = users[indexCurr].boards;
       let indexOdBoard = localStorage.getItem("chooseBoardIndex");
 
       if (newInputAdd.value?.trim()) {
@@ -181,19 +190,7 @@ function renderListData(arrayList) {
 
         arrList.push(newObj);
         users[indexCurr].boards[indexOdBoard].lists = arrList;
-        console.log("-------------------------");
-
-        console.log(
-          "users[indexCurr].boards[indexOdBoard].lists: ",
-          users[indexCurr].boards[indexOdBoard].lists
-        );
-        console.log("arrList: ", arrList);
-
-        console.log("-------------------------");
-
         localStorage.setItem("proUsers", JSON.stringify(users));
-
-        console.log("users: ", users);
 
         renderListData(arrList);
 
@@ -215,34 +212,51 @@ function renderListData(arrayList) {
     });
   }
 
-  // add card
+  attachCardEvents();
+}
 
+//  nút "Add card"
+function attachCardEvents() {
   let btnShowAddCard = document.querySelectorAll("#btnShowAddCard");
   let formAddTasks = document.querySelectorAll(".addAnotherCard");
   let closeAddCard = document.querySelectorAll("#spanCloseCard");
   let btnAddCard = document.querySelectorAll("#btnAddCard");
   let inputTitleCard = document.querySelectorAll("#inputTitleCard");
+  let iconDelList = document.querySelectorAll("#iconDelList");
 
   btnShowAddCard.forEach((element, index) => {
     if (element && formAddTasks[index]) {
-      element.style.display = "block";
+      element.style.display = "flex";
+      if (iconDelList[index]) {
+        iconDelList[index].style.display = "flex";
+      }
       formAddTasks[index].style.display = "none";
+      inputTitleCard[index].focus();
 
       element.addEventListener("click", function () {
         element.style.display = "none";
+        if (iconDelList[index]) {
+          iconDelList[index].style.display = "none";
+        }
         formAddTasks[index].style.display = "block";
 
         formAddTasks.forEach((e, i) => {
-          if (i != index) {
+          if (i !== index) {
             e.style.display = "none";
-            btnShowAddCard[i].style.display = "block";
+            btnShowAddCard[i].style.display = "flex";
+            if (iconDelList[i]) {
+              iconDelList[i].style.display = "flex";
+            }
           }
         });
       });
 
       closeAddCard[index].addEventListener("click", function () {
         inputTitleCard[index].value = "";
-        element.style.display = "block";
+        element.style.display = "flex";
+        if (iconDelList[index]) {
+          iconDelList[index].style.display = "flex";
+        }
         formAddTasks[index].style.display = "none";
       });
 
@@ -252,6 +266,11 @@ function renderListData(arrayList) {
         console.log("input: ", inputTitleCard[index].value?.trim());
 
         if (inputTitleCard[index].value?.trim()) {
+          let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+          let localLogin = localStorage.getItem("currentLogin");
+          let indexCurr = users.findIndex((item) => item.email === localLogin);
+          let indexOdBoard = localStorage.getItem("chooseBoardIndex");
+
           let arrList = users[indexCurr].boards[indexOdBoard].lists;
           let arrTasks = arrList[index].tasks;
           let arrTaskIds = arrTasks
@@ -278,7 +297,10 @@ function renderListData(arrayList) {
           renderListData(arrList);
 
           inputTitleCard[index].value = "";
-          element.style.display = "block";
+          element.style.display = "flex";
+          if (iconDelList[index]) {
+            iconDelList[index].style.display = "flex";
+          }
           formAddTasks[index].style.display = "none";
         } else {
           showCustomToast("Tên card không được để trống");
@@ -287,6 +309,44 @@ function renderListData(arrayList) {
     }
   });
 }
+
+function getIndexDel(indexList) {
+  indexToDelete = indexList;
+
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+
+  console.log("users: ", users);
+}
+
+let btnConfirmDelete = document.querySelector("#btnConfirmDelList");
+btnConfirmDelete.addEventListener("click", function (event) {
+  console.log("thuc hien xoa---------------");
+  if (indexToDelete !== null) {
+    // Lấy dữ liệu từ localStorage
+    let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+    let localLogin = localStorage.getItem("currentLogin");
+    let indexCurr = users.findIndex((item) => item.email === localLogin);
+    let indexOfBoard = Number(localStorage.getItem("chooseBoardIndex"));
+
+    let arrList = users[indexCurr].boards[indexOfBoard].lists;
+    arrList.splice(indexToDelete, 1);
+    console.log("arrList sau xoa: ", arrList);
+
+    users[indexCurr].boards[indexOfBoard].lists = arrList;
+    localStorage.setItem("proUsers", JSON.stringify(users));
+
+    renderListData(arrList);
+
+    const deleteModal = bootstrap.Modal.getInstance(
+      document.getElementById("closeListModal")
+    );
+    deleteModal.hide();
+
+    indexToDelete = null;
+  } else {
+    console.log("indexToDelete null");
+  }
+});
 
 function updateTitleOfList(index) {
   console.log("index list dc chon: ", index);
@@ -297,6 +357,7 @@ function updateTitleOfList(index) {
   inputTitleUpdate[index].style.display = "block";
   inputTitleUpdate[index].value = titleList[index].textContent;
   titleList[index].style.display = "none";
+  inputTitleUpdate[index].focus();
 
   inputTitleUpdate[index].addEventListener(
     "keydown",

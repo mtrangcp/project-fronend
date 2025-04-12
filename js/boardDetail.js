@@ -302,13 +302,25 @@ function updateTitleOfList(index) {
     "keydown",
     function handleKeyDown(event) {
       if (event.key === "Enter") {
-        console.log("Bạn đã nhấn Enter!");
         if (inputTitleUpdate[index].value.trim()) {
           console.log(
             "Nội dung cập nhật:",
             inputTitleUpdate[index].value.trim()
           );
           titleList[index].textContent = inputTitleUpdate[index].value.trim();
+
+          // cap nhat
+          let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+          let localLogin = localStorage.getItem("currentLogin");
+          let indexCurr = users.findIndex((item) => item.email === localLogin);
+          let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+          users[indexCurr].boards[indexOfBoard].lists[index].title =
+            inputTitleUpdate[index].value.trim();
+          console.log(users[indexCurr].boards[indexOfBoard].lists[index]);
+
+          localStorage.setItem("proUsers", JSON.stringify(users));
+          renderListData(users[indexCurr].boards[indexOfBoard].lists);
         } else {
           showCustomToast("Tên List không được để trống");
         }

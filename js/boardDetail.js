@@ -80,20 +80,20 @@ function renderListData(arrayList) {
 
                 <div class="list-item" id="list-item-task">
                     ${item.tasks
-        .map((task, indexTask) => {
-          return `
+                      .map((task, indexTask) => {
+                        return `
                             <div class="one-item">
-                                <i id="statusTask" class="fa-solid fa-circle-check ${task.status === "complete"
-              ? "check-active"
-              : ""
-            }"
-                                onclick="updateStatusTask(${index},${indexTask})"></i>
+                              <i id="statusTask" class="fa-solid fa-circle-check ${
+                                task.status === "complete" ? "check-active" : ""
+                              }"
+                                onclick="updateStatusTask(${index},${indexTask})">
+                              </i>
                                 <span data-list-index="${index}" data-task-index="${indexTask}" onclick="openTaskDetailModal(${index}, ${indexTask})">
                                     ${task.title}</span>
                             </div>
                         `;
-        })
-        .join("")}
+                      })
+                      .join("")}
                 </div>
 
                 <div class="last-item">
@@ -372,6 +372,33 @@ function openTaskDetailModal(listIndex, taskIndex) {
       taskDetailModal.hide();
     }
   });
+
+  let btnDelCard = document.querySelector("#confirm-delete");
+  btnDelCard.addEventListener("click", function () {
+    const closeCardModal = document.getElementById("closeCardModal");
+    if (closeCardModal) {
+      const delTaskModal = new bootstrap.Modal(closeCardModal, {
+        backdrop: true,
+        keyboard: true,
+      });
+      delTaskModal.show();
+
+      let choseArrTask =
+        users[indexCurr].boards[indexOfBoard].lists[listIndex].tasks;
+      let btnConfirmDelCard = document.querySelector("#btnConfirmDelCard");
+      btnConfirmDelCard.addEventListener("click", function () {
+        choseArrTask.splice(currentTaskIndex, 1);
+        users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks =
+          choseArrTask;
+
+        localStorage.setItem("proUsers", JSON.stringify(users));
+        renderListData(users[indexCurr].boards[indexOfBoard].lists);
+        showToastSucces("Xóa task thành công!");
+        delTaskModal.hide();
+        taskDetailModal.hide();
+      });
+    }
+  });
 }
 
 function openMoveDropdownModal() {
@@ -404,13 +431,15 @@ function openLabelModal() {
 
     setupColorSelection();
 
-    // Xử lý nút Create
+    //btn Create
     const createLabelBtn = document.querySelector("#createLabelBtn");
     createLabelBtn.addEventListener("click", function () {
-      const success = saveLabelValues(); // Gọi hàm từ boardDetail.js
+      const success = saveLabelValues();
       if (success) {
         renderListData(users[indexCurr].boards[indexOfBoard].lists);
-        const labelModal = bootstrap.Modal.getInstance(document.getElementById("labelModal"));
+        const labelModal = bootstrap.Modal.getInstance(
+          document.getElementById("labelModal")
+        );
         labelModal.hide();
       }
     });
@@ -447,7 +476,7 @@ function saveLabelValues() {
 
   let task =
     users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
-    currentTaskIndex
+      currentTaskIndex
     ];
 
   const newLabel = {
@@ -473,7 +502,7 @@ function saveLabelValues() {
   return true;
 }
 
-// Hàm thiết lập sự kiện chọn màu (gọi khi mở modal Labels)
+//  modal Labels
 function setupColorSelection() {
   const colorOptions = document.querySelectorAll(".color-option");
   colorOptions.forEach((option) => {
@@ -519,7 +548,7 @@ function saveDateValues() {
 
   let task =
     users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
-    currentTaskIndex
+      currentTaskIndex
     ];
   task.start_date = dates.start_date;
   task.due_date = dates.due_date;
@@ -542,7 +571,7 @@ function removeDateValues() {
 
   let task =
     users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
-    currentTaskIndex
+      currentTaskIndex
     ];
   task.start_date = null;
   task.due_date = null;
@@ -706,17 +735,19 @@ function renderListYourBoard() {
             <div class="item" onclick="showListOfBoard(${index})" >
                 <div
                   class="img"
-                  style="${isImage
-          ? `background-image: url('${item.backdrop}');`
-          : `background: ${item.backdrop};`
-        }"
+                  style="${
+                    isImage
+                      ? `background-image: url('${item.backdrop}');`
+                      : `background: ${item.backdrop};`
+                  }"
                 ></div>
                 <span class="title-clamp">${item.title}</span>
 
-                ${item.is_starred
-          ? `<i  class="fa-solid fa-star star-black" onclick="removeStar(${index})" > </i>`
-          : `<i class="fa-solid fa-star star-white" onclick="addStar(${index})"></i>`
-        }
+                ${
+                  item.is_starred
+                    ? `<i  class="fa-solid fa-star star-black" onclick="removeStar(${index})" > </i>`
+                    : `<i class="fa-solid fa-star star-white" onclick="addStar(${index})"></i>`
+                }
             </div>
         `;
     })
@@ -770,9 +801,10 @@ function showCustomToast(message) {
 
 function showToastSucces(message) {
   const toastContent = document.createElement("div");
-  toastContent.innerHTML = `<img src="../assets/icons/check_circle.png" width="24px" height="24px" style="margin-right: 8px;"> ${message}`;
+  toastContent.innerHTML = `<img src="../assets/icons/check_circle.png" width="16px" height="16px" style="margin-right: 8px;"> ${message}`;
   toastContent.style.display = "flex";
   toastContent.style.alignItems = "center";
+  toastContent.style.marginTop = "20px";
 
   Toastify({
     node: toastContent,

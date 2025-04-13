@@ -968,3 +968,10 @@ body {
     background-color: #0C66E4;
     color: #FFF;
 }
+
+.toastify .toast-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    left: auto;
+}

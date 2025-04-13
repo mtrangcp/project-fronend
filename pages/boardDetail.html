@@ -387,7 +387,7 @@
                   <textarea id="editor" style="height: 300px"></textarea>
 
                   <div class="btn-group">
-                    <button onclick="handleSaveDescription()">Save</button>
+                    <button id="saveUpdateTask">Save</button>
                     <button data-bs-dismiss="modal">Cancel</button>
                   </div>
                 </div>
@@ -674,7 +674,7 @@
       });
 
       function handleGetValue() {
-        console.log("Nội dung:", myEditor.getData());
+        return myEditor.getData();
       }
     </script>
 

@@ -968,17 +968,3 @@ body {
     background-color: #0C66E4;
     color: #FFF;
 }
-
-#taskDetailModal {
-    z-index: 1050;
-}
-
-#moveDropdownModal,
-#labelModal,
-#dateModal {
-    z-index: 1060;
-}
-
-.modal-backdrop.show:nth-of-type(2) {
-    z-index: 1055;
-}

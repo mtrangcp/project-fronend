@@ -20,6 +20,8 @@ let btnCloseBoard = document.querySelector("#btnCloseBoard");
 
 // bien chung
 let indexToDelete = null;
+let currentListIndex = null;
+let currentTaskIndex = null;
 
 titleBoard.textContent = chooseBoard.title;
 titleBoard.classList.add("title-clamp");
@@ -58,9 +60,9 @@ function renderListData(arrayList) {
     return `
             <div class="item-toDo">
                 <div class="heading">
-                    <input type="text" id="updateTitleList" />
+                    <input type="text" class="updateTitleList" />
                     <span onclick="updateTitleOfList(${index})" 
-                        id="titleList">${item.title}</span>
+                        class="titleList">${item.title}</span>
                     <div class="icon-util">
                         <img
                             class="icon-arrow"
@@ -86,8 +88,7 @@ function renderListData(arrayList) {
                                     : ""
                                 }"
                                 onclick="updateStatusTask(${index},${indexTask})"></i>
-                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal"
-                                    onclick="getIndexDel(${index})">
+                                <span data-list-index="${index}" data-task-index="${indexTask}" onclick="openTaskDetailModal(${index}, ${indexTask})">
                                     ${task.title}</span>
                             </div>
                         `;
@@ -97,12 +98,12 @@ function renderListData(arrayList) {
 
                 <div class="last-item">
                     <div class="part-show" >
-                        <button id="btnShowAddCard">
+                        <button class="btnShowAddCard">
                             <img src="../assets/icons/btn-add.png" alt="icon-add" />
                             <span>Add card</span>
                         </button>
                         <img
-                            id="iconDelList"
+                            class="iconDelList"
                             onclick="getIndexDel(${index})"
                             src="../assets/icons/add-card.png"
                             alt="icon-add-card"
@@ -112,11 +113,11 @@ function renderListData(arrayList) {
                     </div>
 
                     <div class="addAnotherCard">
-                        <textarea placeholder="Add a card" id="inputTitleCard"></textarea>
+                        <textarea placeholder="Add a card" class="inputTitleCard"></textarea>
 
                         <div class="confirm-add">
-                            <button id="btnAddCard">Add a card</button>
-                            <span id="spanCloseCard">✖︎</span>
+                            <button class="btnAddCard">Add a card</button>
+                            <span class="spanCloseCard">✖︎</span>
                         </div>
                     </div>
                 </div>
@@ -224,12 +225,12 @@ function renderListData(arrayList) {
 
 //  nút "Add card"
 function attachCardEvents() {
-  let btnShowAddCard = document.querySelectorAll("#btnShowAddCard");
+  let btnShowAddCard = document.querySelectorAll(".btnShowAddCard");
   let formAddTasks = document.querySelectorAll(".addAnotherCard");
-  let closeAddCard = document.querySelectorAll("#spanCloseCard");
-  let btnAddCard = document.querySelectorAll("#btnAddCard");
-  let inputTitleCard = document.querySelectorAll("#inputTitleCard");
-  let iconDelList = document.querySelectorAll("#iconDelList");
+  let closeAddCard = document.querySelectorAll(".spanCloseCard");
+  let btnAddCard = document.querySelectorAll(".btnAddCard");
+  let inputTitleCard = document.querySelectorAll(".inputTitleCard");
+  let iconDelList = document.querySelectorAll(".iconDelList");
 
   btnShowAddCard.forEach((element, index) => {
     if (element && formAddTasks[index]) {
@@ -290,6 +291,7 @@ function attachCardEvents() {
           let newTask = {
             id: newTaskId,
             title: inputTitleCard[index].value.trim(),
+            description: "",
             status: "pending",
             due_date: null,
             created_at: now,
@@ -317,11 +319,93 @@ function attachCardEvents() {
   });
 }
 
+function openTaskDetailModal(listIndex, taskIndex) {
+  currentListIndex = listIndex;
+  currentTaskIndex = taskIndex;
+
+  let btnSaveUpdateTask = document.querySelector("#saveUpdateTask");
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let list = users[indexCurr].boards[indexOfBoard].lists[listIndex];
+  let task =
+    users[indexCurr].boards[indexOfBoard].lists[listIndex].tasks[taskIndex];
+
+  // Cập nhật tiêu đề và trạng thái trong modal
+  document.querySelector("#taskDetailTitle").textContent = task.title;
+  document.querySelector("#status-task").textContent = list.title;
+  let iconStatus = document.querySelector("#iconStatus");
+  if (task.status === "complete") {
+    iconStatus.classList.add("check-active");
+  }
+
+  window.myEditor.setData(task.description || "");
+
+  const taskDetailModalElement = document.getElementById("taskDetailModal");
+  const taskDetailModal = new bootstrap.Modal(taskDetailModalElement, {
+    backdrop: true,
+  });
+  taskDetailModal.show();
+
+  btnSaveUpdateTask.addEventListener("click", function (params) {
+    let describe = handleGetValue();
+    console.log("describe: ", describe);
+
+    task.description = describe;
+    users[indexCurr].boards[indexOfBoard].lists[listIndex].tasks[taskIndex] =
+      task;
+
+    localStorage.setItem("proUsers", JSON.stringify(users));
+    window.myEditor.setData("");
+  });
+}
+
+function openMoveDropdownModal() {
+  const moveDropdownModalElement = document.getElementById("moveDropdownModal");
+  if (moveDropdownModalElement) {
+    const moveDropdownModal = new bootstrap.Modal(moveDropdownModalElement, {
+      backdrop: true,
+      keyboard: true,
+    });
+    moveDropdownModal.show();
+  } else {
+    console.error("Không tìm thấy phần tử #moveDropdownModal");
+  }
+}
+
+// Mở modal labelModal
+function openLabelModal() {
+  const labelModalElement = document.getElementById("labelModal");
+  if (labelModalElement) {
+    const labelModal = new bootstrap.Modal(labelModalElement, {
+      backdrop: true,
+      keyboard: true,
+    });
+    labelModal.show();
+  } else {
+    console.error("Không tìm thấy phần tử #labelModal");
+  }
+}
+
+// Mở modal dateModal
+function openDateModal() {
+  const dateModalElement = document.getElementById("dateModal");
+  if (dateModalElement) {
+    const dateModal = new bootstrap.Modal(dateModalElement, {
+      backdrop: true,
+      keyboard: true,
+    });
+    dateModal.show();
+  } else {
+    console.error("Không tìm thấy phần tử #dateModal");
+  }
+}
+
 function updateStatusTask(indexList, indexTask) {
   console.log("indexList: ", indexList);
   console.log("indexTask: ", indexTask);
-
-  let statusTask = document.querySelector("#statusTask");
 
   let users = JSON.parse(localStorage.getItem("proUsers")) || [];
   let localLogin = localStorage.getItem("currentLogin");
@@ -329,7 +413,7 @@ function updateStatusTask(indexList, indexTask) {
 
   let indexOfBoard = localStorage.getItem("chooseBoardIndex");
   let arrList = users[indexCurr].boards[indexOfBoard].lists;
-  if ((arrList[indexList].tasks[indexTask].status = "complete")) {
+  if (arrList[indexList].tasks[indexTask].status === "complete") {
     arrList[indexList].tasks[indexTask].status = "pending";
   } else {
     arrList[indexList].tasks[indexTask].status = "complete";
@@ -382,8 +466,8 @@ btnConfirmDelete.addEventListener("click", function (event) {
 function updateTitleOfList(index) {
   console.log("index list dc chon: ", index);
 
-  let titleList = document.querySelectorAll("#titleList");
-  let inputTitleUpdate = document.querySelectorAll("#updateTitleList");
+  let titleList = document.querySelectorAll(".titleList");
+  let inputTitleUpdate = document.querySelectorAll(".updateTitleList");
 
   inputTitleUpdate[index].style.display = "block";
   inputTitleUpdate[index].value = titleList[index].textContent;

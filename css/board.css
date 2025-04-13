@@ -191,8 +191,14 @@ body {
 }
 
 .list-your-boards .item i:hover,
-.item-toDo .last-item .part-show img:hover {
-    opacity: 0.6;
+.item-toDo .last-item .part-show img:hover,
+.popular .header-modal .span-select .select:hover,
+.content .aside-modal .labels:hover,
+.item-toDo .last-item .part-show button:hover,
+.item-toDo .last-item .confirm-add button:hover,
+#labelModal .modal-header img:hover,
+#labelModal .modal-footer button:hover {
+    opacity: 0.7;
     cursor: pointer;
 }
 
@@ -226,7 +232,8 @@ body {
     border-radius: 4px;
 }
 
-.main .overlay-title .over-right:hover {
+.main .overlay-title .over-right:hover,
+.overlay-title .over-left .close-board:hover {
     cursor: pointer;
     background-color: #ffffff;
 }
@@ -292,11 +299,6 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-}
-
-.overlay-title .over-left .close-board:hover{
-    background-color: #ffffff;
-    cursor: pointer;
 }
 
 .main .toDo-list{
@@ -588,13 +590,7 @@ body {
     border: none;
     display: flex;
     gap: 8px;
-    
     align-items: center;
-}
-
-.item-toDo .last-item .part-show button:hover {
-    cursor: pointer;
-    opacity: 0.7;
 }
 
 .item-toDo .last-item .part-show button span{
@@ -663,11 +659,6 @@ body {
     color: #fff;
 }
 
-.item-toDo .last-item .confirm-add button:hover{
-    opacity: 0.6;
-    cursor: pointer;
-}
-
 .item-toDo .last-item .confirm-add span {
     padding: 4px 10px;
     border-radius: 3px;
@@ -714,6 +705,12 @@ body {
     margin: 0;
 }
 
+.popular .header-modal .span-select{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
 .popular .header-modal .span-select span{
     color: #44546F;
     font-size: 14px;
@@ -723,21 +720,17 @@ body {
     margin-right: 4px;
 }
 
-.popular .header-modal .span-select select {
+.popular .header-modal .span-select .select {
     border-radius: 3px;
     background: #DCDFE4;
     padding: 1.5px 4px;
     border: none;
-    outline: none;
-}
 
-.popular .header-modal .span-select select option{
     color: #44546F;
     text-align: center;
     font-size: 11px;
     font-weight: 700;
     line-height: 16px;
-    text-transform: uppercase;
 }
 
 .popular .content {
@@ -944,12 +937,6 @@ body {
     height: 24px;
 }
 
-#labelModal .modal-header img:hover,
-#labelModal .modal-footer button:hover {
-    opacity: 0.7;
-    cursor: pointer;
-}
-
 #labelModal .modal-header button {
     margin: 0;
 }
@@ -982,30 +969,16 @@ body {
     color: #FFF;
 }
 
+#taskDetailModal {
+    z-index: 1050;
+}
 
+#moveDropdownModal,
+#labelModal,
+#dateModal {
+    z-index: 1060;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.modal-backdrop.show:nth-of-type(2) {
+    z-index: 1055;
+}

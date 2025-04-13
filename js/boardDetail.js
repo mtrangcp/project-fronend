@@ -86,9 +86,9 @@ function renderListData(arrayList) {
                                     : ""
                                 }"
                                 onclick="updateStatusTask(${index},${indexTask})"></i>
-                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal">${
-                                  task.title
-                                }</span>
+                                <span data-bs-toggle="modal" data-bs-target="#taskDetailModal"
+                                    onclick="getIndexDel(${index})">
+                                    ${task.title}</span>
                             </div>
                         `;
                       })

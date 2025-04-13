@@ -359,20 +359,20 @@
           <div class="modal-header popular">
             <div class="header-modal">
               <div class="header-top">
-                <i class="fa-solid fa-circle-check"></i>
-                <p>Kịch bản</p>
+                <i class="fa-solid fa-circle-check" id="iconStatus"></i>
+                <p id="taskDetailTitle">Kịch bản</p>
               </div>
 
               <div class="span-select">
                 <span>in list</span>
-                <select
-                  name="status"
+
+                <div
+                  class="select"
                   id="status-task"
-                  data-bs-toggle="modal"
-                  data-bs-target="#moveDropdownModal"
+                  onchange="openMoveDropdownModal()"
                 >
-                  <option value="1">In-progress</option>
-                </select>
+                  In-progress
+                </div>
               </div>
             </div>
 
@@ -387,27 +387,19 @@
                   <textarea id="editor" style="height: 300px"></textarea>
 
                   <div class="btn-group">
-                    <button onclick="handleGetValue()">Save</button>
+                    <button onclick="handleSaveDescription()">Save</button>
                     <button data-bs-dismiss="modal">Cancel</button>
                   </div>
                 </div>
               </div>
 
               <div class="aside-modal">
-                <div
-                  class="labels"
-                  data-bs-toggle="modal"
-                  data-bs-target="#labelModal"
-                >
+                <div class="labels" onclick="openLabelModal()">
                   <img src="../assets/icons/icon-labels.png" alt="labels" />
                   <span>Labels</span>
                 </div>
 
-                <div
-                  class="labels"
-                  data-bs-toggle="modal"
-                  data-bs-target="#dateModal"
-                >
+                <div class="labels" onclick="openDateModal()">
                   <img src="../assets/icons/icon-date.png" alt="date" />
                   <span>Dates</span>
                 </div>
@@ -625,6 +617,41 @@
       </div>
     </div>
 
+    <!-- Modal Close card -->
+    <div class="modal fade" id="closeCardModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header popular">
+            <img
+              src="../assets/icons/icon-confirm-close.png"
+              alt="icon-confirm"
+            />
+
+            <p class="question">Are you sure?</p>
+            <p class="remind">You won't be able to revert this!</p>
+
+            <div class="d-flex justify-content-center list-btn">
+              <button
+                id="btnConfirmDelCard"
+                type="button"
+                class="btn my-btn-create"
+              >
+                Yes, delete it!
+              </button>
+              <button
+                type="button"
+                class="btn my-btn-close"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- script -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

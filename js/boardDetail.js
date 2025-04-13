@@ -22,6 +22,7 @@ let btnCloseBoard = document.querySelector("#btnCloseBoard");
 let indexToDelete = null;
 let currentListIndex = null;
 let currentTaskIndex = null;
+let selectedColor = null;
 
 titleBoard.textContent = chooseBoard.title;
 titleBoard.classList.add("title-clamp");
@@ -79,21 +80,20 @@ function renderListData(arrayList) {
 
                 <div class="list-item" id="list-item-task">
                     ${item.tasks
-                      .map((task, indexTask) => {
-                        return `
+        .map((task, indexTask) => {
+          return `
                             <div class="one-item">
-                                <i id="statusTask" class="fa-solid fa-circle-check ${
-                                  task.status === "complete"
-                                    ? "check-active"
-                                    : ""
-                                }"
+                                <i id="statusTask" class="fa-solid fa-circle-check ${task.status === "complete"
+              ? "check-active"
+              : ""
+            }"
                                 onclick="updateStatusTask(${index},${indexTask})"></i>
                                 <span data-list-index="${index}" data-task-index="${indexTask}" onclick="openTaskDetailModal(${index}, ${indexTask})">
                                     ${task.title}</span>
                             </div>
                         `;
-                      })
-                      .join("")}
+        })
+        .join("")}
                 </div>
 
                 <div class="last-item">
@@ -293,6 +293,7 @@ function attachCardEvents() {
             title: inputTitleCard[index].value.trim(),
             description: "",
             status: "pending",
+            start_date: null,
             due_date: null,
             created_at: now,
             tag: [],
@@ -351,7 +352,7 @@ function openTaskDetailModal(listIndex, taskIndex) {
   });
   taskDetailModal.show();
 
-  btnSaveUpdateTask.addEventListener("click", function (params) {
+  btnSaveUpdateTask.addEventListener("click", function () {
     let describe = handleGetValue();
     if (
       describe === "" ||
@@ -365,6 +366,7 @@ function openTaskDetailModal(listIndex, taskIndex) {
         task;
 
       localStorage.setItem("proUsers", JSON.stringify(users));
+      renderListData(users[indexCurr].boards[indexOfBoard].lists);
       handleSetValue("");
       showToastSucces("Update mô tả thành công!");
       taskDetailModal.hide();
@@ -387,6 +389,11 @@ function openMoveDropdownModal() {
 
 // Mở modal labelModal
 function openLabelModal() {
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
   const labelModalElement = document.getElementById("labelModal");
   if (labelModalElement) {
     const labelModal = new bootstrap.Modal(labelModalElement, {
@@ -394,9 +401,90 @@ function openLabelModal() {
       keyboard: true,
     });
     labelModal.show();
+
+    setupColorSelection();
+
+    // Xử lý nút Create
+    const createLabelBtn = document.querySelector("#createLabelBtn");
+    createLabelBtn.addEventListener("click", function () {
+      const success = saveLabelValues(); // Gọi hàm từ boardDetail.js
+      if (success) {
+        renderListData(users[indexCurr].boards[indexOfBoard].lists);
+        const labelModal = bootstrap.Modal.getInstance(document.getElementById("labelModal"));
+        labelModal.hide();
+      }
+    });
   } else {
     console.error("Không tìm thấy phần tử #labelModal");
   }
+}
+
+function getLabelValues() {
+  const labelTitle = document.querySelector("#labelTitleInput").value.trim();
+  return {
+    title: labelTitle,
+    color: selectedColor,
+  };
+}
+
+function saveLabelValues() {
+  const label = getLabelValues();
+
+  if (!label.title) {
+    showCustomToast("Tên label không được để trống!");
+    return false;
+  }
+
+  if (!label.color) {
+    showCustomToast("Vui lòng chọn một màu!");
+    return false;
+  }
+
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let task =
+    users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+    ];
+
+  const newLabel = {
+    title: label.title,
+    color: label.color,
+  };
+  task.tag.push(newLabel);
+
+  users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+  ] = task;
+  localStorage.setItem("proUsers", JSON.stringify(users));
+
+  showToastSucces("Thêm label thành công!");
+  console.log("Task sau khi thêm label:", task);
+
+  // Reset form
+  document.querySelector("#labelTitleInput").value = "";
+  selectedColor = null;
+  const colorOptions = document.querySelectorAll(".color-option");
+  colorOptions.forEach((opt) => (opt.style.border = "2px solid transparent"));
+
+  return true;
+}
+
+// Hàm thiết lập sự kiện chọn màu (gọi khi mở modal Labels)
+function setupColorSelection() {
+  const colorOptions = document.querySelectorAll(".color-option");
+  colorOptions.forEach((option) => {
+    option.addEventListener("click", function () {
+      colorOptions.forEach(
+        (opt) => (opt.style.border = "2px solid transparent")
+      );
+      this.style.border = "2px solid #000";
+      selectedColor = this.style.backgroundColor;
+    });
+  });
 }
 
 // Mở modal dateModal
@@ -413,10 +501,69 @@ function openDateModal() {
   }
 }
 
-function updateStatusTask(indexList, indexTask) {
-  console.log("indexList: ", indexList);
-  console.log("indexTask: ", indexTask);
+function getDateValues() {
+  const startDateInput = document.querySelector("#start-date").value;
+  const dueDateInput = document.querySelector("#due-date").value;
+  return {
+    start_date: startDateInput ? startDateInput : null,
+    due_date: dueDateInput ? dueDateInput : null,
+  };
+}
 
+function saveDateValues() {
+  const dates = getDateValues();
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let task =
+    users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+    ];
+  task.start_date = dates.start_date;
+  task.due_date = dates.due_date;
+
+  users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+  ] = task;
+  localStorage.setItem("proUsers", JSON.stringify(users));
+  renderListData(users[indexCurr].boards[indexOfBoard].lists);
+
+  showToastSucces("Cập nhật ngày thành công!");
+  console.log("Task sau khi cập nhật ngày:", task);
+}
+
+function removeDateValues() {
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let task =
+    users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+    ];
+  task.start_date = null;
+  task.due_date = null;
+
+  users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+    currentTaskIndex
+  ] = task;
+  localStorage.setItem("proUsers", JSON.stringify(users));
+  renderListData(users[indexCurr].boards[indexOfBoard].lists);
+
+  // Reset giá trị input
+  document.querySelector("#start-date").value = "";
+  document.querySelector("#due-date").value = "";
+  document.querySelector("#start-date-checkbox").checked = false;
+  document.querySelector("#due-date-checkbox").checked = false;
+
+  showToastSucces("Đã xóa ngày thành công!");
+}
+
+//
+function updateStatusTask(indexList, indexTask) {
   let users = JSON.parse(localStorage.getItem("proUsers")) || [];
   let localLogin = localStorage.getItem("currentLogin");
   let indexCurr = users.findIndex((item) => item.email === localLogin);
@@ -559,19 +706,17 @@ function renderListYourBoard() {
             <div class="item" onclick="showListOfBoard(${index})" >
                 <div
                   class="img"
-                  style="${
-                    isImage
-                      ? `background-image: url('${item.backdrop}');`
-                      : `background: ${item.backdrop};`
-                  }"
+                  style="${isImage
+          ? `background-image: url('${item.backdrop}');`
+          : `background: ${item.backdrop};`
+        }"
                 ></div>
                 <span class="title-clamp">${item.title}</span>
 
-                ${
-                  item.is_starred
-                    ? `<i  class="fa-solid fa-star star-black" onclick="removeStar(${index})" > </i>`
-                    : `<i class="fa-solid fa-star star-white" onclick="addStar(${index})"></i>`
-                }
+                ${item.is_starred
+          ? `<i  class="fa-solid fa-star star-black" onclick="removeStar(${index})" > </i>`
+          : `<i class="fa-solid fa-star star-white" onclick="addStar(${index})"></i>`
+        }
             </div>
         `;
     })

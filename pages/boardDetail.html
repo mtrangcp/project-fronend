@@ -1,734 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Board</title>
-    <link rel="stylesheet" href="../css/board.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board</title>
+  <link rel="stylesheet" href="../css/board.css" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <header class="header">
-      <div class="div-logo">
-        <img src="../assets/images/trello-logo-full.png" alt="img full logo" />
-      </div>
-    </header>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
-    <div class="my-container">
-      <aside class="aside">
-        <p>YOUR WORKSPACES</p>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-        <div class="workspaces">
-          <div class="boards">
-            <a href="#" class="item">
-              <img src="../assets/icons/boards.png" alt="img boards" />
-              <span>Boards</span>
-            </a>
+<body>
+  <header class="header">
+    <div class="div-logo">
+      <img src="../assets/images/trello-logo-full.png" alt="img full logo" />
+    </div>
+  </header>
 
-            <a href="#" class="item">
-              <img
-                src="../assets/icons/starredBoards.png"
-                alt="img starredBoards"
-              />
-              <span>Starred Boards</span>
-            </a>
+  <div class="my-container">
+    <aside class="aside">
+      <p>YOUR WORKSPACES</p>
 
-            <a href="#" class="item">
-              <img
-                src="../assets/icons/closedBoards.png"
-                alt="img closedBoards"
-              />
-              <span>Closed Boards</span>
-            </a>
-          </div>
+      <div class="workspaces">
+        <div class="boards">
+          <a href="#" class="item">
+            <img src="../assets/icons/boards.png" alt="img boards" />
+            <span>Boards</span>
+          </a>
 
-          <div class="line"></div>
+          <a href="#" class="item">
+            <img src="../assets/icons/starredBoards.png" alt="img starredBoards" />
+            <span>Starred Boards</span>
+          </a>
 
-          <div class="your-boards">
-            <div class="title">
-              <span>Your boards</span>
-              <img src="../assets/icons/btn-add.png" alt="img-add" />
-            </div>
-
-            <div class="list-your-boards">
-              <div class="item">
-                <div class="img"></div>
-                <span class="title-clamp">abc abc</span>
-                <i
-                  class="fa-solid fa-star star-black"
-                  onclick="removeStar()"
-                ></i>
-                <i class="fa-solid fa-star star-white" onclick="addStar()"></i>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-        </div>
-      </aside>
-      <main class="main">
-        <div class="overlay-title">
-          <div class="over-left">
-            <span class="title" id="board-name">
-              Tổ chức sự kiện Year-end party !
-            </span>
-
-            <img
-              id="title-star"
-              src="../assets/icons/starredBoards-black.png"
-              alt="img star"
-            />
-
-            <div class="over-board">
-              <img src="../assets/icons/over-board.png" alt="img board" />
-              <span>Board</span>
-            </div>
-
-            <div class="change-table">
-              <img
-                id="icon-table"
-                src="../assets/icons/table.png"
-                alt="img table"
-              />
-              <span>Table</span>
-            </div>
-
-            <div
-              data-bs-toggle="modal"
-              data-bs-target="#closeBoardModal"
-              class="close-board"
-            >
-              <img
-                id="icon-table"
-                src="../assets/icons/close-board.png"
-                alt="img close"
-              />
-              <span>Close this board</span>
-            </div>
-          </div>
-
-          <div
-            data-bs-toggle="modal"
-            data-bs-target="#filterModal"
-            class="over-right"
-          >
-            <img src="../assets/icons/filters.png" alt="filters" />
-            <span>Filters</span>
-          </div>
+          <a href="#" class="item">
+            <img src="../assets/icons/closedBoards.png" alt="img closedBoards" />
+            <span>Closed Boards</span>
+          </a>
         </div>
 
-        <div class="toDo-list" id="toDo-lists">
+        <div class="line"></div>
+
+        <div class="your-boards">
+          <div class="title">
+            <span>Your boards</span>
+            <img src="../assets/icons/btn-add.png" alt="img-add" />
+          </div>
+
+          <div class="list-your-boards">
+            <!-- <div class="item">
+              <div class="img"></div>
+              <span class="title-clamp">abc abc</span>
+              <i class="fa-solid fa-star star-black" onclick="removeStar()"></i>
+              <i class="fa-solid fa-star star-white" onclick="addStar()"></i>
+            </div> -->
+          </div>
           <!--  -->
-
-          <div class="item-toDo last-item-list">
-            <div class="last-item">
-              <div class="part-show" id="btnShowAddList">
-                <button>
-                  <img src="../assets/icons/btn-add.png" alt="icon-add" />
-                  <span>Add another list</span>
-                </button>
-              </div>
-
-              <div class="addAnotherList">
-                <input
-                  autofocus
-                  type="text"
-                  placeholder="Add another list"
-                  id="inputAddList"
-                />
-
-                <div class="confirm-add">
-                  <button id="btnAddList">Add another list</button>
-                  <span id="spanClose">✖︎</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <!-- Modal Filter Dropdown -->
-    <div class="modal fade" id="filterModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div
-            class="modal-header d-flex align-items-center"
-            style="border-bottom: none"
-          >
-            <h1
-              class="modal-title fs-5 text-center flex-grow-1"
-              id="exampleModalLabel"
-            >
-              Filter
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="keyboard">
-              <p class="title">Keyword</p>
-              <input type="text" placeholder="Enter a keyword…" />
-              <p class="p-normal">Search cards,</p>
-            </div>
-
-            <div class="keyboard">
-              <p class="title">Card status</p>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <span>Marked as complete</span>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <span>Not marked as complete</span>
-              </div>
-            </div>
-
-            <div class="keyboard">
-              <p class="title">Due date</p>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <img src="../assets/icons/filter-date.png" alt="filter date" />
-                <span>No dates</span>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <img
-                  src="../assets/icons/over-dueDate.png"
-                  alt="over-dueDate"
-                />
-                <span>Overdue</span>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <img src="../assets/icons/due-nextDay.png" alt="due-nextDay" />
-                <span>Due in the next day</span>
-              </div>
-            </div>
-
-            <div class="keyboard">
-              <p class="title">Labels</p>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <img src="../assets/icons/no-labels.png" alt="filter date" />
-                <span>No labels</span>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <div
-                  class="color-label"
-                  style="background-color: #4bce97"
-                ></div>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <div
-                  class="color-label"
-                  style="background-color: #f5cd47"
-                ></div>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <div
-                  class="color-label"
-                  style="background-color: #fea362"
-                ></div>
-              </div>
-
-              <div class="item-status">
-                <input type="checkbox" />
-                <select name="list-labels" id="list-labels">
-                  <option value="" selected>Select labels</option>
-                </select>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
+    </aside>
+    <main class="main">
+      <div class="overlay-title">
+        <div class="over-left">
+          <span class="title" id="board-name">
+            Tổ chức sự kiện Year-end party !
+          </span>
 
-    <!-- Modal Close board -->
-    <div class="modal fade" id="closeBoardModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header popular">
-            <img
-              src="../assets/icons/icon-confirm-close.png"
-              alt="icon-confirm"
-            />
+          <img id="title-star" src="../assets/icons/starredBoards-black.png" alt="img star" />
 
-            <p class="question">Are you sure?</p>
-            <p class="remind">You won't be able to revert this!</p>
+          <div class="over-board">
+            <img src="../assets/icons/over-board.png" alt="img board" />
+            <span>Board</span>
+          </div>
 
-            <div class="d-flex justify-content-center list-btn">
-              <button
-                id="btnConfirmDelete"
-                type="button"
-                class="btn my-btn-create"
-              >
-                Yes, close it!
-              </button>
-              <button
-                id="btnCloseBoard"
-                type="button"
-                class="btn my-btn-close"
-                data-bs-dismiss="modal"
-              >
-                Cancel
+          <div class="change-table">
+            <img id="icon-table" src="../assets/icons/table.png" alt="img table" />
+            <span>Table</span>
+          </div>
+
+          <div data-bs-toggle="modal" data-bs-target="#closeBoardModal" class="close-board">
+            <img id="icon-table" src="../assets/icons/close-board.png" alt="img close" />
+            <span>Close this board</span>
+          </div>
+        </div>
+
+        <div data-bs-toggle="modal" data-bs-target="#filterModal" class="over-right">
+          <img src="../assets/icons/filters.png" alt="filters" />
+          <span>Filters</span>
+        </div>
+      </div>
+
+      <div class="toDo-list" id="toDo-lists">
+        <!--  -->
+
+        <div class="item-toDo last-item-list">
+          <div class="last-item">
+            <div class="part-show" id="btnShowAddList">
+              <button>
+                <img src="../assets/icons/btn-add.png" alt="icon-add" />
+                <span>Add another list</span>
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Modal Close list -->
-    <div class="modal fade" id="closeListModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header popular">
-            <img
-              src="../assets/icons/icon-confirm-close.png"
-              alt="icon-confirm"
-            />
+            <div class="addAnotherList">
+              <input autofocus type="text" placeholder="Add another list" id="inputAddList" />
 
-            <p class="question">Are you sure?</p>
-            <p class="remind">You won't be able to revert this!</p>
-
-            <div class="d-flex justify-content-center list-btn">
-              <button
-                id="btnConfirmDelList"
-                type="button"
-                class="btn my-btn-create"
-              >
-                Yes, delete it!
-              </button>
-              <button
-                type="button"
-                class="btn my-btn-close"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Task Detail -->
-    <div class="modal fade modal-lg" id="taskDetailModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header popular">
-            <div class="header-modal">
-              <div class="header-top">
-                <i class="fa-solid fa-circle-check" id="iconStatus"></i>
-                <p id="taskDetailTitle">Kịch bản</p>
-              </div>
-
-              <div class="span-select">
-                <span>in list</span>
-
-                <div
-                  class="select"
-                  id="status-task"
-                  onchange="openMoveDropdownModal()"
-                >
-                  In-progress
-                </div>
-              </div>
-            </div>
-
-            <div class="content">
-              <div class="main-modal">
-                <div class="title">
-                  <img src="../assets/icons/describe.png" alt="describe" />
-                  <span>Description</span>
-                </div>
-
-                <div class="input-content">
-                  <textarea id="editor" style="height: 300px"></textarea>
-
-                  <div class="btn-group">
-                    <button id="saveUpdateTask">Save</button>
-                    <button data-bs-dismiss="modal">Cancel</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="aside-modal">
-                <div class="labels" onclick="openLabelModal()">
-                  <img src="../assets/icons/icon-labels.png" alt="labels" />
-                  <span>Labels</span>
-                </div>
-
-                <div class="labels" onclick="openDateModal()">
-                  <img src="../assets/icons/icon-date.png" alt="date" />
-                  <span>Dates</span>
-                </div>
-
-                <div
-                  class="labels"
-                  id="confirm-delete"
-                  style="background-color: #c9372c"
-                >
-                  <img src="../assets/icons/icon-del-task.png" alt="date" />
-                  <span style="color: #ffffff">Delete</span>
-                </div>
+              <div class="confirm-add">
+                <button id="btnAddList">Add another list</button>
+                <span id="spanClose">✖︎</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+  </div>
 
-    <!-- Modal move func dropdown -->
-    <div class="modal fade" id="moveDropdownModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1
-              class="modal-title fs-5 w-100 text-center"
-              id="exampleModalLabel"
-            >
-              Move card
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+  <!-- Modal Filter Dropdown -->
+  <div class="modal fade" id="filterModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header d-flex align-items-center" style="border-bottom: none">
+          <h1 class="modal-title fs-5 text-center flex-grow-1" id="exampleModalLabel">
+            Filter
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="keyboard">
+            <p class="title">Keyword</p>
+            <input type="text" placeholder="Enter a keyword…" />
+            <p class="p-normal">Search cards,</p>
           </div>
-          <div class="modal-body">
-            <p>Select destination</p>
 
-            <div class="boards">
-              <h3>Board</h3>
-              <input
-                type="text"
-                placeholder="Tổ chức sự kiện Year-end party !"
-              />
+          <div class="keyboard">
+            <p class="title">Card status</p>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <span>Marked as complete</span>
             </div>
 
-            <div class="list-po">
-              <div class="list">
-                <h3>List</h3>
-                <select name="" id="">
-                  <option value="In-progress">In-progress</option>
-                </select>
-              </div>
-
-              <div class="position">
-                <h3>Position</h3>
-                <select name="" id="">
-                  <option value="1">1</option>
-                </select>
-              </div>
+            <div class="item-status">
+              <input type="checkbox" />
+              <span>Not marked as complete</span>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary me-auto">Move</button>
+
+          <div class="keyboard">
+            <p class="title">Due date</p>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <img src="../assets/icons/filter-date.png" alt="filter date" />
+              <span>No dates</span>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <img src="../assets/icons/over-dueDate.png" alt="over-dueDate" />
+              <span>Overdue</span>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <img src="../assets/icons/due-nextDay.png" alt="due-nextDay" />
+              <span>Due in the next day</span>
+            </div>
+          </div>
+
+          <div class="keyboard">
+            <p class="title">Labels</p>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <img src="../assets/icons/no-labels.png" alt="filter date" />
+              <span>No labels</span>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <div class="color-label" style="background-color: #4bce97"></div>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <div class="color-label" style="background-color: #f5cd47"></div>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <div class="color-label" style="background-color: #fea362"></div>
+            </div>
+
+            <div class="item-status">
+              <input type="checkbox" />
+              <select name="list-labels" id="list-labels">
+                <option value="" selected>Select labels</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal add labels dropdown -->
-    <div
-      class="modal fade"
-      id="labelModal"
-      tabindex="-1"
-      aria-labelledby="labelModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content p-3">
-          <div class="modal-header">
-            <img
-              src="../assets/icons/btn-back.png"
-              alt="back-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            />
-            <h5 class="modal-title" id="labelModalLabel">Create label</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+  <!-- Modal Close board -->
+  <div class="modal fade" id="closeBoardModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header popular">
+          <img src="../assets/icons/icon-confirm-close.png" alt="icon-confirm" />
 
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Select a color</label>
-              <div class="d-flex flex-wrap gap-2">
-                <span
-                  class="color-option"
-                  style="background-color: #baf3db"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #f8e6a0"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #fedec8"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #ffd5d2"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #dfd8fd"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #4bce97"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #f5cd47"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #fea362"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #f87168"
-                ></span>
-                <span
-                  class="color-option"
-                  style="background-color: #9f8fef"
-                ></span>
-              </div>
-            </div>
-          </div>
+          <p class="question">Are you sure?</p>
+          <p class="remind">You won't be able to revert this!</p>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Create</button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
+          <div class="d-flex justify-content-center list-btn">
+            <button id="btnConfirmDelete" type="button" class="btn my-btn-create">
+              Yes, close it!
+            </button>
+            <button id="btnCloseBoard" type="button" class="btn my-btn-close" data-bs-dismiss="modal">
+              Cancel
             </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal choose dates -->
-    <div
-      class="modal fade"
-      id="dateModal"
-      tabindex="-1"
-      aria-labelledby="labelModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content p-3">
-          <div class="modal-header d-flex align-items-center">
-            <h5
-              class="modal-title text-center flex-grow-1"
-              id="labelModalLabel"
-            >
-              Dates
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+  <!-- Modal Close list -->
+  <div class="modal fade" id="closeListModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header popular">
+          <img src="../assets/icons/icon-confirm-close.png" alt="icon-confirm" />
 
-          <div class="modal-body">
-            <div id="calendar"></div>
-            <!-- Khu vực hiển thị lịch -->
+          <p class="question">Are you sure?</p>
+          <p class="remind">You won't be able to revert this!</p>
 
-            <label style="margin-top: 25px">
-              <input type="checkbox" id="start-date-checkbox" /> Start date
-            </label>
-            <input type="text" id="start-date" class="form-control" readonly />
-
-            <label>
-              <input type="checkbox" id="due-date-checkbox" /> Due date
-            </label>
-            <input type="text" id="due-date" class="form-control" readonly />
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Remove
+          <div class="d-flex justify-content-center list-btn">
+            <button id="btnConfirmDelList" type="button" class="btn my-btn-create">
+              Yes, delete it!
+            </button>
+            <button type="button" class="btn my-btn-close" data-bs-dismiss="modal">
+              Cancel
             </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal Close card -->
-    <div class="modal fade" id="closeCardModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header popular">
-            <img
-              src="../assets/icons/icon-confirm-close.png"
-              alt="icon-confirm"
-            />
+  <!-- Modal Task Detail -->
+  <div class="modal fade modal-lg" id="taskDetailModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header popular">
+          <div class="header-modal">
+            <div class="header-top">
+              <i class="fa-solid fa-circle-check" id="iconStatus"></i>
+              <p id="taskDetailTitle">Kịch bản</p>
+            </div>
 
-            <p class="question">Are you sure?</p>
-            <p class="remind">You won't be able to revert this!</p>
+            <div class="span-select">
+              <span>in list</span>
 
-            <div class="d-flex justify-content-center list-btn">
-              <button
-                id="btnConfirmDelCard"
-                type="button"
-                class="btn my-btn-create"
-              >
-                Yes, delete it!
-              </button>
-              <button
-                type="button"
-                class="btn my-btn-close"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
+              <div class="select" id="status-task" onchange="openMoveDropdownModal()">
+                In-progress
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="main-modal">
+              <div class="title">
+                <img src="../assets/icons/describe.png" alt="describe" />
+                <span>Description</span>
+              </div>
+
+              <div class="input-content">
+                <textarea id="editor" style="height: 300px"></textarea>
+
+                <div class="btn-group">
+                  <button id="saveUpdateTask">Save</button>
+                  <button data-bs-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="aside-modal">
+              <div class="labels" onclick="openLabelModal()">
+                <img src="../assets/icons/icon-labels.png" alt="labels" />
+                <span>Labels</span>
+              </div>
+
+              <div class="labels" onclick="openDateModal()">
+                <img src="../assets/icons/icon-date.png" alt="date" />
+                <span>Dates</span>
+              </div>
+
+              <div class="labels" id="confirm-delete" style="background-color: #c9372c">
+                <img src="../assets/icons/icon-del-task.png" alt="date" />
+                <span style="color: #ffffff">Delete</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- script -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Modal move func dropdown -->
+  <div class="modal fade" id="moveDropdownModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 w-100 text-center" id="exampleModalLabel">
+            Move card
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Select destination</p>
 
-    <!-- scrip word -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+          <div class="boards">
+            <h3>Board</h3>
+            <input type="text" placeholder="Tổ chức sự kiện Year-end party !" />
+          </div>
 
-    <script>
-      let myEditor;
-      document.addEventListener("DOMContentLoaded", function () {
-        ClassicEditor.create(document.querySelector("#editor"))
-          .then((editor) => {
-            myEditor = editor;
-          })
-          .catch((error) => {
-            console.error("Có lỗi xảy ra khi khởi tạo CKEditor:", error);
-          });
-      });
+          <div class="list-po">
+            <div class="list">
+              <h3>List</h3>
+              <select name="" id="">
+                <option value="In-progress">In-progress</option>
+              </select>
+            </div>
 
-      function handleGetValue() {
-        return myEditor.getData().trim();
-      }
-      function handleSetValue(newValue) {
-        myEditor.setData(newValue);
-      }
-    </script>
+            <div class="position">
+              <h3>Position</h3>
+              <select name="" id="">
+                <option value="1">1</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary me-auto">Move</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- calendar -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let selectedInput = null;
+  <!-- Modal add labels dropdown -->
+  <div class="modal fade" id="labelModal" tabindex="-1" aria-labelledby="labelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <img src="../assets/icons/btn-back.png" alt="back-btn" data-bs-dismiss="modal" aria-label="Close" />
+          <h5 class="modal-title" id="labelModalLabel">Create label</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-        const startCheckbox = document.querySelector("#start-date-checkbox");
-        const dueCheckbox = document.querySelector("#due-date-checkbox");
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" id="labelTitleInput" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Select a color</label>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="color-option" style="background-color: #baf3db"></span>
+              <span class="color-option" style="background-color: #f8e6a0"></span>
+              <span class="color-option" style="background-color: #fedec8"></span>
+              <span class="color-option" style="background-color: #ffd5d2"></span>
+              <span class="color-option" style="background-color: #dfd8fd"></span>
+              <span class="color-option" style="background-color: #4bce97"></span>
+              <span class="color-option" style="background-color: #f5cd47"></span>
+              <span class="color-option" style="background-color: #fea362"></span>
+              <span class="color-option" style="background-color: #f87168"></span>
+              <span class="color-option" style="background-color: #9f8fef"></span>
+            </div>
+          </div>
+        </div>
 
-        function handleCheckboxChange(checkbox, otherCheckbox, inputSelector) {
-          if (checkbox.checked) {
-            otherCheckbox.checked = false;
-            selectedInput = inputSelector;
-          } else {
-            selectedInput = null;
-          }
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="createLabelBtn">Create</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal choose dates -->
+  <div class="modal fade" id="dateModal" tabindex="-1" aria-labelledby="labelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content p-3">
+        <div class="modal-header d-flex align-items-center">
+          <h5 class="modal-title text-center flex-grow-1" id="labelModalLabel">
+            Dates
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div id="calendar"></div>
+          <!-- Khu vực hiển thị lịch -->
+
+          <label style="margin-top: 25px">
+            <input type="checkbox" id="start-date-checkbox" /> Start date
+          </label>
+          <input type="text" id="start-date" class="form-control" readonly />
+
+          <label>
+            <input type="checkbox" id="due-date-checkbox" /> Due date
+          </label>
+          <input type="text" id="due-date" class="form-control" readonly />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Close card -->
+  <div class="modal fade" id="closeCardModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header popular">
+          <img src="../assets/icons/icon-confirm-close.png" alt="icon-confirm" />
+
+          <p class="question">Are you sure?</p>
+          <p class="remind">You won't be able to revert this!</p>
+
+          <div class="d-flex justify-content-center list-btn">
+            <button id="btnConfirmDelCard" type="button" class="btn my-btn-create">
+              Yes, delete it!
+            </button>
+            <button type="button" class="btn my-btn-close" data-bs-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- scrip word -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+  <script>
+    let myEditor;
+    document.addEventListener("DOMContentLoaded", function () {
+      ClassicEditor.create(document.querySelector("#editor"))
+        .then((editor) => {
+          myEditor = editor;
+        })
+        .catch((error) => {
+          console.error("Có lỗi xảy ra khi khởi tạo CKEditor:", error);
+        });
+    });
+
+    function handleGetValue() {
+      return myEditor.getData().trim();
+    }
+    function handleSetValue(newValue) {
+      myEditor.setData(newValue);
+    }
+  </script>
+
+  <!-- calendar -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let selectedInput = null;
+
+      const startCheckbox = document.querySelector("#start-date-checkbox");
+      const dueCheckbox = document.querySelector("#due-date-checkbox");
+
+      function handleCheckboxChange(checkbox, otherCheckbox, inputSelector) {
+        if (checkbox.checked) {
+          otherCheckbox.checked = false;
+          selectedInput = inputSelector;
+        } else {
+          selectedInput = null;
         }
+      }
 
-        startCheckbox.addEventListener("change", function () {
-          handleCheckboxChange(this, dueCheckbox, "#start-date");
-        });
-
-        dueCheckbox.addEventListener("change", function () {
-          handleCheckboxChange(this, startCheckbox, "#due-date");
-        });
-
-        // Khởi tạo Flatpickr - hien thi lich
-        flatpickr("#calendar", {
-          inline: true,
-          enableTime: true,
-          dateFormat: "m/d/Y H:i",
-          onChange: function (selectedDates, dateStr) {
-            if (selectedInput) {
-              document.querySelector(selectedInput).value = dateStr;
-            }
-          },
-        });
+      startCheckbox.addEventListener("change", function () {
+        handleCheckboxChange(this, dueCheckbox, "#start-date");
       });
-    </script>
 
-    <!-- dialog delete -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      dueCheckbox.addEventListener("change", function () {
+        handleCheckboxChange(this, startCheckbox, "#due-date");
+      });
 
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/toastify-js"
-    ></script>
+      // Khởi tạo Flatpickr - hien thi lich
+      flatpickr("#calendar", {
+        inline: true,
+        enableTime: true,
+        dateFormat: "Y-m-d\\TH:i:s\\Z",
+        onChange: function (selectedDates, dateStr) {
+          if (selectedInput) {
+            document.querySelector(selectedInput).value = dateStr;
+          }
+        },
+      });
 
-    <script src="../js/boardDetail.js"></script>
-  </body>
+      const saveDateBtn = document.querySelector(
+        "#dateModal .modal-footer .btn-primary:first-child"
+      );
+      saveDateBtn.addEventListener("click", function () {
+        saveDateValues(); // Gọi hàm từ boardDetail.js
+        const dateModal = bootstrap.Modal.getInstance(
+          document.getElementById("dateModal")
+        );
+        dateModal.hide();
+      });
+
+      const removeDateBtn = document.querySelector(
+        "#dateModal .modal-footer .btn-primary:last-child"
+      );
+      removeDateBtn.addEventListener("click", function () {
+        removeDateValues(); // Gọi hàm từ boardDetail.js
+        const dateModal = bootstrap.Modal.getInstance(
+          document.getElementById("dateModal")
+        );
+        dateModal.hide();
+      });
+    });
+  </script>
+
+  <!-- dialog delete -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <script src="../js/boardDetail.js"></script>
+</body>
+
 </html>

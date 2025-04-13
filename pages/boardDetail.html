@@ -674,7 +674,10 @@
       });
 
       function handleGetValue() {
-        return myEditor.getData();
+        return myEditor.getData().trim();
+      }
+      function handleSetValue(newValue) {
+        myEditor.setData(newValue);
       }
     </script>
 

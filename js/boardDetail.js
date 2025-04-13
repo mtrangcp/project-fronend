@@ -341,7 +341,9 @@ function openTaskDetailModal(listIndex, taskIndex) {
     iconStatus.classList.add("check-active");
   }
 
-  window.myEditor.setData(task.description || "");
+  task.description !== ""
+    ? handleSetValue(task.description)
+    : handleSetValue("");
 
   const taskDetailModalElement = document.getElementById("taskDetailModal");
   const taskDetailModal = new bootstrap.Modal(taskDetailModalElement, {
@@ -351,14 +353,22 @@ function openTaskDetailModal(listIndex, taskIndex) {
 
   btnSaveUpdateTask.addEventListener("click", function (params) {
     let describe = handleGetValue();
-    console.log("describe: ", describe);
+    if (
+      describe === "" ||
+      describe === "<p>&nbsp;</p>" ||
+      describe === "<p></p>"
+    ) {
+      showCustomToast("Nội dung mô tả không được để trống!");
+    } else {
+      task.description = describe;
+      users[indexCurr].boards[indexOfBoard].lists[listIndex].tasks[taskIndex] =
+        task;
 
-    task.description = describe;
-    users[indexCurr].boards[indexOfBoard].lists[listIndex].tasks[taskIndex] =
-      task;
-
-    localStorage.setItem("proUsers", JSON.stringify(users));
-    window.myEditor.setData("");
+      localStorage.setItem("proUsers", JSON.stringify(users));
+      handleSetValue("");
+      showToastSucces("Update mô tả thành công!");
+      taskDetailModal.hide();
+    }
   });
 }
 
@@ -583,7 +593,7 @@ function showCustomToast(message) {
                 ${formattedMessage}
             </div>
             `,
-    duration: 3000,
+    duration: 2000,
     gravity: "top",
     position: "left",
     stopOnFocus: true,
@@ -611,4 +621,29 @@ function showCustomToast(message) {
       });
     }
   }, 100);
+}
+
+function showToastSucces(message) {
+  const toastContent = document.createElement("div");
+  toastContent.innerHTML = `<img src="../assets/icons/check_circle.png" width="24px" height="24px" style="margin-right: 8px;"> ${message}`;
+  toastContent.style.display = "flex";
+  toastContent.style.alignItems = "center";
+
+  Toastify({
+    node: toastContent,
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    position: "left",
+    backgroundColor: "#E5FFF0",
+    style: {
+      fontSize: "14px",
+      fontWeight: "400",
+      color: "#000",
+      textAlign: "center",
+      lineHeight: "100%",
+      borderRadius: "10px",
+      padding: "16px 16px 18px 16px",
+    },
+  }).showToast();
 }

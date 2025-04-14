@@ -10,9 +10,9 @@ let users = JSON.parse(localStorage.getItem("proUsers")) || [];
 let localLogin = localStorage.getItem("currentLogin");
 let indexCurr = users.findIndex((item) => item.email === localLogin);
 
+let indexOdBoard = localStorage.getItem("chooseBoardIndex");
 let chooseBoard = JSON.parse(localStorage.getItem("chooseCurrentBoard"));
 let arrayBoardOfUser = users[indexCurr].boards;
-let indexOdBoard = localStorage.getItem("chooseBoardIndex");
 
 let titleBoard = document.querySelector("#board-name");
 let listYourBoard = document.querySelector(".list-your-boards");
@@ -401,17 +401,202 @@ function openTaskDetailModal(listIndex, taskIndex) {
   });
 }
 
+function moveTask() {
+  const listSelect = document.querySelector("#listSelect");
+  const positionSelect = document.querySelector("#positionSelect");
+
+  // Lấy list đích và vị trí
+  const targetListIndex = parseInt(listSelect.value); // Index của list đích
+  const targetPosition = parseInt(positionSelect.value) - 1; // Vị trí trong list đích (trừ 1 vì mảng bắt đầu từ 0)
+
+  // Lấy dữ liệu từ localStorage
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let lists = users[indexCurr].boards[indexOfBoard].lists;
+
+  // Lấy task hiện tại
+  const taskToMove = lists[currentListIndex].tasks[currentTaskIndex];
+
+  // Xóa task khỏi list hiện tại
+  lists[currentListIndex].tasks.splice(currentTaskIndex, 1);
+
+  // Thêm task vào list đích ở vị trí được chọn
+  lists[targetListIndex].tasks.splice(targetPosition, 0, taskToMove);
+
+  // Cập nhật localStorage
+  users[indexCurr].boards[indexOfBoard].lists = lists;
+  localStorage.setItem("proUsers", JSON.stringify(users));
+
+  // Hiển thị thông báo thành công
+  showToastSucces("Di chuyển task thành công!");
+
+  // Đóng modal
+  const moveModal = bootstrap.Modal.getInstance(
+    document.getElementById("moveDropdownModal")
+  );
+  moveModal.hide();
+
+  // Cập nhật giao diện (tạm thời reload)
+  window.location.reload();
+}
+
 function openMoveDropdownModal() {
-  const moveDropdownModalElement = document.getElementById("moveDropdownModal");
-  if (moveDropdownModalElement) {
-    const moveDropdownModal = new bootstrap.Modal(moveDropdownModalElement, {
+  const moveModal = showModal("moveDropdownModal");
+  if (!moveModal) return;
+
+  const boardData = getCurrentBoardData();
+  if (!boardData) return;
+
+  displayBoardTitle(boardData);
+  populateListSelect(boardData);
+  populatePositionSelect(boardData);
+  setupListSelectChangeEvent(boardData);
+
+  const moveTaskBtn = document.querySelector("#moveTaskBtn");
+  if (moveTaskBtn) {
+    const newMoveTaskBtn = moveTaskBtn.cloneNode(true);
+    moveTaskBtn.parentNode.replaceChild(newMoveTaskBtn, moveTaskBtn);
+    newMoveTaskBtn.addEventListener("click", moveTask);
+  } else {
+    console.error("Không tìm thấy phần tử #moveTaskBtn");
+  }
+}
+
+function showModal(modalId) {
+  const modalElement = document.querySelector(`#${modalId}`);
+  if (modalElement) {
+    const modal = new bootstrap.Modal(modalElement, {
       backdrop: true,
       keyboard: true,
     });
-    moveDropdownModal.show();
+    modal.show();
+    return modal;
   } else {
-    console.error("Không tìm thấy phần tử #moveDropdownModal");
+    console.error(`Không tìm thấy phần tử #${modalId}`);
+    return null;
   }
+}
+function displayBoardTitle(boardData) {
+  const titleBoardInput = document.querySelector("#titleBoardOfTask");
+  if (titleBoardInput) {
+    titleBoardInput.value = boardData.board.title;
+  } else {
+    console.error("Không tìm thấy phần tử #titleBoardOfTask");
+  }
+}
+
+function getCurrentBoardData() {
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  if (indexCurr === -1 || !users[indexCurr].boards[indexOfBoard]) {
+    console.error("Không tìm thấy board hiện tại!");
+    return null;
+  }
+
+  return {
+    users,
+    indexCurr,
+    indexOfBoard,
+    board: users[indexCurr].boards[indexOfBoard],
+  };
+}
+
+function populateListSelect(boardData) {
+  const listSelect = document.querySelector("#listSelect");
+  if (!listSelect) {
+    console.error("Không tìm thấy phần tử #listSelect");
+    return;
+  }
+
+  const lists = boardData.board.lists;
+  listSelect.innerHTML = ""; // Xóa các option cũ
+
+  lists.forEach((list, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = list.title;
+    listSelect.appendChild(option);
+  });
+
+  // Mặc định chọn list hiện tại
+  listSelect.value = currentListIndex;
+}
+
+function populateListSelect(boardData) {
+  const listSelect = document.querySelector("#listSelect");
+  if (!listSelect) {
+    console.error("Không tìm thấy phần tử #listSelect");
+    return;
+  }
+
+  const lists = boardData.board.lists;
+  listSelect.innerHTML = ""; // Xóa các option cũ
+
+  lists.forEach((list, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = list.title;
+    listSelect.appendChild(option);
+  });
+
+  // Mặc định chọn list hiện tại
+  listSelect.value = currentListIndex;
+}
+
+function populatePositionSelect(boardData) {
+  const positionSelect = document.querySelector("#positionSelect");
+  const listSelect = document.querySelector("#listSelect");
+  if (!positionSelect || !listSelect) {
+    console.error("Không tìm thấy phần tử #positionSelect hoặc #listSelect");
+    return;
+  }
+
+  const lists = boardData.board.lists;
+  let selectedListIndex = parseInt(listSelect.value);
+  if (
+    isNaN(selectedListIndex) ||
+    selectedListIndex < 0 ||
+    selectedListIndex >= lists.length
+  ) {
+    selectedListIndex = currentListIndex; // Mặc định là list hiện tại
+  }
+
+  const tasksInList = lists[selectedListIndex].tasks || [];
+  positionSelect.innerHTML = ""; // Xóa các option cũ
+
+  const taskCount = tasksInList.length;
+  for (let i = 1; i <= taskCount + 1; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+    positionSelect.appendChild(option);
+  }
+
+  // Mặc định chọn vị trí cuối cùng
+  positionSelect.value = taskCount + 1;
+}
+
+function setupListSelectChangeEvent(boardData) {
+  const listSelect = document.querySelector("#listSelect");
+  if (!listSelect) {
+    console.error("Không tìm thấy phần tử #listSelect");
+    return;
+  }
+
+  // Clone để xóa sự kiện cũ
+  const newListSelect = listSelect.cloneNode(true);
+  listSelect.parentNode.replaceChild(newListSelect, listSelect);
+
+  // Gắn sự kiện change mới
+  newListSelect.addEventListener("change", function () {
+    populatePositionSelect(boardData);
+  });
 }
 
 // Mở modal labelModal
@@ -502,7 +687,7 @@ function saveLabelValues() {
   return true;
 }
 
-//  modal Labels
+//  list Labels
 function setupColorSelection() {
   const colorOptions = document.querySelectorAll(".color-option");
   colorOptions.forEach((option) => {

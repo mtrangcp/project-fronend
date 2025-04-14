@@ -273,7 +273,7 @@
             <div class="span-select">
               <span>in list</span>
 
-              <div class="select" id="status-task" onchange="openMoveDropdownModal()">
+              <div class="select" id="status-task" onclick="openMoveDropdownModal()">
                 In-progress
               </div>
             </div>
@@ -333,27 +333,27 @@
 
           <div class="boards">
             <h3>Board</h3>
-            <input type="text" placeholder="Tổ chức sự kiện Year-end party !" />
+            <input type="text" id="titleBoardOfTask" disabled />
           </div>
 
           <div class="list-po">
             <div class="list">
               <h3>List</h3>
-              <select name="" id="">
+              <select id="listSelect">
                 <option value="In-progress">In-progress</option>
               </select>
             </div>
 
             <div class="position">
               <h3>Position</h3>
-              <select name="" id="">
+              <select id="positionSelect">
                 <option value="1">1</option>
               </select>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary me-auto">Move</button>
+          <button type="button" id="moveTaskBtn" class="btn btn-primary me-auto">Move</button>
         </div>
       </div>
     </div>

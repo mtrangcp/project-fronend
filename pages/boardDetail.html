@@ -143,35 +143,30 @@
 
           <div class="keyboard">
             <p class="title">Card status</p>
-
             <div class="item-status">
-              <input type="checkbox" />
+              <input type="checkbox" class="filter-checkbox status-complete" />
               <span>Marked as complete</span>
             </div>
-
             <div class="item-status">
-              <input type="checkbox" />
+              <input type="checkbox" class="filter-checkbox status-pending" />
               <span>Not marked as complete</span>
             </div>
           </div>
 
           <div class="keyboard">
             <p class="title">Due date</p>
-
             <div class="item-status">
-              <input type="checkbox" />
+              <input type="checkbox" class="filter-checkbox no-dates" />
               <img src="../assets/icons/filter-date.png" alt="filter date" />
               <span>No dates</span>
             </div>
-
             <div class="item-status">
-              <input type="checkbox" />
+              <input type="checkbox" class="filter-checkbox overdue" />
               <img src="../assets/icons/over-dueDate.png" alt="over-dueDate" />
               <span>Overdue</span>
             </div>
-
             <div class="item-status">
-              <input type="checkbox" />
+              <input type="checkbox" class="filter-checkbox due-next-day" />
               <img src="../assets/icons/due-nextDay.png" alt="due-nextDay" />
               <span>Due in the next day</span>
             </div>
@@ -297,7 +292,7 @@
             </div>
 
             <div class="aside-modal">
-              <div class="labels" onclick="openLabelModal()">
+              <div class="labels" onclick="openEditLabelModal()">
                 <img src="../assets/icons/icon-labels.png" alt="labels" />
                 <span>Labels</span>
               </div>
@@ -401,7 +396,7 @@
     </div>
   </div>
 
-  <!-- Modal add labels dropdown -->
+  <!-- Modal edit list labels dropdown -->
   <div class="modal fade" id="editLabelModal" tabindex="-1" aria-labelledby="labelModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content p-3">
@@ -417,18 +412,54 @@
               <input type="checkbox">
               <div class="colorLabel">done</div>
               <img src="../assets/icons/pen-edit.png" alt="edit">
-            </div>
-
-            <div class="itemLabel">
-              <input type="checkbox">
-              <div class="colorLabel">done</div>
-              <img src="../assets/icons/pen-edit.png" alt="edit">
             </div> -->
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" id="openCreateLabelModal">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal edit and del labels dropdown -->
+  <div class="modal fade" id="editAndDelLabelModal" tabindex="-1" aria-labelledby="labelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <img src="../assets/icons/btn-back.png" alt="back-btn" data-bs-dismiss="modal" aria-label="Close" />
+          <h5 class="modal-title" id="labelModalLabel">Edit label</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" id="labelTitleInput" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Select a color</label>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="color-option" style="background-color: #baf3db"></span>
+              <span class="color-option" style="background-color: #f8e6a0"></span>
+              <span class="color-option" style="background-color: #fedec8"></span>
+              <span class="color-option" style="background-color: #ffd5d2"></span>
+              <span class="color-option" style="background-color: #dfd8fd"></span>
+              <span class="color-option" style="background-color: #4bce97"></span>
+              <span class="color-option" style="background-color: #f5cd47"></span>
+              <span class="color-option" style="background-color: #fea362"></span>
+              <span class="color-option" style="background-color: #f87168"></span>
+              <span class="color-option" style="background-color: #9f8fef"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="saveEditLabelBtn">Save</button>
+          <button type="button" class="btn btn-secondary" id="delLabelBtn" data-bs-dismiss="modal">
+            Delete
+          </button>
         </div>
       </div>
     </div>

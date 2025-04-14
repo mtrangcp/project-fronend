@@ -62,7 +62,7 @@ function renderListData(arrayList) {
             <div class="item-toDo">
                 <div class="heading">
                     <input type="text" class="updateTitleList" />
-                    <span onclick="updateTitleOfList(${index})" 
+                    <span onclick="updateTitleOfList(${index})"
                         class="titleList">${item.title}</span>
                     <div class="icon-util">
                         <img
@@ -406,42 +406,28 @@ function moveTask() {
   const listSelect = document.querySelector("#listSelect");
   const positionSelect = document.querySelector("#positionSelect");
 
-  // Lấy list đích và vị trí
-  const targetListIndex = parseInt(listSelect.value); // Index của list đích
-  const targetPosition = parseInt(positionSelect.value) - 1; // Vị trí trong list đích (trừ 1 vì mảng bắt đầu từ 0)
+  const targetListIndex = parseInt(listSelect.value);
+  const targetPosition = parseInt(positionSelect.value) - 1;
 
-  // Lấy dữ liệu từ localStorage
   let users = JSON.parse(localStorage.getItem("proUsers")) || [];
   let localLogin = localStorage.getItem("currentLogin");
   let indexCurr = users.findIndex((item) => item.email === localLogin);
   let indexOfBoard = localStorage.getItem("chooseBoardIndex");
 
   let lists = users[indexCurr].boards[indexOfBoard].lists;
-
-  // Lấy task hiện tại
   const taskToMove = lists[currentListIndex].tasks[currentTaskIndex];
-
-  // Xóa task khỏi list hiện tại
   lists[currentListIndex].tasks.splice(currentTaskIndex, 1);
-
-  // Thêm task vào list đích ở vị trí được chọn
   lists[targetListIndex].tasks.splice(targetPosition, 0, taskToMove);
 
-  // Cập nhật localStorage
   users[indexCurr].boards[indexOfBoard].lists = lists;
   localStorage.setItem("proUsers", JSON.stringify(users));
-
-  // Hiển thị thông báo thành công
   showToastSucces("Di chuyển task thành công!");
 
-  // Đóng modal
   const moveModal = bootstrap.Modal.getInstance(
     document.getElementById("moveDropdownModal")
   );
   moveModal.hide();
-
-  // Cập nhật giao diện (tạm thời reload)
-  window.location.reload();
+  renderListData(users[indexCurr].boards[indexOfBoard].lists);
 }
 
 function openMoveDropdownModal() {
@@ -601,11 +587,215 @@ function setupListSelectChangeEvent(boardData) {
 }
 
 // Mở modal labelModal
+function openEditLabelModal() {
+  const editLabelModalElement = document.getElementById("editLabelModal");
+  if (editLabelModalElement) {
+    const editLabelModal = new bootstrap.Modal(editLabelModalElement, {
+      backdrop: true,
+      keyboard: true,
+    });
+    editLabelModal.show();
+
+    // Lấy danh sách label của task hiện tại và hiển thị
+    let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+    let localLogin = localStorage.getItem("currentLogin");
+    let indexCurr = users.findIndex((item) => item.email === localLogin);
+    let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+    let task =
+      users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+        currentTaskIndex
+      ];
+    const listLabels = document.querySelector(".listLabels");
+    listLabels.innerHTML = "";
+
+    if (task.tag && task.tag.length > 0) {
+      task.tag.forEach((label, index) => {
+        const labelItem = document.createElement("div");
+        labelItem.className = "itemLabel";
+        labelItem.innerHTML = `
+          <input type="checkbox" ${label.checked ? "checked" : ""}>
+          <div class="colorLabel" style="background-color: ${label.color}">${
+          label.title
+        }</div>
+          <img src="../assets/icons/pen-edit.png" alt="edit" class="edit-label-icon" data-label-index="${index}">
+        `;
+        listLabels.appendChild(labelItem);
+      });
+
+      const editIcons = document.querySelectorAll(".edit-label-icon");
+      editIcons.forEach((icon) => {
+        icon.addEventListener("click", function () {
+          const labelIndex = parseInt(icon.dataset.labelIndex);
+          openEditAndDelLabelModal(labelIndex);
+        });
+      });
+    } else {
+      listLabels.innerHTML = "<p>Chưa có label nào.</p>";
+    }
+
+    // Gắn sự kiện cho nút Create
+    const createLabelBtn = document.querySelector("#openCreateLabelModal");
+    if (createLabelBtn) {
+      const newCreateLabelBtn = createLabelBtn.cloneNode(true);
+      createLabelBtn.parentNode.replaceChild(newCreateLabelBtn, createLabelBtn);
+      newCreateLabelBtn.addEventListener("click", function () {
+        openLabelModal(); // Mở modal tạo label
+      });
+    }
+  } else {
+    console.error("Không tìm thấy phần tử #editLabelModal");
+  }
+}
+
+function openEditAndDelLabelModal(labelIndex) {
+  const editAndDelLabelModalElement = document.getElementById(
+    "editAndDelLabelModal"
+  );
+  if (editAndDelLabelModalElement) {
+    // Đóng modal #editLabelModal trước
+    const editLabelModalElement = document.getElementById("editLabelModal");
+    let editLabelModalInstance = null;
+    if (editLabelModalElement) {
+      editLabelModalInstance = bootstrap.Modal.getInstance(
+        editLabelModalElement
+      );
+      if (editLabelModalInstance) {
+        editLabelModalInstance.hide();
+      }
+    }
+
+    const editAndDelLabelModal = new bootstrap.Modal(
+      editAndDelLabelModalElement,
+      {
+        backdrop: true,
+        keyboard: true,
+      }
+    );
+    editAndDelLabelModal.show();
+
+    // Lấy thông tin label hiện tại
+    let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+    let localLogin = localStorage.getItem("currentLogin");
+    let indexCurr = users.findIndex((item) => item.email === localLogin);
+    let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+    let task =
+      users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+        currentTaskIndex
+      ];
+    const label = task.tag[labelIndex];
+
+    // Hiển thị tiêu đề và màu hiện tại
+    const labelTitleInput = document.querySelector(
+      "#editAndDelLabelModal #labelTitleInput"
+    );
+    if (labelTitleInput) {
+      labelTitleInput.value = label.title || ""; // Đảm bảo hiển thị tiêu đề của label
+    } else {
+      console.error(
+        "Không tìm thấy #labelTitleInput trong #editAndDelLabelModal"
+      );
+    }
+
+    selectedColor = label.color;
+
+    const colorOptions = document.querySelectorAll(
+      "#editAndDelLabelModal .color-option"
+    );
+    colorOptions.forEach((option) => {
+      option.style.border =
+        option.style.backgroundColor === label.color
+          ? "2px solid #000"
+          : "2px solid transparent";
+      option.addEventListener("click", function () {
+        colorOptions.forEach(
+          (opt) => (opt.style.border = "2px solid transparent")
+        );
+        this.style.border = "2px solid #000";
+        selectedColor = this.style.backgroundColor;
+      });
+    });
+
+    // Xử lý nút Save
+    const saveEditLabelBtn = document.querySelector("#saveEditLabelBtn");
+    if (saveEditLabelBtn) {
+      const newSaveEditLabelBtn = saveEditLabelBtn.cloneNode(true);
+      saveEditLabelBtn.parentNode.replaceChild(
+        newSaveEditLabelBtn,
+        saveEditLabelBtn
+      );
+      newSaveEditLabelBtn.addEventListener("click", function () {
+        const newTitle = labelTitleInput.value.trim();
+        if (!newTitle) {
+          showCustomToast("Tên label không được để trống!");
+          return;
+        }
+        if (!selectedColor) {
+          showCustomToast("Vui lòng chọn một màu!");
+          return;
+        }
+
+        // Cập nhật thông tin label
+        task.tag[labelIndex].title = newTitle;
+        task.tag[labelIndex].color = selectedColor;
+        users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+          currentTaskIndex
+        ] = task;
+        localStorage.setItem("proUsers", JSON.stringify(users));
+
+        showToastSucces("Cập nhật label thành công!");
+        editAndDelLabelModal.hide();
+        openEditLabelModal(); // Mở lại modal #editLabelModal
+      });
+    }
+
+    // Xử lý nút Delete
+    const delLabelBtn = document.querySelector("#delLabelBtn");
+    if (delLabelBtn) {
+      const newDelLabelBtn = delLabelBtn.cloneNode(true);
+      delLabelBtn.parentNode.replaceChild(newDelLabelBtn, delLabelBtn);
+      newDelLabelBtn.addEventListener("click", function () {
+        // Xóa label
+        task.tag.splice(labelIndex, 1);
+        users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
+          currentTaskIndex
+        ] = task;
+        localStorage.setItem("proUsers", JSON.stringify(users));
+
+        showToastSucces("Xóa label thành công!");
+        editAndDelLabelModal.hide();
+        openEditLabelModal(); // Mở lại modal #editLabelModal
+      });
+    }
+
+    // Khi modal #editAndDelLabelModal đóng, mở lại modal #editLabelModal
+    editAndDelLabelModalElement.addEventListener(
+      "hidden.bs.modal",
+      function () {
+        openEditLabelModal();
+      },
+      { once: true }
+    );
+  } else {
+    console.error("Không tìm thấy phần tử #editAndDelLabelModal");
+  }
+}
+
 function openLabelModal() {
   let users = JSON.parse(localStorage.getItem("proUsers")) || [];
   let localLogin = localStorage.getItem("currentLogin");
   let indexCurr = users.findIndex((item) => item.email === localLogin);
   let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  const editLabelModalElement = document.getElementById("editLabelModal");
+  let editLabelModalInstance = null;
+  if (editLabelModalElement) {
+    editLabelModalInstance = bootstrap.Modal.getInstance(editLabelModalElement);
+    if (editLabelModalInstance) {
+      editLabelModalInstance.hide();
+    }
+  }
 
   const labelModalElement = document.getElementById("labelModal");
   if (labelModalElement) {
@@ -617,18 +807,47 @@ function openLabelModal() {
 
     setupColorSelection();
 
-    //btn Create
     const createLabelBtn = document.querySelector("#createLabelBtn");
-    createLabelBtn.addEventListener("click", function () {
-      const success = saveLabelValues();
-      if (success) {
-        renderListData(users[indexCurr].boards[indexOfBoard].lists);
-        const labelModal = bootstrap.Modal.getInstance(
-          document.getElementById("labelModal")
-        );
-        labelModal.hide();
-      }
-    });
+    if (createLabelBtn) {
+      const newCreateLabelBtn = createLabelBtn.cloneNode(true);
+      createLabelBtn.parentNode.replaceChild(newCreateLabelBtn, createLabelBtn);
+      newCreateLabelBtn.addEventListener("click", function () {
+        const success = saveLabelValues();
+        if (success) {
+          renderListData(users[indexCurr].boards[indexOfBoard].lists);
+          labelModal.hide();
+          // Sau khi tạo label thành công, cập nhật lại danh sách label trong modal #editLabelModal
+          const editLabelModalElement =
+            document.getElementById("editLabelModal");
+          if (
+            editLabelModalElement &&
+            bootstrap.Modal.getInstance(editLabelModalElement)
+          ) {
+            const listLabels = document.querySelector(".listLabels");
+            let task =
+              users[indexCurr].boards[indexOfBoard].lists[currentListIndex]
+                .tasks[currentTaskIndex];
+            listLabels.innerHTML = "";
+            if (task.tag && task.tag.length > 0) {
+              task.tag.forEach((label, index) => {
+                const labelItem = document.createElement("div");
+                labelItem.className = "itemLabel";
+                labelItem.innerHTML = `
+                  <input type="checkbox" ${label.checked ? "checked" : ""}>
+                  <div class="colorLabel" style="background-color: ${
+                    label.color
+                  }">${label.title}</div>
+                  <img src="../assets/icons/pen-edit.png" alt="edit">
+                `;
+                listLabels.appendChild(labelItem);
+              });
+            } else {
+              listLabels.innerHTML = "<p>Chưa có label nào.</p>";
+            }
+          }
+        }
+      });
+    }
   } else {
     console.error("Không tìm thấy phần tử #labelModal");
   }
@@ -668,6 +887,7 @@ function saveLabelValues() {
   const newLabel = {
     title: label.title,
     color: label.color,
+    checked: false,
   };
   task.tag.push(newLabel);
 
@@ -938,6 +1158,114 @@ function renderListYourBoard() {
         `;
     })
     .join("");
+}
+
+// filter
+document.querySelector(".over-right").addEventListener("click", function () {
+  openFilterModal();
+});
+
+function openFilterModal() {
+  const filterModalElement = document.getElementById("filterModal");
+  if (filterModalElement) {
+    const filterModal = new bootstrap.Modal(filterModalElement, {
+      backdrop: true,
+      keyboard: true,
+    });
+    filterModal.show();
+
+    // Gắn sự kiện cho các checkbox
+    const checkboxes = document.querySelectorAll(".filter-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        applyFilters(); // Gọi hàm lọc khi checkbox thay đổi
+      });
+    });
+  } else {
+    console.error("Không tìm thấy phần tử #filterModal");
+  }
+}
+
+// Hàm áp dụng bộ lọc
+function applyFilters() {
+  let users = JSON.parse(localStorage.getItem("proUsers")) || [];
+  let localLogin = localStorage.getItem("currentLogin");
+  let indexCurr = users.findIndex((item) => item.email === localLogin);
+  let indexOfBoard = localStorage.getItem("chooseBoardIndex");
+
+  let lists = users[indexCurr].boards[indexOfBoard].lists;
+
+  // Lấy trạng thái các checkbox
+  const statusComplete = document.querySelector(".status-complete").checked;
+  const statusPending = document.querySelector(".status-pending").checked;
+  const noDates = document.querySelector(".no-dates").checked;
+  const overdue = document.querySelector(".overdue").checked;
+  const dueNextDay = document.querySelector(".due-next-day").checked;
+
+  // Lọc danh sách task
+  let filteredLists = JSON.parse(JSON.stringify(lists)); // Sao chép sâu để không ảnh hưởng dữ liệu gốc
+  const currentDate = new Date();
+  const tomorrow = new Date(currentDate);
+  tomorrow.setDate(currentDate.getDate() + 1);
+  tomorrow.setHours(23, 59, 59, 999); // Cuối ngày mai
+
+  filteredLists.forEach((list) => {
+    list.tasks = list.tasks.filter((task) => {
+      let matchesStatus = true;
+      let matchesDueDate = true;
+
+      // Lọc theo trạng thái
+      if (statusComplete && !statusPending) {
+        matchesStatus = task.status === "complete";
+      } else if (statusPending && !statusComplete) {
+        matchesStatus = task.status === "pending";
+      } else if (!statusComplete && !statusPending) {
+        matchesStatus = true; // Không lọc theo trạng thái nếu không chọn gì
+      } else {
+        matchesStatus = true; // Nếu chọn cả hai thì không lọc theo trạng thái
+      }
+
+      // Lọc theo ngày
+      if (noDates || overdue || dueNextDay) {
+        if (noDates && !overdue && !dueNextDay) {
+          matchesDueDate = !task.due_date;
+        } else if (overdue && !noDates && !dueNextDay) {
+          matchesDueDate =
+            task.due_date && new Date(task.due_date) < currentDate;
+        } else if (dueNextDay && !noDates && !overdue) {
+          matchesDueDate =
+            task.due_date &&
+            new Date(task.due_date) >= currentDate &&
+            new Date(task.due_date) <= tomorrow;
+        } else if (noDates && overdue && !dueNextDay) {
+          matchesDueDate =
+            !task.due_date ||
+            (task.due_date && new Date(task.due_date) < currentDate);
+        } else if (noDates && dueNextDay && !overdue) {
+          matchesDueDate =
+            !task.due_date ||
+            (task.due_date &&
+              new Date(task.due_date) >= currentDate &&
+              new Date(task.due_date) <= tomorrow);
+        } else if (overdue && dueNextDay && !noDates) {
+          matchesDueDate =
+            task.due_date &&
+            (new Date(task.due_date) < currentDate ||
+              (new Date(task.due_date) >= currentDate &&
+                new Date(task.due_date) <= tomorrow));
+        } else if (noDates && overdue && dueNextDay) {
+          matchesDueDate = true; // Nếu chọn cả ba thì không lọc theo ngày
+        } else {
+          matchesDueDate = true; // Nếu không chọn gì thì không lọc
+        }
+      }
+
+      return matchesStatus && matchesDueDate;
+    });
+  });
+
+  // Render lại danh sách với dữ liệu đã lọc
+  renderListData(filteredLists);
 }
 
 function showCustomToast(message) {

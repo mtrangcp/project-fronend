@@ -502,7 +502,7 @@ function populateListSelect(boardData) {
   }
 
   const lists = boardData.board.lists;
-  listSelect.innerHTML = ""; // Xóa các option cũ
+  listSelect.innerHTML = "";
 
   lists.forEach((list, index) => {
     const option = document.createElement("option");
@@ -511,7 +511,6 @@ function populateListSelect(boardData) {
     listSelect.appendChild(option);
   });
 
-  // Mặc định chọn list hiện tại
   listSelect.value = currentListIndex;
 }
 
@@ -523,7 +522,7 @@ function populateListSelect(boardData) {
   }
 
   const lists = boardData.board.lists;
-  listSelect.innerHTML = ""; // Xóa các option cũ
+  listSelect.innerHTML = "";
 
   lists.forEach((list, index) => {
     const option = document.createElement("option");
@@ -532,7 +531,6 @@ function populateListSelect(boardData) {
     listSelect.appendChild(option);
   });
 
-  // Mặc định chọn list hiện tại
   listSelect.value = currentListIndex;
 }
 
@@ -551,11 +549,11 @@ function populatePositionSelect(boardData) {
     selectedListIndex < 0 ||
     selectedListIndex >= lists.length
   ) {
-    selectedListIndex = currentListIndex; // Mặc định là list hiện tại
+    selectedListIndex = currentListIndex;
   }
 
   const tasksInList = lists[selectedListIndex].tasks || [];
-  positionSelect.innerHTML = ""; // Xóa các option cũ
+  positionSelect.innerHTML = "";
 
   const taskCount = tasksInList.length;
   for (let i = 1; i <= taskCount + 1; i++) {
@@ -565,7 +563,6 @@ function populatePositionSelect(boardData) {
     positionSelect.appendChild(option);
   }
 
-  // Mặc định chọn vị trí cuối cùng
   positionSelect.value = taskCount + 1;
 }
 
@@ -576,11 +573,10 @@ function setupListSelectChangeEvent(boardData) {
     return;
   }
 
-  // Clone để xóa sự kiện cũ
   const newListSelect = listSelect.cloneNode(true);
   listSelect.parentNode.replaceChild(newListSelect, listSelect);
 
-  // Gắn sự kiện change mới
+  // change
   newListSelect.addEventListener("change", function () {
     populatePositionSelect(boardData);
   });
@@ -596,7 +592,6 @@ function openEditLabelModal() {
     });
     editLabelModal.show();
 
-    // Lấy danh sách label của task hiện tại và hiển thị
     let users = JSON.parse(localStorage.getItem("proUsers")) || [];
     let localLogin = localStorage.getItem("currentLogin");
     let indexCurr = users.findIndex((item) => item.email === localLogin);
@@ -634,13 +629,13 @@ function openEditLabelModal() {
       listLabels.innerHTML = "<p>Chưa có label nào.</p>";
     }
 
-    // Gắn sự kiện cho nút Create
+    //  Create
     const createLabelBtn = document.querySelector("#openCreateLabelModal");
     if (createLabelBtn) {
       const newCreateLabelBtn = createLabelBtn.cloneNode(true);
       createLabelBtn.parentNode.replaceChild(newCreateLabelBtn, createLabelBtn);
       newCreateLabelBtn.addEventListener("click", function () {
-        openLabelModal(); // Mở modal tạo label
+        openLabelModal();
       });
     }
   } else {
@@ -653,7 +648,6 @@ function openEditAndDelLabelModal(labelIndex) {
     "editAndDelLabelModal"
   );
   if (editAndDelLabelModalElement) {
-    // Đóng modal #editLabelModal trước
     const editLabelModalElement = document.getElementById("editLabelModal");
     let editLabelModalInstance = null;
     if (editLabelModalElement) {
@@ -674,7 +668,6 @@ function openEditAndDelLabelModal(labelIndex) {
     );
     editAndDelLabelModal.show();
 
-    // Lấy thông tin label hiện tại
     let users = JSON.parse(localStorage.getItem("proUsers")) || [];
     let localLogin = localStorage.getItem("currentLogin");
     let indexCurr = users.findIndex((item) => item.email === localLogin);
@@ -717,7 +710,7 @@ function openEditAndDelLabelModal(labelIndex) {
       });
     });
 
-    // Xử lý nút Save
+    //save
     const saveEditLabelBtn = document.querySelector("#saveEditLabelBtn");
     if (saveEditLabelBtn) {
       const newSaveEditLabelBtn = saveEditLabelBtn.cloneNode(true);
@@ -736,7 +729,6 @@ function openEditAndDelLabelModal(labelIndex) {
           return;
         }
 
-        // Cập nhật thông tin label
         task.tag[labelIndex].title = newTitle;
         task.tag[labelIndex].color = selectedColor;
         users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
@@ -746,17 +738,16 @@ function openEditAndDelLabelModal(labelIndex) {
 
         showToastSucces("Cập nhật label thành công!");
         editAndDelLabelModal.hide();
-        openEditLabelModal(); // Mở lại modal #editLabelModal
+        openEditLabelModal();
       });
     }
 
-    // Xử lý nút Delete
+    // del
     const delLabelBtn = document.querySelector("#delLabelBtn");
     if (delLabelBtn) {
       const newDelLabelBtn = delLabelBtn.cloneNode(true);
       delLabelBtn.parentNode.replaceChild(newDelLabelBtn, delLabelBtn);
       newDelLabelBtn.addEventListener("click", function () {
-        // Xóa label
         task.tag.splice(labelIndex, 1);
         users[indexCurr].boards[indexOfBoard].lists[currentListIndex].tasks[
           currentTaskIndex
@@ -765,11 +756,10 @@ function openEditAndDelLabelModal(labelIndex) {
 
         showToastSucces("Xóa label thành công!");
         editAndDelLabelModal.hide();
-        openEditLabelModal(); // Mở lại modal #editLabelModal
+        openEditLabelModal();
       });
     }
 
-    // Khi modal #editAndDelLabelModal đóng, mở lại modal #editLabelModal
     editAndDelLabelModalElement.addEventListener(
       "hidden.bs.modal",
       function () {
@@ -816,7 +806,7 @@ function openLabelModal() {
         if (success) {
           renderListData(users[indexCurr].boards[indexOfBoard].lists);
           labelModal.hide();
-          // Sau khi tạo label thành công, cập nhật lại danh sách label trong modal #editLabelModal
+          // update ds modal
           const editLabelModalElement =
             document.getElementById("editLabelModal");
           if (
@@ -988,7 +978,6 @@ function removeDateValues() {
   localStorage.setItem("proUsers", JSON.stringify(users));
   renderListData(users[indexCurr].boards[indexOfBoard].lists);
 
-  // Reset giá trị input
   document.querySelector("#start-date").value = "";
   document.querySelector("#due-date").value = "";
   document.querySelector("#start-date-checkbox").checked = false;
@@ -1029,7 +1018,6 @@ let btnConfirmDelete = document.querySelector("#btnConfirmDelList");
 btnConfirmDelete.addEventListener("click", function (event) {
   console.log("thuc hien xoa---------------");
   if (indexToDelete !== null) {
-    // Lấy dữ liệu từ localStorage
     let users = JSON.parse(localStorage.getItem("proUsers")) || [];
     let localLogin = localStorage.getItem("currentLogin");
     let indexCurr = users.findIndex((item) => item.email === localLogin);
@@ -1174,11 +1162,10 @@ function openFilterModal() {
     });
     filterModal.show();
 
-    // Gắn sự kiện cho các checkbox
     const checkboxes = document.querySelectorAll(".filter-checkbox");
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener("change", function () {
-        applyFilters(); // Gọi hàm lọc khi checkbox thay đổi
+        applyFilters();
       });
     });
   } else {
@@ -1186,7 +1173,6 @@ function openFilterModal() {
   }
 }
 
-// Hàm áp dụng bộ lọc
 function applyFilters() {
   let users = JSON.parse(localStorage.getItem("proUsers")) || [];
   let localLogin = localStorage.getItem("currentLogin");
@@ -1195,37 +1181,35 @@ function applyFilters() {
 
   let lists = users[indexCurr].boards[indexOfBoard].lists;
 
-  // Lấy trạng thái các checkbox
+  // status checkbox
   const statusComplete = document.querySelector(".status-complete").checked;
   const statusPending = document.querySelector(".status-pending").checked;
   const noDates = document.querySelector(".no-dates").checked;
   const overdue = document.querySelector(".overdue").checked;
   const dueNextDay = document.querySelector(".due-next-day").checked;
 
-  // Lọc danh sách task
-  let filteredLists = JSON.parse(JSON.stringify(lists)); // Sao chép sâu để không ảnh hưởng dữ liệu gốc
+  // loc ds task
+  let filteredLists = JSON.parse(JSON.stringify(lists));
   const currentDate = new Date();
   const tomorrow = new Date(currentDate);
   tomorrow.setDate(currentDate.getDate() + 1);
-  tomorrow.setHours(23, 59, 59, 999); // Cuối ngày mai
+  tomorrow.setHours(23, 59, 59, 999);
 
   filteredLists.forEach((list) => {
     list.tasks = list.tasks.filter((task) => {
       let matchesStatus = true;
       let matchesDueDate = true;
 
-      // Lọc theo trạng thái
       if (statusComplete && !statusPending) {
         matchesStatus = task.status === "complete";
       } else if (statusPending && !statusComplete) {
         matchesStatus = task.status === "pending";
       } else if (!statusComplete && !statusPending) {
-        matchesStatus = true; // Không lọc theo trạng thái nếu không chọn gì
+        matchesStatus = true;
       } else {
-        matchesStatus = true; // Nếu chọn cả hai thì không lọc theo trạng thái
+        matchesStatus = true;
       }
 
-      // Lọc theo ngày
       if (noDates || overdue || dueNextDay) {
         if (noDates && !overdue && !dueNextDay) {
           matchesDueDate = !task.due_date;
@@ -1254,9 +1238,9 @@ function applyFilters() {
               (new Date(task.due_date) >= currentDate &&
                 new Date(task.due_date) <= tomorrow));
         } else if (noDates && overdue && dueNextDay) {
-          matchesDueDate = true; // Nếu chọn cả ba thì không lọc theo ngày
+          matchesDueDate = true;
         } else {
-          matchesDueDate = true; // Nếu không chọn gì thì không lọc
+          matchesDueDate = true;
         }
       }
 
@@ -1264,7 +1248,6 @@ function applyFilters() {
     });
   });
 
-  // Render lại danh sách với dữ liệu đã lọc
   renderListData(filteredLists);
 }
 

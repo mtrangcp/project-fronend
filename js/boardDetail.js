@@ -401,6 +401,7 @@ function openTaskDetailModal(listIndex, taskIndex) {
   });
 }
 
+// move task
 function moveTask() {
   const listSelect = document.querySelector("#listSelect");
   const positionSelect = document.querySelector("#positionSelect");

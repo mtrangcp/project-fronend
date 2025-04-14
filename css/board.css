@@ -975,3 +975,70 @@ body {
     top: 10px;
     left: auto;
 }
+
+#editLabelModal .modal-body p{
+    color: #44546F;
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    margin-bottom: 8px;
+}
+
+#editLabelModal .modal-body .listLabels {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#editLabelModal .modal-body .listLabels .itemLabel{
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#editLabelModal .modal-body .listLabels .itemLabel input,
+#editLabelModal .modal-body .listLabels .itemLabel img{
+   width: 16px;
+   height: 16px;
+}
+
+#editLabelModal .modal-body .listLabels .itemLabel .colorLabel{
+    height: 32px;
+    border-radius: 3px;
+    background-color: #4BCE97;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    flex: 1;
+}
+
+#editLabelModal .modal-footer #openCreateLabelModal{
+    width: 100%;
+    border-radius: 3px;
+    background: rgba(9, 30, 66, 0.06);
+
+    color: #172B4D;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+}
+
+#editLabelModal .modal-footer #openCreateLabelModal:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+

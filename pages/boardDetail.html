@@ -20,7 +20,7 @@
 
 <body>
   <header class="header">
-    <div class="div-logo">
+    <div class="div-logo" data-bs-toggle="modal" data-bs-target="#editLabelModal">
       <img src="../assets/images/trello-logo-full.png" alt="img full logo" />
     </div>
   </header>
@@ -396,6 +396,39 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal add labels dropdown -->
+  <div class="modal fade" id="editLabelModal" tabindex="-1" aria-labelledby="labelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div class="modal-header ">
+          <h5 class="modal-title w-100 text-center " id="labelModalLabel">Label</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <p>Labels</p>
+          <div class="listLabels">
+            <!-- <div class="itemLabel">
+              <input type="checkbox">
+              <div class="colorLabel">done</div>
+              <img src="../assets/icons/pen-edit.png" alt="edit">
+            </div>
+
+            <div class="itemLabel">
+              <input type="checkbox">
+              <div class="colorLabel">done</div>
+              <img src="../assets/icons/pen-edit.png" alt="edit">
+            </div> -->
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="openCreateLabelModal">Create</button>
         </div>
       </div>
     </div>

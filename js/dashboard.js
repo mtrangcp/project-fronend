@@ -65,12 +65,12 @@ function renderData() {
     let isImage = item.backdrop.startsWith("../");
 
     return `
-            <div onclick = "boardDetail(${index})"  class="item-boards" style="${
-      isImage
-        ? `background-image: url('${item.backdrop}');`
-        : `background: ${item.backdrop};`
-    }">
-                <p>${item.title}</p>
+            <div   class="item-boards" style="${
+              isImage
+                ? `background-image: url('${item.backdrop}');`
+                : `background: ${item.backdrop};`
+            }">
+                <p onclick = "boardDetail(${index})">${item.title}</p>
                 <div
                     class="edit-board"
                     data-bs-toggle="modal"

@@ -154,7 +154,7 @@ function renderListData(arrayList) {
     `;
   listData.innerHTML = convertArr;
 
-  // Gắn sự kiện cho nút "Add another list"
+  //  "Add another list"
   let newBtnShowAddList = document.querySelector("#btnShowAddList");
   let newAddAnotherList = document.querySelector(".addAnotherList");
   let newBtnAddList = document.querySelector("#btnAddList");
